@@ -1,9 +1,7 @@
 package com.ahnstudio.management.controller.backend;
 
-import com.ahnstudio.management.common.Const;
 import com.ahnstudio.management.common.ServerResponse;
 import com.ahnstudio.management.pojo.Product;
-import com.ahnstudio.management.pojo.User;
 import com.ahnstudio.management.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * @author : Cunho
