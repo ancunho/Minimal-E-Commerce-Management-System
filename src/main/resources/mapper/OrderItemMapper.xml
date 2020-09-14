@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.OrderItem">
     <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="USER_ID" jdbcType="INTEGER" property="userId" />
-    <result column="ORDER_ID" jdbcType="BIGINT" property="orderId" />
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
     <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId" />
     <result column="SPEC_ID" jdbcType="INTEGER" property="specId" />
     <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
@@ -34,7 +34,7 @@
       PRODUCT_ID, SPEC_ID, PRODUCT_NAME, PRODUCT_IMAGE,
       CURRENT_UNIT_PRICE, QTY, TOTAL_PRICE, 
       CREATETIME, UPDATETIME)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR},
       #{productId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productImage,jdbcType=VARCHAR},
       #{currentUnitPrice,jdbcType=DECIMAL}, #{qty,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
       #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
@@ -87,7 +87,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         #{productId,jdbcType=INTEGER},
@@ -125,7 +125,7 @@
         USER_ID = #{userId,jdbcType=INTEGER},
       </if>
       <if test="orderId != null">
-        ORDER_ID = #{orderId,jdbcType=BIGINT},
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="productId != null">
         PRODUCT_ID = #{productId,jdbcType=INTEGER},
@@ -160,7 +160,7 @@
   <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.OrderItem">
     update tb_order_item
     set USER_ID = #{userId,jdbcType=INTEGER},
-      ORDER_ID = #{orderId,jdbcType=BIGINT},
+      ORDER_ID = #{orderId,jdbcType=VARCHAR},
       PRODUCT_ID = #{productId,jdbcType=INTEGER},
       SPEC_ID = #{specId,jdbcType=INTEGER},
       PRODUCT_NAME = #{productName,jdbcType=VARCHAR},

@@ -3,7 +3,7 @@
 <mapper namespace="com.ahnstudio.management.dao.OrderMapper">
   <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Order">
     <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="ORDER_ID" jdbcType="BIGINT" property="orderId" />
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
     <result column="USER_ID" jdbcType="INTEGER" property="userId" />
     <result column="SHIPPING_ID" jdbcType="INTEGER" property="shippingId" />
     <result column="PAYMENT" jdbcType="DECIMAL" property="payment" />
@@ -45,7 +45,7 @@
       PARAM1, PARAM2, PARAM3, 
       PARAM4, PARAM5, CREATETIME, 
       UPDATETIME)
-    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER},
       #{shippingId,jdbcType=INTEGER}, #{payment,jdbcType=DECIMAL}, #{paymentType,jdbcType=INTEGER}, 
       #{postage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{paymentTime,jdbcType=TIMESTAMP}, 
       #{sendTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, 
@@ -119,7 +119,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -178,7 +178,7 @@
     update tb_order
     <set>
       <if test="orderId != null">
-        ORDER_ID = #{orderId,jdbcType=BIGINT},
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null">
         USER_ID = #{userId,jdbcType=INTEGER},
@@ -236,7 +236,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Order">
     update tb_order
-    set ORDER_ID = #{orderId,jdbcType=BIGINT},
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
       USER_ID = #{userId,jdbcType=INTEGER},
       SHIPPING_ID = #{shippingId,jdbcType=INTEGER},
       PAYMENT = #{payment,jdbcType=DECIMAL},

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class OrderItemVO {
 
-    private Long orderNo;
+    private String orderNo;
 
     private Integer productId;
 
@@ -20,11 +20,11 @@ public class OrderItemVO {
 
     private String createTime;
 
-    public Long getOrderNo() {
+    public String getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(Long orderNo) {
+    public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 

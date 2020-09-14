@@ -7,7 +7,7 @@ public class PayInfo {
 
     private Integer userId;
 
-    private Long orderId;
+    private String orderId;
 
     private Integer payPlatform;
 
@@ -45,11 +45,11 @@ public class PayInfo {
         this.userId = userId;
     }
 
-    public Long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 

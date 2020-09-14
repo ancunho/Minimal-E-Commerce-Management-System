@@ -19,9 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Service
@@ -124,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
      */
     private Order assembleOrder(Integer userId, Integer shippingId, BigDecimal totalPrice) {
         Order order = new Order();
-        long orderNo = this.generateOrderNo();
+        String orderNo = this.generateOrderNo();
         order.setOrderId(orderNo);
         order.setStatus(Const.OrderStatusEnum.NO_PAY.getCode());
         order.setPostage(0);
@@ -146,9 +150,20 @@ public class OrderServiceImpl implements OrderService {
      * 주문번호생성
      * @return
      */
-    private long generateOrderNo(){
-        long currentTime =System.currentTimeMillis();
-        return currentTime+new Random().nextInt(100);
+//    private long generateOrderNo(){
+//        long currentTime =System.currentTimeMillis();
+//        return currentTime+new Random().nextInt(100);
+//    }
+    private static final AtomicInteger SEQ = new AtomicInteger(1000);
+    private static final DateTimeFormatter DF_FMT_PREFIX = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSS");
+    private static ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
+
+    public static String generateOrderNo() {
+        LocalDateTime dataTime = LocalDateTime.now(ZONE_ID);
+        if(SEQ.intValue() > 9990){
+            SEQ.getAndSet(1000);
+        }
+        return  dataTime.format(DF_FMT_PREFIX) + SEQ.getAndIncrement();
     }
 
     /**

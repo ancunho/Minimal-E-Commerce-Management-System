@@ -5,7 +5,7 @@ import java.util.List;
 
 public class OrderVO {
 
-    private Long orderNo;
+    private String orderNo;
 
     private BigDecimal payment;
 
@@ -41,11 +41,11 @@ public class OrderVO {
 
     private ShippingVO shippingVo;
 
-    public Long getOrderNo() {
+    public String getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(Long orderNo) {
+    public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 
