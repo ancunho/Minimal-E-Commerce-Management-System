@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_file::head_tag_html"></div>
+<link rel="stylesheet" type="text/css" th:href="@{/css/wangEditor.min.css}">
+<body>
+
+<!-- Nav Statrt -->
+<div th:replace="common/nav_header::nav_header"></div>
+<!-- // Nav End -->
+
+<!-- Content Start -->
+<div class="container ahn-container">
+    <div class="con">
+        <!-- Contents Real Start -->
+        <h3>Product Edit -- [[${product.name}]]</h3>
+        <div class="row right-button mb-3 clearfix">
+            <a role="button" href="#" th:href="@{/page/product/list}" class="btn btn-primary">商品列表</a>
+        </div>
+        <input type="hidden" th:value="${product.getId()}" id="productId" />
+        <input type="hidden" th:value="${product.getCategoryId()}" id="categoryId" />
+        <div class="form-group row">
+            <label for="name" class="col-md-2 col-form-label text-right">商品名称</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="name" placeholder="" th:value="${product.getName()}" required>
+                <div class="invalid-feedback">商品名称不能为空</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="subtitle" class="col-md-2 col-form-label text-right">副标题</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="subtitle" placeholder="" th:value="${product.getSubtitle()}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <lable for="spec" class="col-md-2 col-form-label text-right">
+                规格<br/><button class="btn btn-primary btn-sm" id="btnAddNewSpec">新加规格</button>
+            </lable>
+            <div class="col-md-10">
+
+                <table class="table table-hover table-bordered specTable">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">重量</th>
+                        <th scope="col">库存</th>
+                        <th scope="col">价格</th>
+                        <th scope="col">VIP价格</th>
+                        <th scope="col">发货方式</th>
+<!--                        <th scope="col">状态</th>-->
+                        <th scope="col">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group row" style="display: none;">
+            <label for="price" class="col-md-2 col-form-label text-right">价格</label>
+            <div class="col-md-4">
+                <input type="number" class="form-control" id="price" placeholder="" th:value="${product.getPrice()}">
+            </div>
+            <label for="vipPrice" class="col-md-2 col-form-label text-right">VIP价格</label>
+            <div class="col-md-4">
+                <input type="number" class="form-control" id="vipPrice" placeholder="" th:value="${product.getVipPrice()}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="stock" class="col-md-2 col-form-label text-right">库存</label>
+            <div class="col-md-4">
+                <input type="number" class="form-control" id="stock" placeholder="" th:value="${product.getStock()}">
+            </div>
+            <label for="status" class="col-md-2 col-form-label text-right">状态</label>
+            <div class="col-md-4">
+                <select id="status" class="form-control">
+                    <option selected value="1">上架</option>
+                    <option value="0">下架</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="country" class="col-md-2 col-form-label text-right">国家</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="country" placeholder="" th:value="${product.getCountry()}">
+            </div>
+            <label for="city" class="col-md-2 col-form-label text-right">城市</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="city" placeholder="" th:value="${product.getCity()}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label text-right">Main Image</label>
+            <div class="col-md-2">
+                <div id="mainFileImageUploader">
+                    <div class="showImage"></div>
+                    <!--用来存放item-->
+                    <input type="hidden" id="mainImage" th:value="${product.mainImage}" />
+                    <div id="mainFileImage" class="uploader-list"></div>
+                    <div id="mainFileImagePicker">选择图片</div>
+                </div>
+            </div>
+            <label class="col-md-2 col-form-label text-right">Sub Image</label>
+            <div class="col-md-6" style="overflow: hidden; height: 100%;">
+                <div id="subFileImageUploader" class="subFileDiv">
+                    <div class="showImage"></div>
+                    <input type="hidden" id="subImage" th:value="${product.subImage}" />
+                    <div id="subFileImage" class="uploader-list"></div>
+                    <div id="subFileImagePicker">选择图片</div>
+                </div>
+                <div id="subFileImageUploader2" class="subFileDiv">
+                    <div class="showImage"></div>
+                    <input type="hidden" id="subImage2" th:value="${product.subImage2}" />
+                    <div id="subFileImage2" class="uploader-list"></div>
+                    <div id="subFileImagePicker2">选择图片2</div>
+                </div>
+                <div id="subFileImageUploader3" class="subFileDiv">
+                    <div class="showImage"></div>
+                    <input type="hidden" id="subImage3" th:value="${product.subImage3}" />
+                    <div id="subFileImage3" class="uploader-list"></div>
+                    <div id="subFileImagePicker3">选择图片3</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="detail" class="col-md-2 col-form-label text-right">详细</label>
+            <div class="col-md-10">
+                <!--                    <textarea class="form-control" id="detail" aria-label="With textarea"></textarea>-->
+                <div id="detailValue" style="width:100%;"></div>
+                <input type="hidden" id="detail" value="" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="param1" class="col-md-1 col-form-label text-right">机器规格</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="param1" placeholder="" th:value="${product.getParam1()}">
+            </div>
+            <label for="variety" class="col-md-1 col-form-label text-right">品种</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="variety" placeholder="" th:value="${product.getVariety()}">
+            </div>
+            <label for="treatment" class="col-md-1 col-form-label text-right">处理法</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="treatment" placeholder="" th:value="${product.getTreatment()}">
+            </div>
+            <label for="flavor" class="col-md-1 col-form-label text-right">杯测风味</label>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="flavor" placeholder="" th:value="${product.getFlavor()}">
+            </div>
+        </div>
+        <input type="hidden" th:value="${product.getParam2()}" id="param2" />
+        <input type="hidden" th:value="${product.getParam3()}" id="param3" />
+        <input type="hidden" th:value="${product.getParam4()}" id="param4" />
+        <input type="hidden" th:value="${product.getParam5()}" id="param5" />
+
+        <button class="btn btn-primary btn-lg btn-block" id="btnEditProduct">修改商品信息</button>
+        <!-- // Contents Real End -->
+
+    </div>
+</div>
+<!-- // Content Start -->
+
+
+</body>
+<script th:src="@{/js/wangEditor.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/webUploader.min.js}" type="text/javascript"></script>
+<script type="text/javascript" th:inline="javascript">
+    console.log("speclist start");
+    // console.log([[${product.specList}]]);
+    console.log("speclist end");
+
+    // 초기 오브젝트 생성
+    var MAIN_IMAGE = $("#mainImage").val()
+        , SUB_IMAGE = $("#subImage").val()
+        , SUB_IMAGE2 = $("#subImage2").val()
+        , SUB_IMAGE3 = $("#subImage3").val();
+
+    $(function () {
+
+        ProductEdit = {
+            init : function (param) {
+                this.initMainImage($("#mainImage").val());
+                this.initSubImage($("#subImage").val());
+                this.initSubImage2($("#subImage2").val());
+                this.initSubImage3($("#subImage3").val());
+            }
+            ,initMainImage : function (mainImageUrl) {
+                if (mainImageUrl) {
+                    $("#mainFileImageUploader .showImage").append($("<img>").attr("src", mainImageUrl));
+                }
+            }
+            ,initSubImage : function (subImageUrl) {
+                if (subImageUrl) {
+                    $("#subFileImageUploader .showImage").append($("<img>").attr("src", subImageUrl));
+                }
+            }
+            ,initSubImage2 : function (subImageUrl) {
+                if (subImageUrl) {
+                    $("#subFileImageUploader2 .showImage").append($("<img>").attr("src", subImageUrl));
+                }
+            }
+            ,initSubImage3 : function (subImageUrl) {
+                if (subImageUrl) {
+                    $("#subFileImageUploader3 .showImage").append($("<img>").attr("src", subImageUrl));
+                }
+            }
+
+            ,save : function (obj) {
+
+            }
+        }
+
+
+        ProductEdit.init();
+
+
+    });
+
+
+    // Main Image Start
+    var mainUploadParam = {
+        auto : true,
+        fileNumLimit : 1,
+        server : '/api/file/single/upload',
+        pick : '#mainFileImagePicker',
+        accept: { title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*' },
+        fileListId : '#mainFileImage',
+        fileContainer : '#mainFileImageUploader'
+    };
+
+    var MAIN_UPLOADER = new AhnUploader(mainUploadParam);
+
+    MAIN_UPLOADER.on('uploadAccept', function (obj, res) {
+        MAIN_IMAGE = res.data;
+    });
+    // Main Image End
+
+    // Sub Image Start
+    var subUploadParam = {
+        auto : true,
+        fileNumLimit : 1,
+        server : '/api/file/single/upload',
+        pick : '#subFileImagePicker',
+        accept: { title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*' },
+        fileListId : '#subFileImage',
+        fileContainer : '#subFileImageUploader'
+    };
+
+    var SUB_UPLOADER = new AhnUploader(subUploadParam);
+
+    SUB_UPLOADER.on('uploadAccept', function(obj, res) {
+        SUB_IMAGE = res.data;
+    });
+    // Sub Image End
+
+    // Sub Image2 Start
+    var subUploadParam2 = {
+        auto : true,
+        fileNumLimit : 1,
+        server : '/api/file/single/upload',
+        pick : '#subFileImagePicker2',
+        accept: { title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*' },
+        fileListId : '#subFileImage2',
+        fileContainer : '#subFileImageUploader2'
+    };
+
+    var SUB_UPLOADER2 = new AhnUploader(subUploadParam2);
+
+    SUB_UPLOADER2.on('uploadAccept', function(obj, res) {
+        SUB_IMAGE2 = res.data;
+    });
+    // Sub Image2 End
+
+    // Sub Image3 Start
+    var subUploadParam3 = {
+        auto : true,
+        fileNumLimit : 1,
+        server : '/api/file/single/upload',
+        pick : '#subFileImagePicker3',
+        accept: { title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*' },
+        fileListId : '#subFileImage3',
+        fileContainer : '#subFileImageUploader3'
+    };
+
+    var SUB_UPLOADER3 = new AhnUploader(subUploadParam3);
+
+    SUB_UPLOADER3.on('uploadAccept', function(obj, res) {
+        SUB_IMAGE3 = res.data;
+    });
+    // Sub Image3 End
+
+    $(function () {
+
+        // For Detail Start
+        var E = window.wangEditor;
+        var editor = new E(document.getElementById('detailValue'));
+        editor.customConfig.uploadImgServer = '/api/file/single/upload/url';
+        editor.customConfig.uploadFileName = 'file';
+        // editor.customConfig.uploadImgShowBase64 = true;
+        editor.customConfig.uploadImgHooks = {
+            fail: function (xhr, editor, result) {
+                swal ( "哎哟" ,  "好像出了问题!" ,  "error" );
+            },
+            error: function (xhr, editor) {
+                swal ( "哎哟" ,  "好像出了问题!" ,  "error" );
+            },
+            timeout: function (xhr, editor) {
+                swal ( "哎哟" ,  "超时啦!刷新重新弄！" ,  "error" )
+            },
+            customerInsert : function(insertImg, result, editor){
+                for (var i = 0; i < result.data.length; i++) {
+                    insertImg(result.data[i]);
+                }
+            }
+        };
+
+        editor.create();
+
+        editor.txt.html([[${product.detail}]]);
+        // For Detail End
+
+        $("#btnEditProduct").unbind('click').click(function (e) {
+            var productObj = getProductFromValue();
+            productObj.detail = editor.txt.html();
+            productObj.mainImage = MAIN_IMAGE;
+            productObj.subImage = SUB_IMAGE;
+            productObj.subImage2 = SUB_IMAGE2;
+            productObj.subImage3 = SUB_IMAGE3;
+            productObj.spec = localStorage.tableSpecList;
+            console.log(productObj);
+            var product = new Product();
+            product.save(productObj);
+
+
+        });
+
+        //SPEC Start
+        var specArray = [];
+
+        localStorage.tableSpecList = [[${product.spec}]];
+        var specListSize = 0;
+        specListSize = [[${product.specList.size()}]];
+
+
+        function getSpecData() {
+            console.log("getSpecData start");
+            console.log(localStorage.tableSpecList);
+            console.log([[${product.specList}]]);
+            if (localStorage.tableSpecList == undefined) {
+                specArray = [];
+            } else {
+                if (specListSize > 0) {
+                    specArray = JSON.parse(localStorage.tableSpecList);
+                } else {
+                    specArray = [];
+                }
+            }
+            return specArray;
+        }
+        initSpecList();
+
+        function saveData(data) {
+            localStorage.tableSpecList = JSON.stringify(data);
+        }
+
+        function initSpecList() {
+            // $(".specTable tr:not(tr:first, tr:last)").remove();
+            $(".specTable tbody tr").remove();
+            const data = getSpecData();
+            var sbHtml = '';
+            $.each(data, function (i, item) {
+                sbHtml = "<tr row-index='" + i + "'>";
+                sbHtml += "<td data-role='weight'><input type='number' class='specInput form-control' value='" + item.weight + "' /></td>";
+                sbHtml += "<td data-role='stock'><input type='number' class='specInput form-control' value='" + item.stock + "' /></td>";
+                sbHtml += "<td data-role='price'><input type='number' class='specInput form-control' value='" + item.price + "' /></td>";
+                sbHtml += "<td data-role='vipPrice'><input type='number' class='specInput form-control' value='" + item.vipPrice + "' /></td>";
+                sbHtml += "<td data-role='deliveryType'><input type='text' class='specInput form-control' value='" + item.deliveryType + "' /></td>";
+                // sbHtml += "<td data-role='status'><input type='text' class='specInput form-control' value='" + item.status + "' /></td>";
+                sbHtml += "<td><button class='btn btn-danger btn-sm btnSpecDelete'><i class='fa fa-trash-alt'></i></button></td>";
+                sbHtml += "</tr>";
+                $(".specTable tbody").append(sbHtml);
+            });
+
+            saveData(data)
+        }
+
+
+        $("#btnAddNewSpec").unbind('click').click(function(){
+            const data = getSpecData();
+            data.push({
+                weight : "",
+                price : "",
+                vipPrice : "",
+                stock : "",
+                deliveryType : "",
+                status : ""
+            });
+            saveData(data);
+            initSpecList();
+        });
+
+        $(".specTable tbody").on('blur', '.specInput', function () {
+            const data = getSpecData();
+            const index = $(this).parent().parent().attr('row-index');
+            const value = $(this).val();
+            const attr = $(this).parent().attr('data-role');
+            data[index][attr] = value;
+            saveData(data);
+        })
+
+        $(".specTable tbody").on('click', '.btnSpecDelete', function () {
+            const data = getSpecData();
+            const index = $(this).parent().parent().attr("row-index");
+            data.splice(index, 1);
+            saveData(data);
+            initSpecList();
+        });
+
+        //SPEC End
+
+    });
+
+
+</script>
+</html>

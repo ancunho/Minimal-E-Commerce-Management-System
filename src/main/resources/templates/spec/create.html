@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_file::head_tag_html"></div>
+<body>
+
+<!-- Nav Statrt -->
+<div th:replace="common/nav_header::nav_header"></div>
+<!-- // Nav End -->
+
+<!-- Content Start -->
+<div class="container ahn-container">
+    <div class="con">
+        <!-- Contents Real Start -->
+        <h3>Spec Create</h3>
+        <div class="row right-button mb-3 clearfix">
+            <a role="button" href="#" th:href="@{/page/spec/list}" class="btn btn-primary">规格列表</a>
+        </div>
+        <form class="needs-validation" novalidate="">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="weight">重量</label>
+                    <select id="weight" class="form-control">
+                        <option selected>请选择重量</option>
+                        <option th:value="1kg">1kg</option>
+                        <option th:value="5kg">5kg</option>
+                        <option th:value="30kg">30kg</option>
+                        <option th:value="50kg">50kg</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="deliveryType">发货方式</label>
+                    <select id="deliveryType" class="form-control">
+                        <option selected>请选择发货方式</option>
+                        <option th:value="1">办公室快递</option>
+                        <option th:value="2">仓库物流</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="price">价格</label>
+                    <input type="text" class="form-control" id="price">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="vipPrice">VIP价格</label>
+                    <input type="text" class="form-control" id="vipPrice">
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">上传并保存商品</button>
+        </form>
+        <!-- // Contents Real End -->
+
+    </div>
+</div>
+<!-- // Content Start -->
+
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    });
+</script>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Customer Edit</title>
+<body class="layui-layout-body">
+
+
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a href="#this">客户管理</a>
+                    <a href="#this">详细页</a>
+                    <a><cite>[[${user.username}]]</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <div class="layui-row mb20" style="text-align: left">
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/list}"><i class="layui-icon layui-icon-cols"></i>  客户列表</a>
+                </div>
+                <form class="layui-form" id="productEditForm">
+                    <input type="hidden" th:value="${user.getId()}" id="userId" />
+                    <div class="layui-row">
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="username">用户名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="username" id="username" th:value="${user.getUsername()}" class="layui-input" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">微信OpenId</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="openid" id="openid" th:value="${user.getOpenid()}" class="layui-input" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row">
+                        <div class="layui-col-md12">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="email">E-Mail</label>
+                                <div class="layui-input-block">
+                                    <input type="email" name="email" id="email" th:value="${user.getEmail()}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row">
+                        <div class="layui-col-md6">-
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="company">公司名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="company" id="company" th:value="${user.getCompany()}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="companyType">公司类型</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="companyType" id="companyType" th:value="${user.getCompanyType()}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row">
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="province">省份</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="province" id="province" th:value="${user.getProvince()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="city">城市</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="city" id="city" th:value="${user.getCity()}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row">
+                        <div class="layui-col-md12">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="address">详细地址</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="address" id="address" th:value="${user.getAddress()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="deviceSerial">设备序列号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="deviceSerial" id="deviceSerial" th:value="${user.getDeviceSerial()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="deviceModel">设备型号</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="deviceModel" id="deviceModel" th:value="${user.getDeviceModel()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="deviceColor">设备颜色</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="deviceColor" id="deviceColor" th:value="${user.getDeviceColor()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="hidden" th:value="${user.getParam2()}" id="param1" />
+                    <input type="hidden" th:value="${user.getParam2()}" id="param2" />
+                    <input type="hidden" th:value="${user.getParam3()}" id="param3" />
+                    <input type="hidden" th:value="${user.getParam4()}" id="param4" />
+                    <input type="hidden" th:value="${user.getParam5()}" id="param5" />
+
+                </form>
+
+                <div style="text-align: center"><a class="text-center layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" id="btnEditUser"><i class="layui-icon layui-icon-upload-drag"></i> 保存</a></div>
+
+
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    $(function () {
+        $("#btnEditUser").unbind('click').click(function (){
+            UserInfo.edit();
+        });
+    });
+</script>
+
+</body>
+</html>

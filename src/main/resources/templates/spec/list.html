@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_file::head_tag_html"></div>
+<body>
+
+<!-- Nav Statrt -->
+<div th:replace="common/nav_header::nav_header"></div>
+<!-- // Nav End -->
+
+<!-- Content Start -->
+<div class="container ahn-container">
+    <div class="con">
+        <!-- Contents Real Start -->
+        <h3>Spec List</h3>
+        <div id="toolbar">
+            <button type="button" class="btn btn-primary btn-sm mb-3 float-right" id="btnCreate">新增规格</button>
+        </div>
+
+        <!-- Spec List Start -->
+        <table class="table ahn-table"
+               id="specListTable"
+               data-toggle="specListTable"
+               data-show-columns="false"
+               data-search="false"
+               data-sort-order="asc"
+        >
+            <thead>
+                <tr>
+    <!--                <th data-field="id">ID</th>-->
+                    <th data-field="productId" data-align="center" data-visible="false" data-sortable="true">产品名</th>
+                    <th data-field="productName" data-align="center" data-sortable="true">产品名</th>
+                    <th data-field="weight" data-align="center" data-sortable="true">规格重量(KG)</th>
+                    <th data-field="stock" data-align="center" data-sortable="true">库存(KG)</th>
+                    <th data-field="price" data-align="right" data-sortable="true">价格(元)</th>
+                    <th data-field="vipPrice" data-align="right" data-sortable="true">VIP价格(元)</th>
+                    <th data-field="deliveryType" data-align="center" data-formatter="deliveryDataChange">发货方式</th>
+                    <th data-field="" data-formatter="FnBtnFormat" data-events="ActionEvents">操作</th>
+                </tr>
+            </thead>
+        </table>
+        <!-- // Spec List End -->
+        <!-- // Contents Real End -->
+
+        <!-- 편집 팝업 시작 -->
+        <div class="modal fade" id="SpecModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">规格详情</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <input type="hidden" id="specId" value="" />
+                            <input type="hidden" id="productId" value="" />
+                            <div class="form-group col-md-6">
+                                <label for="weight">规格重量</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <input type="text" class="form-control" id="weight" placeholder="">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">KG</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="stock">库存</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <input type="text" class="form-control" id="stock" placeholder="">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">KG</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="price">价格</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <input type="text" class="form-control" id="price" placeholder="">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">元</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="vipPrice">VIP价格</label>
+                                <div class="input-group mb-2 mr-sm-2">
+                                    <input type="text" class="form-control" id="vipPrice" placeholder="">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">元</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="deliveryType">发货方式</label>
+                                <select id="deliveryType" class="form-control">
+                                    <option selected th:value="1">办公室快递</option>
+                                    <option th:value="2">仓库物流</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnSaveSpec">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 편집 팝업 끝 -->
+
+    </div>
+</div>
+<!-- // Content Start -->
+
+
+</body>
+
+<script type="text/javascript">
+    $(function() {
+
+        $("#btnCreate").unbind('click').click(function(){
+            $("#SpecModal").modal('show');
+            initSpecModalData();
+        });
+
+        $("#btnSaveSpec").unbind('click').click(function(){
+            const specObj = {
+                id              : $("#specId").val(),
+                weight          : $("#weight").val(),
+                stock          : $("#stock").val(),
+                deliveryType    : $("#deliveryType").val(),
+                price           : $("#price").val(),
+                vipPrice        : $("#vipPrice").val()
+            };
+
+            ajaxSpecSaveOrUpdate(specObj);
+            // $("#specListTable").bootstrapTable('refresh');
+            // refreshSpecList();
+        });
+
+        $("#SpecModal").on('hidden.bs.modal', function(e) {
+            refreshSpecList();
+        });
+
+        const refreshSpecList = () => {
+            var oTable = new TableInit("#specListTable", '/api/spec/list', tableColumns);
+            oTable.Init();
+        };
+
+        refreshSpecList();
+    });
+
+    const tableColumns = [];
+
+    const ajaxSpecSaveOrUpdate = (data) => {
+        $.ajax({
+            url : '/api/spec/saveOrUpdate'
+            ,method : 'POST'
+            ,data : data
+            ,dataType : 'json'
+            ,success : function(response) {
+                $("#SpecModal").modal('hide');
+                $("#specListTable").bootstrapTable('refresh');
+            }
+            ,error : function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseText, jqXHR.status, jqXHR.readyState, jqXHR.statusText, textStatus, errorThrown);
+            }
+        });
+    };
+
+    const initSpecModalData = () => {
+        $("#SpecModal #specId").val('');
+        $("#SpecModal #stock").val('');
+        $("#SpecModal #weight").val('');
+        $("#SpecModal #price").val('');
+        $("#SpecModal #vipPrice").val('');
+    };
+
+    function FnBtnFormat(value,row,index) {
+        return [
+            '<button class="btn btn-success btnEdit" type="button">编辑</button>&nbsp;&nbsp;',
+            '<button class="btn btn-danger btnDelete" type="button">删除</button>'
+        ].join("");
+    }
+
+    function deliveryDataChange(value, row, index) {
+        if (value == "1") {
+            return "办公室快递";
+        } else if (value == "2") {
+            return "仓库物流";
+        }
+    }
+
+    window.ActionEvents = {
+        'click .btnEdit' : function(e, value, row, index) {
+            $("#SpecModal").modal('show');
+            initSpecModalData();
+            $("#SpecModal #specId").val(row.id);
+            $("#SpecModal #weight").val(row.weight);
+            $("#SpecModal #stock").val(row.stock);
+            $("#SpecModal #price").val(row.price);
+            $("#SpecModal #vipPrice").val(row.vipPrice);
+        },
+        'click .btnDelete' : function (e, value, row, index) {
+            swal({
+                title: "确定要删除吗？",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url : '/api/spec/delete'
+                            ,method : 'POST'
+                            ,contentType:"application/json"
+                            ,data : JSON.stringify(row)
+                            ,dataType : 'json'
+                            ,success : function(response) {
+                                console.log(response);
+                                swal("删除成功！", { icon: "success", });
+
+                            }
+                            ,error : function(jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR.responseText, jqXHR.status, jqXHR.readyState, jqXHR.statusText, textStatus, errorThrown);
+                            }
+                        });
+                    }
+                });
+        }
+    }
+
+
+</script>
+</html>

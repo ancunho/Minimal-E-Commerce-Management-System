@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.OrderItemMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.OrderItem">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="ORDER_ID" jdbcType="BIGINT" property="orderId" />
+    <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId" />
+    <result column="SPEC_ID" jdbcType="INTEGER" property="specId" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_IMAGE" jdbcType="VARCHAR" property="productImage" />
+    <result column="CURRENT_UNIT_PRICE" jdbcType="DECIMAL" property="currentUnitPrice" />
+    <result column="QTY" jdbcType="INTEGER" property="qty" />
+    <result column="TOTAL_PRICE" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USER_ID, ORDER_ID, PRODUCT_ID, SPEC_ID, PRODUCT_NAME, PRODUCT_IMAGE, CURRENT_UNIT_PRICE,
+    QTY, TOTAL_PRICE, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_order_item
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_order_item
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.OrderItem">
+    insert into tb_order_item (ID, USER_ID, ORDER_ID, 
+      PRODUCT_ID, SPEC_ID, PRODUCT_NAME, PRODUCT_IMAGE,
+      CURRENT_UNIT_PRICE, QTY, TOTAL_PRICE, 
+      CREATETIME, UPDATETIME)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderId,jdbcType=BIGINT}, 
+      #{productId,jdbcType=INTEGER}, #{specId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productImage,jdbcType=VARCHAR},
+      #{currentUnitPrice,jdbcType=DECIMAL}, #{qty,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.OrderItem">
+    insert into tb_order_item
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="specId != null">
+        SPEC_ID,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productImage != null">
+        PRODUCT_IMAGE,
+      </if>
+      <if test="currentUnitPrice != null">
+        CURRENT_UNIT_PRICE,
+      </if>
+      <if test="qty != null">
+        QTY,
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="specId != null">
+        #{specId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage != null">
+        #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="currentUnitPrice != null">
+        #{currentUnitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="qty != null">
+        #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.OrderItem">
+    update tb_order_item
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="specId != null">
+        SPEC_ID = #{specId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage != null">
+        PRODUCT_IMAGE = #{productImage,jdbcType=VARCHAR},
+      </if>
+      <if test="currentUnitPrice != null">
+        CURRENT_UNIT_PRICE = #{currentUnitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="qty != null">
+        QTY = #{qty,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.OrderItem">
+    update tb_order_item
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      ORDER_ID = #{orderId,jdbcType=BIGINT},
+      PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      SPEC_ID = #{specId,jdbcType=INTEGER},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_IMAGE = #{productImage,jdbcType=VARCHAR},
+      CURRENT_UNIT_PRICE = #{currentUnitPrice,jdbcType=DECIMAL},
+      QTY = #{qty,jdbcType=INTEGER},
+      TOTAL_PRICE = #{totalPrice,jdbcType=DECIMAL},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="batchInsert" parameterType="list">
+    insert into tb_order_item (id, ORDER_ID,user_id, product_id,spec_id,
+    product_name, product_image, current_unit_price,
+    qty, TOTAL_PRICE, CREATETIME,
+    UPDATETIME)
+    values
+    <foreach collection="orderItemList" index="index" item="item" separator=",">
+      (
+      #{item.id},#{item.orderId},#{item.userId},#{item.productId},#{item.specId},#{item.productName},#{item.productImage},#{item.currentUnitPrice},#{item.qty},#{item.totalPrice},now(),now()
+      )
+    </foreach>
+  </insert>
+
+
+
+</mapper>

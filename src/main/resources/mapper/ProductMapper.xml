@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Product">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CATEGORY_ID" jdbcType="INTEGER" property="categoryId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="SUBTITLE" jdbcType="VARCHAR" property="subtitle" />
+    <result column="MAIN_IMAGE" jdbcType="VARCHAR" property="mainImage" />
+    <result column="SUB_IMAGE" jdbcType="VARCHAR" property="subImage" />
+    <result column="SUB_IMAGE2" jdbcType="VARCHAR" property="subImage2" />
+    <result column="SUB_IMAGE3" jdbcType="VARCHAR" property="subImage3" />
+    <result column="ATTRIBUTE" jdbcType="VARCHAR" property="attribute" />
+    <result column="DETAIL" jdbcType="VARCHAR" property="detail" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="VIP_PRICE" jdbcType="DECIMAL" property="vipPrice" />
+    <result column="SPEC" jdbcType="VARCHAR" property="spec" />
+    <result column="STOCK" jdbcType="INTEGER" property="stock" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="VARIETY" jdbcType="VARCHAR" property="variety" />
+    <result column="TREATMENT" jdbcType="VARCHAR" property="treatment" />
+    <result column="FLAVOR" jdbcType="VARCHAR" property="flavor" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CATEGORY_ID, NAME, SUBTITLE, MAIN_IMAGE, SUB_IMAGE, SUB_IMAGE2, SUB_IMAGE3, ATTRIBUTE, DETAIL, PRICE,
+    VIP_PRICE, SPEC, STOCK, STATUS, COUNTRY, CITY, VARIETY, TREATMENT, FLAVOR, PARAM1, PARAM2,
+    PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_product
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_product
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.Product">
+    insert into tb_product (ID, CATEGORY_ID, NAME, 
+      SUBTITLE, MAIN_IMAGE, SUB_IMAGE, SUB_IMAGE2, SUB_IMAGE3,
+      ATTRIBUTE, DETAIL, PRICE, 
+      VIP_PRICE, SPEC, STOCK, STATUS,
+      COUNTRY, CITY, VARIETY, 
+      TREATMENT, FLAVOR, PARAM1, 
+      PARAM2, PARAM3, PARAM4, 
+      PARAM5, CREATETIME, UPDATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{subImage,jdbcType=VARCHAR}, #{subImage2,jdbcType=VARCHAR}, #{subImage3,jdbcType=VARCHAR},
+      #{attribute,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{vipPrice,jdbcType=DECIMAL}, #{spec,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{country,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{variety,jdbcType=VARCHAR}, 
+      #{treatment,jdbcType=VARCHAR}, #{flavor,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR}, 
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, 
+      #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertAfterId" parameterType="com.ahnstudio.management.pojo.Product">
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_product (ID, CATEGORY_ID, NAME,
+      SUBTITLE, MAIN_IMAGE, SUB_IMAGE, SUB_IMAGE2, SUB_IMAGE3,
+      ATTRIBUTE, DETAIL, PRICE,
+      VIP_PRICE, SPEC, STOCK, STATUS,
+      COUNTRY, CITY, VARIETY,
+      TREATMENT, FLAVOR, PARAM1,
+      PARAM2, PARAM3, PARAM4,
+      PARAM5, CREATETIME, UPDATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{subtitle,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{subImage,jdbcType=VARCHAR}, #{subImage2,jdbcType=VARCHAR}, #{subImage3,jdbcType=VARCHAR},
+      #{attribute,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+      #{vipPrice,jdbcType=DECIMAL}, #{spec,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{country,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{variety,jdbcType=VARCHAR},
+      #{treatment,jdbcType=VARCHAR}, #{flavor,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR},
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR},
+      #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.Product">
+    insert into tb_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="categoryId != null">
+        CATEGORY_ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="subtitle != null">
+        SUBTITLE,
+      </if>
+      <if test="mainImage != null">
+        MAIN_IMAGE,
+      </if>
+      <if test="subImage != null">
+        SUB_IMAGE,
+      </if>
+      <if test="subImage2 != null">
+        SUB_IMAGE2,
+      </if>
+      <if test="subImage3 != null">
+        SUB_IMAGE3,
+      </if>
+      <if test="attribute != null">
+        ATTRIBUTE,
+      </if>
+      <if test="detail != null">
+        DETAIL,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE,
+      </if>
+      <if test="spec != null">
+        SPEC,
+      </if>
+      <if test="stock != null">
+        STOCK,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="variety != null">
+        VARIETY,
+      </if>
+      <if test="treatment != null">
+        TREATMENT,
+      </if>
+      <if test="flavor != null">
+        FLAVOR,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null">
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null">
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage != null">
+        #{subImage,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage2 != null">
+        #{subImage2,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage3 != null">
+        #{subImage3,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute != null">
+        #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="spec != null">
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="variety != null">
+        #{variety,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="flavor != null">
+        #{flavor,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.Product">
+    update tb_product
+    <set>
+      <if test="categoryId != null">
+        CATEGORY_ID = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null">
+        SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null">
+        MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage != null">
+        SUB_IMAGE = #{subImage,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage2 != null">
+        SUB_IMAGE2 = #{subImage,jdbcType=VARCHAR},
+      </if>
+      <if test="subImage3 != null">
+        SUB_IMAGE3 = #{subImage,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute != null">
+        ATTRIBUTE = #{attribute,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        DETAIL = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="spec != null">
+        SPEC = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        STOCK = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="country != null">
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="variety != null">
+        VARIETY = #{variety,jdbcType=VARCHAR},
+      </if>
+      <if test="treatment != null">
+        TREATMENT = #{treatment,jdbcType=VARCHAR},
+      </if>
+      <if test="flavor != null">
+        FLAVOR = #{flavor,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Product">
+    update tb_product
+    set CATEGORY_ID = #{categoryId,jdbcType=INTEGER},
+      NAME = #{name,jdbcType=VARCHAR},
+      SUBTITLE = #{subtitle,jdbcType=VARCHAR},
+      MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      SUB_IMAGE = #{subImage,jdbcType=VARCHAR},
+      SUB_IMAGE2 = #{subImage2,jdbcType=VARCHAR},
+      SUB_IMAGE3 = #{subImage3,jdbcType=VARCHAR},
+      ATTRIBUTE = #{attribute,jdbcType=VARCHAR},
+      DETAIL = #{detail,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      SPEC = #{spec,jdbcType=VARCHAR},
+      STOCK = #{stock,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=INTEGER},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      VARIETY = #{variety,jdbcType=VARCHAR},
+      TREATMENT = #{treatment,jdbcType=VARCHAR},
+      FLAVOR = #{flavor,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllProduct" resultType="com.ahnstudio.management.pojo.Product">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM TB_PRODUCT
+    ORDER BY ID
+  </select>
+</mapper>

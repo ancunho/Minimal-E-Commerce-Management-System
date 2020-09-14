@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.ShippingMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Shipping">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="RECEIVER_NAME" jdbcType="VARCHAR" property="receiverName" />
+    <result column="RECEIVER_PHONE" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="RECEIVER_MOBILE" jdbcType="VARCHAR" property="receiverMobile" />
+    <result column="RECEIVER_PROVINCE" jdbcType="VARCHAR" property="receiverProvince" />
+    <result column="RECEIVER_CITY" jdbcType="VARCHAR" property="receiverCity" />
+    <result column="RECEIVER_DISTRICT" jdbcType="VARCHAR" property="receiverDistrict" />
+    <result column="RECEIVER_ADDRESS" jdbcType="VARCHAR" property="receiverAddress" />
+    <result column="RECEIVER_ZIP" jdbcType="VARCHAR" property="receiverZip" />
+    <result column="IS_DEFAULT" jdbcType="VARCHAR" property="isDefault" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USER_ID, RECEIVER_NAME, RECEIVER_PHONE, RECEIVER_MOBILE, RECEIVER_PROVINCE, RECEIVER_CITY, 
+    RECEIVER_DISTRICT, RECEIVER_ADDRESS, RECEIVER_ZIP, IS_DEFAULT, PARAM1, PARAM2, PARAM3, 
+    PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_shipping
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_shipping
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.Shipping">
+    insert into tb_shipping (ID, USER_ID, RECEIVER_NAME, 
+      RECEIVER_PHONE, RECEIVER_MOBILE, RECEIVER_PROVINCE, 
+      RECEIVER_CITY, RECEIVER_DISTRICT, RECEIVER_ADDRESS, 
+      RECEIVER_ZIP, IS_DEFAULT, PARAM1, 
+      PARAM2, PARAM3, PARAM4, 
+      PARAM5, CREATETIME, UPDATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{receiverName,jdbcType=VARCHAR}, 
+      #{receiverPhone,jdbcType=VARCHAR}, #{receiverMobile,jdbcType=VARCHAR}, #{receiverProvince,jdbcType=VARCHAR}, 
+      #{receiverCity,jdbcType=VARCHAR}, #{receiverDistrict,jdbcType=VARCHAR}, #{receiverAddress,jdbcType=VARCHAR}, 
+      #{receiverZip,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR}, 
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, 
+      #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.Shipping">
+    insert into tb_shipping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="receiverName != null">
+        RECEIVER_NAME,
+      </if>
+      <if test="receiverPhone != null">
+        RECEIVER_PHONE,
+      </if>
+      <if test="receiverMobile != null">
+        RECEIVER_MOBILE,
+      </if>
+      <if test="receiverProvince != null">
+        RECEIVER_PROVINCE,
+      </if>
+      <if test="receiverCity != null">
+        RECEIVER_CITY,
+      </if>
+      <if test="receiverDistrict != null">
+        RECEIVER_DISTRICT,
+      </if>
+      <if test="receiverAddress != null">
+        RECEIVER_ADDRESS,
+      </if>
+      <if test="receiverZip != null">
+        RECEIVER_ZIP,
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="receiverName != null">
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null">
+        #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverProvince != null">
+        #{receiverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverCity != null">
+        #{receiverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDistrict != null">
+        #{receiverDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAddress != null">
+        #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverZip != null">
+        #{receiverZip,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.Shipping">
+    update tb_shipping
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="receiverName != null">
+        RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPhone != null">
+        RECEIVER_PHONE = #{receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverMobile != null">
+        RECEIVER_MOBILE = #{receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverProvince != null">
+        RECEIVER_PROVINCE = #{receiverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverCity != null">
+        RECEIVER_CITY = #{receiverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverDistrict != null">
+        RECEIVER_DISTRICT = #{receiverDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverAddress != null">
+        RECEIVER_ADDRESS = #{receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverZip != null">
+        RECEIVER_ZIP = #{receiverZip,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Shipping">
+    update tb_shipping
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      RECEIVER_PHONE = #{receiverPhone,jdbcType=VARCHAR},
+      RECEIVER_MOBILE = #{receiverMobile,jdbcType=VARCHAR},
+      RECEIVER_PROVINCE = #{receiverProvince,jdbcType=VARCHAR},
+      RECEIVER_CITY = #{receiverCity,jdbcType=VARCHAR},
+      RECEIVER_DISTRICT = #{receiverDistrict,jdbcType=VARCHAR},
+      RECEIVER_ADDRESS = #{receiverAddress,jdbcType=VARCHAR},
+      RECEIVER_ZIP = #{receiverZip,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectListByUserId" parameterType="java.lang.Integer" resultType="com.ahnstudio.management.pojo.Shipping">
+    select
+    <include refid="Base_Column_List" />
+    from tb_shipping
+    where USER_ID = #{userId}
+  </select>
+
+  <update id="updateDefaultShippingByUserId" parameterType="com.ahnstudio.management.pojo.Shipping">
+    update tb_shipping
+    set IS_DEFAULT = '0'
+    WHERE USER_ID = #{userId}
+  </update>
+
+  <select id="selectDefaultCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(1)
+    from tb_shipping
+    where user_id = #{userId} and IS_DEFAULT = '1'
+  </select>
+
+  <update id="updateShipping" parameterType="com.ahnstudio.management.pojo.Shipping">
+    update tb_shipping
+    set RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      RECEIVER_PHONE = #{receiverPhone,jdbcType=VARCHAR},
+      RECEIVER_MOBILE = #{receiverMobile,jdbcType=VARCHAR},
+      RECEIVER_PROVINCE = #{receiverProvince,jdbcType=VARCHAR},
+      RECEIVER_CITY = #{receiverCity,jdbcType=VARCHAR},
+      RECEIVER_DISTRICT = #{receiverDistrict,jdbcType=VARCHAR},
+      RECEIVER_ADDRESS = #{receiverAddress,jdbcType=VARCHAR},
+      RECEIVER_ZIP = #{receiverZip,jdbcType=VARCHAR},
+      IS_DEFAULT = #{isDefault,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      UPDATETIME = now()
+    where ID = #{id,jdbcType=INTEGER}
+    and USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByShippingIdUserId" parameterType="map">
+    DELETE FROM TB_SHIPPING
+    WHERE   ID = #{shippingId}
+    AND     USER_ID = #{userId}
+  </delete>
+</mapper>

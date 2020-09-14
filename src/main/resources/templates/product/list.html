@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_file::head_tag_html"></div>
+<body>
+
+<!-- Nav Statrt -->
+<div th:replace="common/nav_header::nav_header"></div>
+<!-- // Nav End -->
+
+<!-- Content Start -->
+<div class="container ahn-container">
+    <div class="con">
+        <!-- Contents Real Start -->
+        <h3>Product List</h3>
+        <div id="toolbar">
+            <a role="button" href="#" th:href="@{/page/product/create}" class="btn btn-primary">+ 新增产品</a>
+        </div>
+        <!-- Product List Table Start -->
+        <table class="table ahn-table"
+               id="productListTable"
+               data-toggle="productListTable"
+               data-show-columns="false"
+               data-search="false"
+               data-sort-order="asc"
+        >
+        </table>
+        <!-- //Product List Table End -->
+        <!-- // Contents Real End -->
+
+    </div>
+</div>
+<!-- // Content Start -->
+</body>
+<script type="text/javascript">
+    const tableColumns = [
+
+        { field : 'name', title : '商品名', align: 'left'},
+        { field : 'subtitle', title : 'subtitle', align: 'left' },
+        {
+            filed : 'mainImage',
+            title : '产品图片',
+            align : 'center',
+            formatter : function (value, row, index) {
+                console.log(row.mainImage + "----" + row.mainImage);
+                if (row.mainImage) {
+                    return '<img width="60" height="60" src="' + row.mainImage.toString() + '" />';
+                } else {
+                    return '';
+                }
+            }
+        },
+        { field : 'param1', title : '机器分类', align: 'center' } ,
+        {
+            field : 'status',
+            title : '状态',
+            align: 'center',
+            formatter : function (value, row, index) {
+                if (row.status == 1) {
+                    return '上架';
+                } else if (row.status == 0) {
+                    return '下架';
+                }
+            }
+        } ,
+        { field : 'country', title : '国家', align: 'center' },
+        { field : 'city', title : '城市' },
+        {
+            title : '操作',
+            formatter: function (value, row, index) {
+                return [
+                    '<a class="btn btn-success btnEdit" type="button" href="/page/product/edit/' + row.id + '">编辑</a>&nbsp;&nbsp;',
+                    '<a class="btn btn-info btnSpec" type="button" href="#this" th:href="@{/page/product/create}">规格</a>&nbsp;&nbsp;',
+                    '<a class="btn btn-danger btnDelete" type="button" href="#this" th:href="@{/page/product/create}">删除</a>'
+                ].join("");
+            }
+        }
+    ];
+
+    $(function () {
+        const refreshProductList = () => {
+            var oTable = new TableInit("#productListTable", '/api/product/list', tableColumns);
+            oTable.Init();
+        };
+
+        refreshProductList();
+    });
+
+    window.ActionEvents = {
+        'click .btnEdit' : function(e, value, row, index) {
+
+
+        },
+        // 'click .btnDelete' : function (e, value, row, index) {
+        //     swal({
+        //         title: "确定要删除吗？",
+        //         icon: "warning",
+        //         buttons: true,
+        //         dangerMode: true,
+        //     })
+        //         .then((willDelete) => {
+        //             if (willDelete) {
+        //                 $.ajax({
+        //                     url : '/api/spec/delete'
+        //                     ,method : 'POST'
+        //                     ,contentType:"application/json"
+        //                     ,data : JSON.stringify(row)
+        //                     ,dataType : 'json'
+        //                     ,success : function(response) {
+        //                         console.log(response);
+        //                         swal("删除成功！", { icon: "success", });
+        //
+        //                     }
+        //                     ,error : function(jqXHR, textStatus, errorThrown) {
+        //                         console.log(jqXHR.responseText, jqXHR.status, jqXHR.readyState, jqXHR.statusText, textStatus, errorThrown);
+        //                     }
+        //                 });
+        //             }
+        //         });
+        // }
+    }
+
+
+
+</script>
+
+</html>

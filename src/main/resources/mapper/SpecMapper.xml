@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.SpecMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Spec">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="PRODUCT_ID" jdbcType="INTEGER" property="productId" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="VIP_PRICE" jdbcType="DECIMAL" property="vipPrice" />
+    <result column="WEIGHT" jdbcType="VARCHAR" property="weight" />
+    <result column="STOCK" jdbcType="VARCHAR" property="stock" />
+    <result column="DELIVERY_PRICE" jdbcType="DECIMAL" property="deliveryPrice" />
+    <result column="DELIVERY_TYPE" jdbcType="VARCHAR" property="deliveryType" />
+    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, PRODUCT_ID,PRODUCT_NAME, PRICE, VIP_PRICE, WEIGHT, STOCK, DELIVERY_PRICE, DELIVERY_TYPE, STATUS,
+    AREA, COUNTRY, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_spec
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_spec
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.Spec">
+    insert into tb_spec (ID, PRODUCT_ID,PRODUCT_NAME, PRICE,
+      VIP_PRICE, WEIGHT, STOCK, 
+      DELIVERY_PRICE, DELIVERY_TYPE, STATUS, 
+      AREA, COUNTRY, PARAM1, 
+      PARAM2, PARAM3, PARAM4, 
+      PARAM5, CREATETIME, UPDATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+      #{vipPrice,jdbcType=DECIMAL}, #{weight,jdbcType=VARCHAR}, #{stock,jdbcType=VARCHAR}, 
+      #{deliveryPrice,jdbcType=DECIMAL}, #{deliveryType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{area,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR}, 
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, 
+      #{param5,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+
+  <insert id="insertAfterId" parameterType="com.ahnstudio.management.pojo.Spec">
+    <selectKey keyProperty="id" resultType="int" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_spec (ID, PRODUCT_ID,PRODUCT_NAME, PRICE,
+      VIP_PRICE, WEIGHT, STOCK,
+      DELIVERY_PRICE, DELIVERY_TYPE, STATUS,
+      AREA, COUNTRY, PARAM1,
+      PARAM2, PARAM3, PARAM4,
+      PARAM5, CREATETIME, UPDATETIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+      #{vipPrice,jdbcType=DECIMAL}, #{weight,jdbcType=VARCHAR}, #{stock,jdbcType=VARCHAR},
+      #{deliveryPrice,jdbcType=DECIMAL}, #{deliveryType,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{area,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR},
+      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR},
+      #{param5,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.Spec">
+    insert into tb_spec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE,
+      </if>
+      <if test="weight != null">
+        WEIGHT,
+      </if>
+      <if test="stock != null">
+        STOCK,
+      </if>
+      <if test="deliveryPrice != null">
+        DELIVERY_PRICE,
+      </if>
+      <if test="deliveryType != null">
+        DELIVERY_TYPE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPrice != null">
+        #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryType != null">
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.Spec">
+    update tb_spec
+    <set>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="vipPrice != null">
+        VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null">
+        STOCK = #{stock,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPrice != null">
+        DELIVERY_PRICE = #{deliveryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryType != null">
+        DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Spec">
+    update tb_spec
+    set PRODUCT_ID = #{productId,jdbcType=INTEGER},
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+        PRICE = #{price,jdbcType=DECIMAL},
+        VIP_PRICE = #{vipPrice,jdbcType=DECIMAL},
+        WEIGHT = #{weight,jdbcType=VARCHAR},
+        STOCK = #{stock,jdbcType=VARCHAR},
+        DELIVERY_PRICE = #{deliveryPrice,jdbcType=DECIMAL},
+        DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=INTEGER},
+        AREA = #{area,jdbcType=VARCHAR},
+        COUNTRY = #{country,jdbcType=VARCHAR},
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllSpec" resultType="com.ahnstudio.management.pojo.Spec">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM    TB_SPEC
+    ORDER BY PRODUCT_ID,CREATETIME
+  </select>
+
+  <delete id="deleteSpecByProductId" parameterType="java.lang.Integer">
+    DELETE FROM TB_SPEC WHERE PRODUCT_ID = #{productId}
+  </delete>
+
+  <select id="getSpecListByProductId" parameterType="java.lang.Integer" resultType="com.ahnstudio.management.pojo.Spec">
+    select <include refid="Base_Column_List" />
+    from tb_spec
+    where product_id = #{productId}
+  </select>
+
+
+</mapper>

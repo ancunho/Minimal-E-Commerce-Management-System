@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Customer List</title>
+<body class="layui-layout-body">
+
+<style>
+    .layui-table-cell { display:table-cell; vertical-align: middle; }
+</style>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                 <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a href="#this">客户管理</a>
+                    <a><cite>列表页</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <div class="layui-row" style="text-align: right">
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/create}"><i class="layui-icon layui-icon-add-1"></i> 新建产品</a>
+                </div>
+                <table id="customerListTable" lay-filter="customerTableFilter"></table>
+                <div id="pageDemo"></div>
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+
+<script th:inline="javascript">
+
+    layui.use(['laydate', 'table', 'element'], function () {
+        var laydate = layui.laydate //日期
+            ,table = layui.table //表格
+            ,element = layui.element; //元素操作
+        element.render();
+
+        table.render({
+            elem: '#customerListTable'
+            , url: '/api/user/list' //数据接口
+            , method: 'POST'
+            , page: true //开启分页
+            , parseData : function(res) {
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            }
+            , cols: [[ //表头
+                { field : 'username', title : '用户名', align: 'center'},
+                { field : 'company', title : '公司名', align: 'center' },
+                { field : 'companyType', title : '公司类型', align: 'center' } ,
+                { field : 'deviceSerial', title : '设备序列号', align: 'left' },
+                { field : 'deviceModel', title : '设备型号', align: 'left' },
+                { field : 'deviceColor', title : '设备颜色', align: 'center' },
+                , {
+                    fixed : 'right'
+                    , title : '操作'
+                    , align : "center"
+                    , templet : function (item) {
+                        return "<a class='layui-btn layui-btn-xs' href='/manager/customer/edit/" + item.id + "'><i class='layui-icon layui-icon-edit'></i> 编辑</a>" +
+                            "<a class='layui-btn layui-btn-normal layui-btn-xs btnShipping' lay-event='ship'><i class='layui-icon layui-icon-edit'></i> 查看收货地址</a>";
+                    }
+                }
+            ]]
+        });
+
+        table.on()
+
+    });
+
+</script>
+
+</body>
+</html>

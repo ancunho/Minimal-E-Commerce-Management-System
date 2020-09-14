@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.User">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="OPENID" jdbcType="VARCHAR" property="openid" />
+    <result column="UNIONID" jdbcType="VARCHAR" property="unionid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="ROLE_NO" jdbcType="VARCHAR" property="roleNo" />
+    <result column="ROLE" jdbcType="VARCHAR" property="role" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REALNAME" jdbcType="VARCHAR" property="realname" />
+    <result column="COMPANY" jdbcType="VARCHAR" property="company" />
+    <result column="COMPANY_TYPE" jdbcType="VARCHAR" property="companyType" />
+    <result column="DEVICE_SERIAL" jdbcType="VARCHAR" property="deviceSerial" />
+    <result column="DEVICE_MODEL" jdbcType="VARCHAR" property="deviceModel" />
+    <result column="DEVICE_COLOR" jdbcType="VARCHAR" property="deviceColor" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+    <result column="WECHAT" jdbcType="VARCHAR" property="wechat" />
+    <result column="QQ" jdbcType="VARCHAR" property="qq" />
+    <result column="PROVINCE" jdbcType="VARCHAR" property="province" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="AREA" jdbcType="VARCHAR" property="area" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="QUESTION" jdbcType="VARCHAR" property="question" />
+    <result column="ANSWER" jdbcType="VARCHAR" property="answer" />
+    <result column="IMAGE_PHOTO" jdbcType="VARCHAR" property="imagePhoto" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, OPENID, UNIONID, USERNAME, PASSWORD, ROLE_NO, ROLE, STATUS, REALNAME, COMPANY, 
+    COMPANY_TYPE, DEVICE_SERIAL, DEVICE_MODEL, DEVICE_COLOR, PHONE, EMAIL, SEX, BIRTHDAY, 
+    WECHAT, QQ, PROVINCE, CITY, AREA, ADDRESS, QUESTION, ANSWER, IMAGE_PHOTO, PARAM1, 
+    PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <sql id="Base_Column_List_Without_Password">
+    ID, OPENID, UNIONID, USERNAME, ROLE_NO, ROLE, STATUS, REALNAME, COMPANY,
+    COMPANY_TYPE, DEVICE_SERIAL, DEVICE_MODEL, DEVICE_COLOR, PHONE, EMAIL, SEX, BIRTHDAY,
+    WECHAT, QQ, PROVINCE, CITY, AREA, ADDRESS, QUESTION, ANSWER, IMAGE_PHOTO, PARAM1,
+    PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_user
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.User">
+    insert into tb_user (ID, OPENID, UNIONID, 
+      USERNAME, PASSWORD, ROLE_NO, 
+      ROLE, STATUS, REALNAME, 
+      COMPANY, COMPANY_TYPE, DEVICE_SERIAL, 
+      DEVICE_MODEL, DEVICE_COLOR, PHONE, 
+      EMAIL, SEX, BIRTHDAY, 
+      WECHAT, QQ, PROVINCE, 
+      CITY, AREA, ADDRESS, 
+      QUESTION, ANSWER, IMAGE_PHOTO, 
+      PARAM1, PARAM2, PARAM3, 
+      PARAM4, PARAM5, CREATETIME, 
+      UPDATETIME)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{roleNo,jdbcType=VARCHAR}, 
+      #{role,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{companyType,jdbcType=VARCHAR}, #{deviceSerial,jdbcType=VARCHAR}, 
+      #{deviceModel,jdbcType=VARCHAR}, #{deviceColor,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
+      #{wechat,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{imagePhoto,jdbcType=VARCHAR}, 
+      #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, 
+      #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.User">
+    insert into tb_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="openid != null">
+        OPENID,
+      </if>
+      <if test="unionid != null">
+        UNIONID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="roleNo != null">
+        ROLE_NO,
+      </if>
+      <if test="role != null">
+        ROLE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="realname != null">
+        REALNAME,
+      </if>
+      <if test="company != null">
+        COMPANY,
+      </if>
+      <if test="companyType != null">
+        COMPANY_TYPE,
+      </if>
+      <if test="deviceSerial != null">
+        DEVICE_SERIAL,
+      </if>
+      <if test="deviceModel != null">
+        DEVICE_MODEL,
+      </if>
+      <if test="deviceColor != null">
+        DEVICE_COLOR,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY,
+      </if>
+      <if test="wechat != null">
+        WECHAT,
+      </if>
+      <if test="qq != null">
+        QQ,
+      </if>
+      <if test="province != null">
+        PROVINCE,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="area != null">
+        AREA,
+      </if>
+      <if test="address != null">
+        ADDRESS,
+      </if>
+      <if test="question != null">
+        QUESTION,
+      </if>
+      <if test="answer != null">
+        ANSWER,
+      </if>
+      <if test="imagePhoto != null">
+        IMAGE_PHOTO,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleNo != null">
+        #{roleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null">
+        #{companyType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSerial != null">
+        #{deviceSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceColor != null">
+        #{deviceColor,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePhoto != null">
+        #{imagePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.User">
+    update tb_user
+    <set>
+      <if test="openid != null">
+        OPENID = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        UNIONID = #{unionid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleNo != null">
+        ROLE_NO = #{roleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        ROLE = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        REALNAME = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        COMPANY = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyType != null">
+        COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSerial != null">
+        DEVICE_SERIAL = #{deviceSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceModel != null">
+        DEVICE_MODEL = #{deviceModel,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceColor != null">
+        DEVICE_COLOR = #{deviceColor,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        WECHAT = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null">
+        QUESTION = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        ANSWER = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePhoto != null">
+        IMAGE_PHOTO = #{imagePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.User">
+    update tb_user
+    set OPENID = #{openid,jdbcType=VARCHAR},
+      UNIONID = #{unionid,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      ROLE_NO = #{roleNo,jdbcType=VARCHAR},
+      ROLE = #{role,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REALNAME = #{realname,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+      DEVICE_SERIAL = #{deviceSerial,jdbcType=VARCHAR},
+      DEVICE_MODEL = #{deviceModel,jdbcType=VARCHAR},
+      DEVICE_COLOR = #{deviceColor,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      WECHAT = #{wechat,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      QUESTION = #{question,jdbcType=VARCHAR},
+      ANSWER = #{answer,jdbcType=VARCHAR},
+      IMAGE_PHOTO = #{imagePhoto,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where username = #{username}
+    and password = #{password}
+    and status = 1
+  </select>
+
+  <select id="checkUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from tb_user
+		where username = #{username}
+	</select>
+
+  <select id="checkAdminUsername" resultType="java.lang.Integer" parameterType="map">
+		select 	count(1)
+		from 	tb_user
+		where 	username = #{username}
+		and		role = #{role}
+	</select>
+
+  <select id="checkEmail" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from tb_user
+		where email = #{email}
+	</select>
+
+  <select id="checkEmailByUserId" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from tb_user
+		where email = #{email}
+		and id != #{userId}
+	</select>
+
+  <select id="selectQuestionByUsername" resultType="java.lang.String" parameterType="java.lang.String">
+		select 	QUESTION
+		FROM 	TB_USER
+		WHERE 	USERNAME = #{username}
+	</select>
+
+  <select id="checkAnswer" resultType="java.lang.Integer" parameterType="map">
+		SELECT
+		count(1)
+		from tb_user
+		where username=#{username}
+		and question = #{question}
+		and answer = #{answer}
+	</select>
+
+  <update id="updatePasswordByUsername" parameterType="map">
+		update tb_user
+		SET password = #{passwordNew},updatetime = now()
+		where username = #{username}
+	</update>
+
+  <select id="checkPassword" resultType="java.lang.Integer" parameterType="map">
+		SELECT
+		count(1)
+		from tb_user
+		where password = #{password}
+		and id = #{userId}
+	</select>
+
+  <select id="selectAllUser" resultType="com.ahnstudio.management.pojo.User">
+    SELECT
+    <include refid="Base_Column_List_Without_Password" />
+    FROM  	TB_USER
+    ORDER BY ID DESC
+  </select>
+
+  <select id="getUserListOnlyIDAndRealname" resultType="com.ahnstudio.management.pojo.User">
+		SELECT 	ID, REALNAME
+		FROM 	TB_USER
+		ORDER BY ID DESC
+	</select>
+
+  <update id="updateAvatarPath" parameterType="com.ahnstudio.management.pojo.User">
+		UPDATE 	TB_USER
+		SET 	IMAGE_PHOTO = #{imagePhoto}
+		WHERE 	ID = #{id}
+	</update>
+
+
+
+
+</mapper>

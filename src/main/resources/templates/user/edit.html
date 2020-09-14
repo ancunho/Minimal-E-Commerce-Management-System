@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_file::head_tag_html"></div>
+<body>
+
+<!-- Nav Statrt -->
+<div th:replace="common/nav_header::nav_header"></div>
+<!-- // Nav End -->
+
+<!-- Content Start -->
+<div class="container ahn-container">
+    <div class="con">
+        <!-- Contents Real Start -->
+        <h3>User Edit -- [[${user.username}]]</h3>
+        <div class="row right-button mb-3 clearfix">
+            <a role="button" href="#" th:href="@{/page/user/list}" class="btn btn-primary">用户列表</a>
+        </div>
+<!--        <form class="needs-validation" novalidate="" id="UserFrom">-->
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="form-row">
+                    <input type="hidden" th:value="${user.getId()}" id="userId" />
+                    <div class="form-group col-md-6">
+                        <label for="username">用户名</label>
+                        <input type="text" class="form-control" id="username" placeholder="" th:value="${user.getUsername()}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="openid">微信OpenId</label>
+                        <input type="text" class="form-control" id="openid" placeholder="" th:value="${user.getOpenid()}" readonly>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="email">E-Mail</label>
+                        <input type="email" class="form-control" id="email" placeholder="" th:value="${user.getEmail()}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="company">公司名</label>
+                        <input type="text" class="form-control" id="company" placeholder="" th:value="${user.getCompany()}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="companyType">公司类型</label>
+                        <input type="text" class="form-control" id="companyType" placeholder="" th:value="${user.getCompanyType()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="province">省份</label>
+                        <input type="text" class="form-control" id="province" placeholder="" th:value="${user.getProvince()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="city">城市</label>
+                        <input type="text" class="form-control" id="city" placeholder="" th:value="${user.getCity()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="address">详细地址</label>
+                        <input type="text" class="form-control" id="address" placeholder="" th:value="${user.getAddress()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="deviceSerial">设备序列号</label>
+                        <input type="text" class="form-control" id="deviceSerial" placeholder="" th:value="${user.getDeviceSerial()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="deviceModel">设备型号</label>
+                        <input type="text" class="form-control" id="deviceModel" placeholder="" th:value="${user.getDeviceModel()}">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="deviceColor">设备颜色</label>
+                        <input type="text" class="form-control" id="deviceColor" placeholder="" th:value="${user.getDeviceColor()}">
+                    </div>
+
+
+                    <input type="hidden" th:value="${user.getParam1()}" id="param1" />
+                    <input type="hidden" th:value="${user.getParam2()}" id="param2" />
+                    <input type="hidden" th:value="${user.getParam3()}" id="param3" />
+                    <input type="hidden" th:value="${user.getParam4()}" id="param4" />
+                    <input type="hidden" th:value="${user.getParam5()}" id="param5" />
+                </div>
+            </div>
+        </div>
+
+
+<!--        </form>-->
+        <button class="btn btn-primary btn-lg btn-block" id="btnEditUser">修改用户信息</button>
+        <!-- // Contents Real End -->
+
+    </div>
+</div>
+<!-- // Content Start -->
+
+
+</body>
+<script type="text/javascript">
+    $(function () {
+
+        $("#btnEditUser").unbind('click').click(function (){
+            UserInfo.edit();
+        });
+
+    });
+</script>
+</html>

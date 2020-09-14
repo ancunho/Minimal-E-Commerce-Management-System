@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Product List</title>
+<body class="layui-layout-body">
+
+<style>
+    .layui-table-cell { display:table-cell; vertical-align: middle; }
+</style>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                 <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a href="#this">商品管理</a>
+                    <a><cite>列表页</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <div class="layui-row" style="text-align: right">
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/product/create}"><i class="layui-icon layui-icon-add-1"></i> 新建产品</a>
+                </div>
+                <table id="productListTable" lay-filter="productTableFilter"></table>
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+
+<script th:inline="javascript">
+
+    layui.use(['element'], function () {
+        var element = layui.element;
+        element.render();
+    });
+
+
+    layui.table.render({
+        elem: '#productListTable'
+        , url: '/api/product/list' //数据接口
+        , method: 'POST'
+        , page: true //开启分页
+        , parseData : function(res) {
+            return {
+                "code": res.status, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.data.length, //解析数据长度
+                "data": res.data //解析数据列表
+            };
+        }
+        , cols: [[ //表头
+            { fixed : 'center', title : '编号', width:80, sort: true, templet : function(data) { return data.LAY_INDEX}}
+            , { field: 'name', title: '产品名', width:80}
+            , {
+                field : 'mainImage'
+                , title : '缩略图'
+                , templet : function (data) {
+                    console.log("----");
+                    console.log(data);
+                    console.log("----");
+                    if (data.mainImage) {
+                        return '<img width="120" height="120" src="' + data.mainImage.toString() + '" />';
+                    } else {
+                        return '';
+                    }
+                }
+            }
+            , { field : 'param1', title : '机器分类', align: 'center' }
+            , {
+                field : 'status'
+                , title : '产品状态'
+                , align : 'center'
+                , templet : function (data) {
+                    if (data.status == 1) {
+                        return '上架';
+                    } else if (data.status == 0) {
+                        return '下架';
+                    }
+                }
+            }
+            , {
+                field : ''
+                , title : '规格数量'
+                , align : 'center'
+                , templet : function (item) {
+                    return "<span class='layui-badge'>" + JSON.parse(item.spec).length + "</span>";
+                 }
+            }
+            , {
+                fixed : 'right'
+                , title : '操作'
+                , align : "center"
+                , templet : function (item) {
+                    return "<a class='layui-btn layui-btn-xs' lay-event='productEdit' href='/manager/product/edit/" + item.id + "'><i class='layui-icon layui-icon-edit'></i> 编辑</a>";
+                }
+            }
+        ]]
+    });
+
+    layui.table.on('tool(productTableFilter)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            , layEvent = obj.event; //获得 lay-event 对应的值
+        console.log(obj);
+        if (layEvent === 'productDetail') {
+            layer.msg('查看操作');
+        } else if (layEvent === 'productEdit') {
+
+        } else {
+            layer.msg('!!!!!');
+        }
+    });
+
+
+</script>
+
+</body>
+</html>
