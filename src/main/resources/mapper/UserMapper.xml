@@ -509,34 +509,34 @@
 	</select>
 
   <select id="selectAllUser" resultType="com.ahnstudio.management.pojo.User">
-    SELECT
+    select
     <include refid="Base_Column_List_Without_Password" />
-    FROM  	TB_USER
-    ORDER BY ID DESC
+    from  	tb_user
+    order by id desc
   </select>
 
   <select id="getUserListOnlyIDAndRealname" resultType="com.ahnstudio.management.pojo.User">
-		SELECT 	ID, REALNAME
-		FROM 	TB_USER
-		ORDER BY ID DESC
+		select 	id, realname
+		from 	tb_user
+		order by id desc
 	</select>
 
   <update id="updateAvatarPath" parameterType="com.ahnstudio.management.pojo.User">
-		UPDATE 	TB_USER
-		SET 	IMAGE_PHOTO = #{imagePhoto}
-		WHERE 	ID = #{id}
+		update 	tb_user
+		set 	image_photo = #{imagePhoto}
+		where 	ID = #{id}
 	</update>
 
   <update id="updateActiveCustomer" parameterType="com.ahnstudio.management.pojo.User">
-        UPDATE  TB_USER
-        SET     STATUS = "1"
-        WHERE   ID = #{id}
+        update  tb_user
+        set     status = "1"
+        where   id = #{id}
   </update>
 
   <update id="updateNotActiveCustomer" parameterType="com.ahnstudio.management.pojo.User">
-        UPDATE  TB_USER
-        SET     STATUS = "0"
-        WHERE   ID = #{id}
+        update  tb_user
+        set     status = "0"
+        where   id = #{id}
   </update>
 
 

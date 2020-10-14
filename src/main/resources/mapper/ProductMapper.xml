@@ -343,10 +343,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Product">
     update tb_product
-    set CATEGORY_ID = #{categoryId,jdbcType=INTEGER},
+    set category_id = #{categoryId,jdbcType=INTEGER},
       NAME = #{name,jdbcType=VARCHAR},
-      SUBTITLE = #{subtitle,jdbcType=VARCHAR},
-      MAIN_IMAGE = #{mainImage,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
       SUB_IMAGE = #{subImage,jdbcType=VARCHAR},
       SUB_IMAGE2 = #{subImage2,jdbcType=VARCHAR},
       SUB_IMAGE3 = #{subImage3,jdbcType=VARCHAR},
@@ -373,9 +373,9 @@
   </update>
 
   <select id="selectAllProduct" resultType="com.ahnstudio.management.pojo.Product">
-    SELECT
+    select
     <include refid="Base_Column_List" />
-    FROM TB_PRODUCT
-    ORDER BY ID
+    from tb_product
+    order by id
   </select>
 </mapper>
