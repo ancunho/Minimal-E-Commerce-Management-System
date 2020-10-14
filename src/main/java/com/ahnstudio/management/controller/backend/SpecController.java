@@ -1,5 +1,6 @@
 package com.ahnstudio.management.controller.backend;
 
+import com.ahnstudio.management.common.Const;
 import com.ahnstudio.management.common.ServerResponse;
 import com.ahnstudio.management.pojo.Spec;
 import com.ahnstudio.management.service.SpecService;
@@ -42,10 +43,12 @@ public class SpecController {
         return specService.unActiveSpec(spec);
     }
 
-    @RequestMapping(value = "getSpecListByProductId", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "getSpecListByProductId", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse getSpecListByProductId(HttpSession session, @RequestParam(value = "productId") Integer productId) {
-        log.info(">>>>>" + productId);
+    public ServerResponse getSpecListByProductId(HttpSession session, Integer productId) {
+        if (productId == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
+        }
         List<Spec> specList = specService.getSpecListByProductId(productId);
         return ServerResponse.createBySuccess(specList);
     }

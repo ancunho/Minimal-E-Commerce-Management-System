@@ -1,5 +1,8 @@
 package com.ahnstudio.management.vo;
 
+import com.ahnstudio.management.pojo.Shipping;
+import com.ahnstudio.management.pojo.User;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -40,6 +43,12 @@ public class OrderVO {
     private String receiverName;
 
     private ShippingVO shippingVo;
+
+    private String comment;
+
+    private User customer;
+
+    private Shipping shipping;
 
     public String getOrderNo() {
         return orderNo;
@@ -175,5 +184,55 @@ public class OrderVO {
 
     public void setShippingVo(ShippingVO shippingVo) {
         this.shippingVo = shippingVo;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(Shipping shipping) {
+        this.shipping = shipping;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderVO{" +
+                "orderNo='" + orderNo + '\'' +
+                ", payment=" + payment +
+                ", paymentType=" + paymentType +
+                ", paymentTypeDesc='" + paymentTypeDesc + '\'' +
+                ", postage=" + postage +
+                ", status=" + status +
+                ", statusDesc='" + statusDesc + '\'' +
+                ", paymentTime='" + paymentTime + '\'' +
+                ", sendTime='" + sendTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", closeTime='" + closeTime + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", orderItemVoList=" + orderItemVoList +
+                ", imageHost='" + imageHost + '\'' +
+                ", shippingId=" + shippingId +
+                ", receiverName='" + receiverName + '\'' +
+                ", shippingVo=" + shippingVo +
+                ", comment='" + comment + '\'' +
+                ", customer=" + customer +
+                ", shipping=" + shipping +
+                '}';
     }
 }

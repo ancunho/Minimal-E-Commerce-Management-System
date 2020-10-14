@@ -174,6 +174,13 @@ class Product {
             , data : JSON.stringify(param)
             , success : function (response) {
                 console.log(response);
+                if (response.status === 0) {
+                    swal({ title : response.msg, text : param.name.toString(), icon: "success", closeOnClickOutside: false}).then(function () {
+                        window.location.href = '/manager/product/list';
+                    });
+                } else {
+                    swal(response.msg,'Error', 'error');
+                }
             }
             ,error : function (err) {
                 console.log(err);
@@ -245,6 +252,19 @@ $(function () {
         }
         , edit : function () {
             var self = this;
+            var msg = '';
+            var USER_FORM = self.getUserObject();
+
+            if ($.trim(USER_FORM.email.val()) === "") {
+                msg += '邮箱/';
+            }
+
+            if(msg.toString() != "") {
+                var msgStr = msg.toString().substr(0, msg.toString().length - 1);
+                swal(msgStr + '不能为空', '','error');
+                return;
+            }
+
             $.ajax({
                 url : '/api/user/edit'
                 , data : JSON.stringify(this.getUserObjectValue())

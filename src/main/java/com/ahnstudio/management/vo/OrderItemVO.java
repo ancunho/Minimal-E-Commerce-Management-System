@@ -1,5 +1,7 @@
 package com.ahnstudio.management.vo;
 
+import com.ahnstudio.management.pojo.Spec;
+
 import java.math.BigDecimal;
 
 public class OrderItemVO {
@@ -7,6 +9,10 @@ public class OrderItemVO {
     private String orderNo;
 
     private Integer productId;
+
+    private Integer specId;
+
+    private Spec spec;
 
     private String productName;
 
@@ -19,6 +25,7 @@ public class OrderItemVO {
     private BigDecimal totalPrice;
 
     private String createTime;
+
 
     public String getOrderNo() {
         return orderNo;
@@ -34,6 +41,22 @@ public class OrderItemVO {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Integer getSpecId() {
+        return specId;
+    }
+
+    public void setSpecId(Integer specId) {
+        this.specId = specId;
+    }
+
+    public Spec getSpec() {
+        return spec;
+    }
+
+    public void setSpec(Spec spec) {
+        this.spec = spec;
     }
 
     public String getProductName() {
@@ -82,5 +105,21 @@ public class OrderItemVO {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItemVO{" +
+                "orderNo='" + orderNo + '\'' +
+                ", productId=" + productId +
+                ", specId=" + specId +
+                ", spec=" + spec +
+                ", productName='" + productName + '\'' +
+                ", productImage='" + productImage + '\'' +
+                ", currentUnitPrice=" + currentUnitPrice +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                ", createTime='" + createTime + '\'' +
+                '}';
     }
 }

@@ -24,6 +24,8 @@ public interface ShippingMapper {
 
     List<Shipping> selectListByUserId(@Param("userId") Integer userId);
 
+    Shipping selectDefaultShippingByUserId(@Param("userId") Integer userId);
+
     int selectDefaultCount(@Param("userId") Integer userId);
 
     int updateDefaultShippingByUserId(Shipping shipping);

@@ -1,0 +1,21 @@
+const openId = wx.getStorageSync('openId');
+if(this.checkOurCustomer(openId)) {
+    console.log("false");
+} else {
+    console.log("true");
+};
+if(!openId) {
+    wx.login({
+        success(res) {
+            util.requestUrl({
+                url: '/api/miniapp/getOpenId?code=' + res.code,
+                success: function (res) {
+                    wx.setStorageSync('openId', res.data.data.openId);
+                    console.log(wx.getStorageSync('openId'));
+                }
+            });
+        },
+        complete(res) {
+        }
+    });
+}

@@ -49,6 +49,16 @@ public class ShippingServiceImpl implements ShippingService {
     }
 
     @Override
+    public ServerResponse selectDefaultShippingByUserId(Integer userId) {
+        if (userId == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
+        }
+
+        Shipping shipping = shippingMapper.selectDefaultShippingByUserId(userId);
+        return ServerResponse.createBySuccess(shipping);
+    }
+
+    @Override
     public ServerResponse updateShipping(Shipping shipping) {
         if (StringUtils.isEmpty(String.valueOf(shipping.getId())) || StringUtils.isEmpty(String.valueOf(shipping.getUserId()))) {
             return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);

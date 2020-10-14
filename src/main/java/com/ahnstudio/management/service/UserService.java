@@ -8,6 +8,8 @@ public interface UserService {
 
     User login(String username, String password);
 
+    User loginCustomer(String username, String password);
+
 //    ServerResponse<User> info(String token);
 
     ServerResponse<User> infoByUserId(Integer userId);
@@ -31,6 +33,8 @@ public interface UserService {
     Map<String, Object> getUserList(int pageNum, int pageSize);
 
     ServerResponse getUserListForAdmin(int pageNum, int pageSize);
+
+    ServerResponse updateStatusByUserId(User user);
 
 
 

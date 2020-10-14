@@ -448,6 +448,14 @@
     and status = 1
   </select>
 
+  <select id="selectLoginCustomer" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from tb_user
+    where username = #{username}
+    and password = #{password}
+  </select>
+
   <select id="checkUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
 		select count(1) from tb_user
 		where username = #{username}
@@ -519,6 +527,17 @@
 		WHERE 	ID = #{id}
 	</update>
 
+  <update id="updateActiveCustomer" parameterType="com.ahnstudio.management.pojo.User">
+        UPDATE  TB_USER
+        SET     STATUS = "1"
+        WHERE   ID = #{id}
+  </update>
+
+  <update id="updateNotActiveCustomer" parameterType="com.ahnstudio.management.pojo.User">
+        UPDATE  TB_USER
+        SET     STATUS = "0"
+        WHERE   ID = #{id}
+  </update>
 
 
 

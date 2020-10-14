@@ -2,16 +2,15 @@ package com.ahnstudio.management.service.impl;
 
 import com.ahnstudio.management.common.Const;
 import com.ahnstudio.management.common.ServerResponse;
-import com.ahnstudio.management.dao.OrderItemMapper;
-import com.ahnstudio.management.dao.OrderMapper;
-import com.ahnstudio.management.dao.ProductMapper;
-import com.ahnstudio.management.dao.ShippingMapper;
+import com.ahnstudio.management.dao.*;
 import com.ahnstudio.management.pojo.*;
 import com.ahnstudio.management.service.OrderService;
 import com.ahnstudio.management.util.BigDecimalUtil;
 import com.ahnstudio.management.util.DateUtil;
 import com.ahnstudio.management.util.PropertiesUtil;
 import com.ahnstudio.management.vo.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -32,6 +31,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private OrderMapper orderMapper;
 
     @Autowired
@@ -42,6 +44,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ShippingMapper shippingMapper;
+
+    @Autowired
+    private SpecMapper specMapper;
 
     @Override
     public ServerResponse createOrder(CartVO cartVO) {
@@ -55,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal totalPrice = this.getOrderTotalPrice(orderItemList);
         log.info("3:::" + totalPrice);
         // 3. 주문번호 생성
-        Order order = this.assembleOrder(cartVO.getUserId(), cartVO.getShippingId(), totalPrice);
+        Order order = this.assembleOrder(cartVO.getUserId(), cartVO.getShippingId(), totalPrice, cartVO.getComment());
         if(order == null){
             return ServerResponse.createByErrorMessage("生成订单错误");
         }
@@ -87,6 +92,7 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setPostage(order.getPostage());
         orderVO.setStatus(order.getStatus());
         orderVO.setStatusDesc(Const.OrderStatusEnum.codeOf(order.getStatus()).getValue());
+        orderVO.setComment(order.getParam1());
 
         orderVO.setShippingId(order.getShippingId());
         Shipping shipping = shippingMapper.selectByPrimaryKey(order.getShippingId());
@@ -98,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setPaymentTime(DateUtil.dateToStr(order.getPaymentTime()));
         orderVO.setSendTime(DateUtil.dateToStr(order.getSendTime()));
         orderVO.setEndTime(DateUtil.dateToStr(order.getEndTime()));
-        orderVO.setCreateTime(DateUtil.dateToStr(order.getCreatetime()));
+        orderVO.setCreateTime(order.getCreatetime());
         orderVO.setCloseTime(DateUtil.dateToStr(order.getCloseTime()));
 
         List<OrderItemVO> orderItemVoList = Lists.newArrayList();
@@ -126,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
      * @param totalPrice
      * @return
      */
-    private Order assembleOrder(Integer userId, Integer shippingId, BigDecimal totalPrice) {
+    private Order assembleOrder(Integer userId, Integer shippingId, BigDecimal totalPrice, String comment) {
         Order order = new Order();
         String orderNo = this.generateOrderNo();
         order.setOrderId(orderNo);
@@ -134,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPostage(0);
         order.setPaymentType(Const.PaymentTypeEnum.ONLINE_PAY.getCode());
         order.setPayment(totalPrice);
+        order.setParam1(comment);
 
         order.setUserId(userId);
         order.setShippingId(shippingId);
@@ -150,10 +157,6 @@ public class OrderServiceImpl implements OrderService {
      * 주문번호생성
      * @return
      */
-//    private long generateOrderNo(){
-//        long currentTime =System.currentTimeMillis();
-//        return currentTime+new Random().nextInt(100);
-//    }
     private static final AtomicInteger SEQ = new AtomicInteger(1000);
     private static final DateTimeFormatter DF_FMT_PREFIX = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSS");
     private static ZoneId ZONE_ID = ZoneId.of("Asia/Shanghai");
@@ -201,7 +204,8 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setProductImage(cartProductItem.getProductMainImage());
             orderItem.setCurrentUnitPrice(cartProductItem.getProductPrice());
             orderItem.setQty(cartProductItem.getQuantity());
-            orderItem.setTotalPrice(cartProductItem.getProductTotalPrice());
+            BigDecimal totalPrice = BigDecimalUtil.mul(cartProductItem.getProductPrice().doubleValue(),cartProductItem.getQuantity());
+            orderItem.setTotalPrice(totalPrice);
             log.info(orderItem.toString());
             orderItemList.add(orderItem);
         }
@@ -226,6 +230,8 @@ public class OrderServiceImpl implements OrderService {
         OrderItemVO orderItemVo = new OrderItemVO();
         orderItemVo.setOrderNo(orderItem.getOrderId());
         orderItemVo.setProductId(orderItem.getProductId());
+        orderItemVo.setSpecId(orderItem.getSpecId());
+        orderItemVo.setSpec(specMapper.selectByPrimaryKey(orderItem.getSpecId()));
         orderItemVo.setProductName(orderItem.getProductName());
         orderItemVo.setProductImage(orderItem.getProductImage());
         orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
@@ -236,6 +242,71 @@ public class OrderServiceImpl implements OrderService {
         return orderItemVo;
     }
 
+
+
+    /************************************************************
+     * Backend
+     ************************************************************/
+
+    @Override
+    public ServerResponse getAllOrderList(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<OrderListVO> orderList = orderMapper.getAllOrderList();
+        PageInfo pageResult = new PageInfo(orderList);
+        pageResult.setList(orderList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    @Override
+    public ServerResponse getOrderDetail(String orderId) {
+        if (orderId == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
+        }
+        Order order = orderMapper.selectByOrderId(orderId);
+        if (order != null) {
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderId(orderId);
+            OrderVO orderVO = assembleOrderVo(order, orderItemList);
+            return ServerResponse.createBySuccess(orderVO);
+        }
+        return ServerResponse.createByErrorMessage("订单不存在");
+    }
+
+    @Override
+    public OrderVO getOrderVO(String orderNo) {
+        if (orderNo == null) {
+            return null;
+        }
+        Order order = orderMapper.selectByOrderId(orderNo);
+        if (order != null) {
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderId(orderNo);
+            User customer = userMapper.selectByPrimaryKey(order.getUserId());
+            Shipping shipping = shippingMapper.selectByPrimaryKey(order.getShippingId());
+            OrderVO orderVO = assembleOrderVo(order, orderItemList);
+            orderVO.setStatusDesc(this.getOrderStatusDesc(order.getStatus()));
+            orderVO.setCustomer(customer);
+            orderVO.setShipping(shipping);
+            return orderVO;
+        }
+        return null;
+    }
+
+    private String getOrderStatusDesc(Integer status) {
+        if (status == 0) {
+            return "已取消";
+        } else if (status == 10) {
+            return "未支付";
+        } else if (status == 20) {
+            return "已付款";
+        } else if (status == 40) {
+            return "已发货";
+        } else if (status == 50) {
+            return "订单完成";
+        } else if (status == 60) {
+            return "订单关闭";
+        } else {
+            return null;
+        }
+    }
 
 
 }

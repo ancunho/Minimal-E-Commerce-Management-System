@@ -11,6 +11,7 @@ public class CartVO {
     private BigDecimal cartTotalPrice;
     private Boolean allChecked;//是否已经都勾选
     private String imageHost;
+    private String comment;
 
     public List<CartProductVO> getCartProductVoList() {
         return cartProductVoList;
@@ -60,6 +61,14 @@ public class CartVO {
         this.imageHost = imageHost;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     @Override
     public String toString() {
         return "CartVO{" +
@@ -69,6 +78,7 @@ public class CartVO {
                 ", cartTotalPrice=" + cartTotalPrice +
                 ", allChecked=" + allChecked +
                 ", imageHost='" + imageHost + '\'' +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 }

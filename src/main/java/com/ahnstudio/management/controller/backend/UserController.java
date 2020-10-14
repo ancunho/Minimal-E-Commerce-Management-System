@@ -48,7 +48,7 @@ public class UserController {
 
         session.setAttribute(Const.CURRENT_USER, currentUser);
 
-        return ServerResponse.createBySuccess("登录成功");
+        return ServerResponse.createBySuccess("登录成功",currentUser);
     }
 
     /**
@@ -204,6 +204,15 @@ public class UserController {
     @ResponseBody
     public ServerResponse list(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "limit", defaultValue = "10") int pageSize) {
         return userService.getUserListForAdmin(pageNum, pageSize);
+    }
+
+    @RequestMapping(value = "/updateStatusByUserId", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse updateStatusByUserId(HttpSession session, Integer userId, String status) {
+        User user = new User();
+        user.setId(userId);
+        user.setStatus(status);
+        return userService.updateStatusByUserId(user);
     }
 
 

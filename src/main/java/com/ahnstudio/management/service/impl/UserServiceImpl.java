@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User loginCustomer(String username, String password) {
+        String md5Password = MD5Util.MD5EncodeUtf8(password);
+        return userMapper.selectLoginCustomer(username, md5Password);
+    }
+
 //    @Override
 //    public ServerResponse<User> info(String token) {
 //        Integer userId = TokenUtil.getUserIdByToken(token);
@@ -143,7 +149,7 @@ public class UserServiceImpl implements UserService {
         // 4. 값 => 0
         user.setRole(Const.Role.ROLE_USER);
         // 5. default-> 활성화
-        user.setStatus(Const.Status.ACTIVE);
+        user.setStatus(Const.Status.NOT_ACTIVE);
         // 4. 비밀번호를 MD5로 바꾼다.
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
         // 5. user모델 저장 - 회원 신규등록
@@ -289,5 +295,25 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createBySuccess(pageResult);
     }
 
+    @Override
+    public ServerResponse updateStatusByUserId(User user) {
+        if (user == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
+        }
+
+        int updateCount = 0;
+
+        if (user.getStatus().equals(Const.Status.NOT_ACTIVE)) {
+            updateCount = userMapper.updateActiveCustomer(user);
+        } else {
+            updateCount = userMapper.updateNotActiveCustomer(user);
+        }
+
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccessMessage(Const.Message.UPDATE_OK);
+        }
+
+        return ServerResponse.createBySuccessMessage(Const.Message.UPDATE_ERROR);
+    }
 
 }

@@ -253,6 +253,13 @@
     where USER_ID = #{userId}
   </select>
 
+  <select id="selectDefaultShippingByUserId" parameterType="java.lang.Integer" resultType="com.ahnstudio.management.pojo.Shipping">
+    select <include refid="Base_Column_List"/>
+    from    tb_shipping
+    where USER_ID = #{userId}
+    and IS_DEFAULT = '1'
+  </select>
+
   <update id="updateDefaultShippingByUserId" parameterType="com.ahnstudio.management.pojo.Shipping">
     update tb_shipping
     set IS_DEFAULT = '0'

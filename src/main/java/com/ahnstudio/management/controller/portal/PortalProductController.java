@@ -1,6 +1,7 @@
 package com.ahnstudio.management.controller.portal;
 
 import com.ahnstudio.management.common.ServerResponse;
+import com.ahnstudio.management.pojo.Product;
 import com.ahnstudio.management.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,11 @@ public class PortalProductController {
     @ResponseBody
     public ServerResponse list(@RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "limit", defaultValue = "10") int pageSize) {
         return productService.getProductListForWechat(pageNum, pageSize);
+    }
+
+    @RequestMapping(value = "detail", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse detail(Integer productId) {
+        return productService.getProductDetailForWechat(productId);
     }
 }

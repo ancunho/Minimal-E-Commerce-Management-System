@@ -31,11 +31,21 @@ public interface UserMapper {
 
     /**
      * 로그인 정보 가져오기
+     * status = 1
      * @param username
      * @param password
      * @return
      */
     User selectLogin(@Param("username") String username, @Param("password")String password);
+
+    /**
+     * 로그인 정보 가져오기
+     * 모든 정보 가져옴, 상태에 관계없음.
+     * @param username
+     * @param password
+     * @return
+     */
+    User selectLoginCustomer(@Param("username") String username, @Param("password")String password);
 
     /**
      * 관리자 username 체크
@@ -100,5 +110,9 @@ public interface UserMapper {
     List<User> getUserListOnlyIDAndRealname();
 
     int updateAvatarPath(User user);
+
+    int updateActiveCustomer(User user);
+
+    int updateNotActiveCustomer(User user);
 
 }

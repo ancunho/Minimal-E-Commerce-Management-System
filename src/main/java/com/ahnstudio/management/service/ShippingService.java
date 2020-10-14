@@ -11,6 +11,8 @@ public interface ShippingService {
 
     ServerResponse selectListByUserId(Integer userId);
 
+    ServerResponse selectDefaultShippingByUserId(Integer userId);
+
     ServerResponse updateShipping(Shipping shipping);
 
     ServerResponse deleteByShippingIdUserId(Integer userId, Integer shippingId);

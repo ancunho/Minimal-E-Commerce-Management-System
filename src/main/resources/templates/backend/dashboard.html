@@ -6,6 +6,13 @@
 <script th:src="@{/js/echarts/theme/roma.js}" type="text/javascript"></script>
 <body class="layui-layout-body">
 
+<style type="text/css">
+    .dashboard-top { margin-bottom: 30px; }
+    .dashboard-top .box01 {  }
+    .layuiadmin-badge { top: 50%; margin-top: -9px; }
+    .layuiadmin-badge, .layuiadmin-btn-group, .layuiadmin-span-color { position: absolute; right: 15px; }
+    .layuiadmin-card-list p.layuiadmin-big-font {font-size: 36px; color: #666; line-height: 36px; padding: 5px 0 10px; overflow: hidden; text-overflow: ellipsis; word-break: break-all; white-space: nowrap; }
+</style>
 
 <div class="layui-layout layui-layout-admin">
     <div th:replace="common/backend_include::backend_header_nav"></div>
@@ -14,16 +21,71 @@
     <div class="layui-body">
         <!-- Content Start -->
         <div class="sh-container">
-            <!-- Location Start-->
-            <div class="location">
-                <span class="layui-breadcrumb">
-                    <a href="">首页</a>
-                    <a><cite>Dashboard - 总监控</cite></a>
-                </span>
-            </div>
-            <!-- // Location End-->
             <div class="sh-content">
+                <div class="layui-row layui-col-space18 dashboard-top">
+                    <div class="layui-col-md3 box01">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                客户数量
+                                <span class="layui-badge layui-bg-blue layuiadmin-badge">家</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font">666</p>
+                                <p>
+                                    今日新增
+                                    <span class="layuiadmin-span-color">2家</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3 box01">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                上架商品数量
+                                <span class="layui-badge layui-bg-cyan layuiadmin-badge">个</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+                                <p class="layuiadmin-big-font">8</p>
+                                <p>
+                                    总商品数
+                                    <span class="layuiadmin-span-color">22个</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3 box01">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                未处理订单
+                                <span class="layui-badge layui-bg-green layuiadmin-badge">单</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
 
+                                <p class="layuiadmin-big-font">22</p>
+                                <p>
+                                    总处理订单数量
+                                    <span class="layuiadmin-span-color">100单</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3 box01">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                总收入
+                                <span class="layui-badge layui-bg-orange layuiadmin-badge">元</span>
+                            </div>
+                            <div class="layui-card-body layuiadmin-card-list">
+
+                                <p class="layuiadmin-big-font">66,666</p>
+                                <p>
+                                    总销售公斤量
+                                    <span class="layuiadmin-span-color">1000kg</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="layui-row">
                     <div class="layui-col-md6">
                         <div id="main" style="width: 600px;height:400px; margin:0 auto;"></div>

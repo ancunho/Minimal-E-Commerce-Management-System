@@ -19,13 +19,16 @@
     <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
     <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
     <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
-    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="CREATETIME" jdbcType="VARCHAR" property="createtime" />
+    <result column="UPDATETIME" jdbcType="VARCHAR" property="updatetime" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, ORDER_ID, USER_ID, SHIPPING_ID, PAYMENT, PAYMENT_TYPE, POSTAGE, STATUS, PAYMENT_TIME, 
-    SEND_TIME, END_TIME, CLOSE_TIME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, 
-    UPDATETIME
+    SEND_TIME, END_TIME, CLOSE_TIME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, date_format(CREATETIME, '%Y-%m-%d') AS CREATETIME, date_format(UPDATETIME, '%Y-%m-%d') AS UPDATETIME
+  </sql>
+  <sql id="Base_Column_List2">
+    ID, ORDER_ID, USER_ID, SHIPPING_ID, PAYMENT, PAYMENT_TYPE, POSTAGE, STATUS, PAYMENT_TIME,
+    SEND_TIME, END_TIME, CLOSE_TIME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, date_format(CREATETIME, '%Y-%m-%d %H:%i:%s') AS CREATETIME, date_format(UPDATETIME, '%Y-%m-%d %H:%i:%s') AS UPDATETIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -256,4 +259,35 @@
       UPDATETIME = now()
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getAllOrderList" resultType="com.ahnstudio.management.vo.OrderListVO">
+      SELECT O.ID
+          ,O.ORDER_ID
+          ,O.USER_ID
+          ,U.USERNAME
+          ,U.COMPANY
+          ,O.SHIPPING_ID
+          ,O.PAYMENT
+          ,O.PAYMENT_TYPE
+          ,O.POSTAGE
+          ,O.STATUS
+          ,date_format(O.PAYMENT_TIME, '%Y-%m-%d %H:%i:%S') AS PAYMENT_TIME
+          ,date_format(O.SEND_TIME, '%Y-%m-%d %H:%i:%S') AS SEND_TIME
+          ,date_format(O.END_TIME, '%Y-%m-%d %H:%i:%S') AS END_TIME
+          ,date_format(O.CLOSE_TIME, '%Y-%m-%d %H:%i:%S') AS CLOSE_TIME
+          ,date_format(O.CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME
+          ,date_format(O.UPDATETIME, '%Y-%m-%d %H:%i:%S') AS UPDATETIME
+          ,U.COMPANY_TYPE
+      FROM TB_ORDER O LEFT OUTER JOIN TB_USER U ON O.USER_ID = U.ID
+      ORDER BY O.CREATETIME DESC
+  </select>
+
+  <select id="selectByOrderId" parameterType="java.lang.String" resultType="com.ahnstudio.management.pojo.Order">
+    SELECT
+    <include refid="Base_Column_List2" />
+    FROM  tb_order
+    where ORDER_ID = #{orderId}
+  </select>
+
+
 </mapper>

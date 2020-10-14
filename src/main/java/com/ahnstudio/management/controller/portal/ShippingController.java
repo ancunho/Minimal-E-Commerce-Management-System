@@ -6,6 +6,7 @@ import com.ahnstudio.management.service.ShippingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.ServerRequestExtensionsKt;
 
 import javax.servlet.http.HttpSession;
 
@@ -31,6 +32,12 @@ public class ShippingController {
     @ResponseBody
     public ServerResponse shipping_list(HttpSession session, Integer userId){
         return shippingService.selectListByUserId(userId);
+    }
+
+    @RequestMapping(value = "default", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse default_shipping(HttpSession session, Integer userId) {
+        return shippingService.selectDefaultShippingByUserId(userId);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)

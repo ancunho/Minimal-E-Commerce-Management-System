@@ -1,12 +1,15 @@
 package com.ahnstudio.management.controller.backend;
 
 import com.ahnstudio.management.common.Const;
+import com.ahnstudio.management.common.ServerResponse;
 import com.ahnstudio.management.pojo.Product;
 import com.ahnstudio.management.pojo.Spec;
 import com.ahnstudio.management.pojo.User;
+import com.ahnstudio.management.service.OrderService;
 import com.ahnstudio.management.service.ProductService;
 import com.ahnstudio.management.service.SpecService;
 import com.ahnstudio.management.service.UserService;
+import com.ahnstudio.management.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ public class ManagePageController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OrderService orderService;
+
     @RequestMapping(value = "home")
     public String index(HttpSession session, Model model) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -46,6 +52,12 @@ public class ManagePageController {
 
     @RequestMapping(value = "login")
     public String login(HttpSession session) { return "backend/login"; }
+
+    @RequestMapping(value = "logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute(Const.CURRENT_USER);
+        return "backend/login";
+    }
 
     /************************************************************
      * 用户 - User
@@ -172,7 +184,20 @@ public class ManagePageController {
         }
 
         model.addAttribute("activeUri", "manager/order");
-        return "order/list";
+        return "backend/order/list";
+    }
+
+    @RequestMapping(value = "order/detail/{orderNo}", method = RequestMethod.GET)
+    public String order_detail(HttpSession session, @PathVariable("orderNo") String orderNo, Model model, HttpServletRequest request) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return "redirect:/manager/login";
+        }
+
+        OrderVO order = orderService.getOrderVO(orderNo);
+        model.addAttribute("order", order);
+        model.addAttribute("activeUri", "manager/order");
+        return "backend/order/detail";
     }
 
     /************************************************************

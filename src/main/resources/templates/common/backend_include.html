@@ -1,13 +1,9 @@
 <div th:fragment="backend_header_nav">
+
     <div class="layui-header">
-        <div class="layui-logo"><span>Strong-Hold Roasting</span></div>
+        <div class="layui-logo" style="background:#354052; color:#e1e1e1;"><span>Strong-Hold Roasting</span></div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav" style="left:200px;">
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">-->
-            <!--                    <i class="layui-icon layui-icon-shrink-right"></i>-->
-            <!--                </a>-->
-            <!--            </li>-->
+        <ul class="layui-nav" style="left:200px; background:#354052; display: none;">
             <li class="layui-nav-item">
                 <a href="">控制台<span class="layui-badge">9</span></a>
             </li>
@@ -15,18 +11,11 @@
                 <a href="">个人中心<span class="layui-badge-dot"></span></a>
             </li>
         </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-<!--                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">-->
-                    贤心
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+        <ul class="layui-nav layui-layout-right" style="">
+<!--            <li class="layui-nav-item">-->
+<!--                <a href="#this">管理员</a>-->
+<!--            </li>-->
+            <li class="layui-nav-item"><a th:href="@{/manager/logout}">退出</a></li>
         </ul>
     </div>
 
@@ -34,10 +23,10 @@
 
 
 <div th:fragment="backend_side_menu">
-    <div class="layui-side layui-bg-cyan">
+    <div class="layui-side" style="background:#354052;">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree layui-bg-cyan"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test" style="background:#354052;">
                 <li class="layui-nav-item" th:class="${activeUri=='manager/home' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/home}"><i class="layui-icon layui-icon-home"></i> <cite>Dashboard</cite></a></li>
                 <li class="layui-nav-item" th:class="${activeUri=='manager/customer' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/customer/list}"><i class="layui-icon layui-icon-user"></i> <cite>客户管理</cite></a></li>
                 <li class="layui-nav-item" th:class="${activeUri=='manager/product' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/product/list}"><i class="layui-icon layui-icon-gift"></i> <cite>商品管理</cite></a></li>
@@ -49,7 +38,7 @@
 
 
 <div th:fragment="backend_footer">
-    <div class="layui-footer">
+    <div class="layui-footer" style="text-align: center;">
         <!-- 底部固定区域 -->
         © Strong-hold
     </div>

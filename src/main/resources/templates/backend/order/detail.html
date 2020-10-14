@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Order Detail</title>
+<body class="layui-layout-body">
+
+<style>
+    .orderInfoTitle { text-decoration: underline; font-weight: bold; font-size:20px; margin:20px 0;}
+    .totalPriceDiv {text-align: right; padding-right:30px; font-weight: bold; color:#ff2a48;}
+</style>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a href="#this">订单管理</a>
+                    <a href="#this">详细页</a>
+                    <a><cite>[[${order.orderNo}]]</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <h5 style="text-align: center; margin-bottom:20px;">
+                    订单号：<strong style="text-decoration: underline; font-size:18px;">[[${order.orderNo}]]</strong> ，
+                    状态： <strong style="text-decoration: underline; font-size:18px;">[[${order.getStatusDesc()}]]</strong></h5>
+                <form class="layui-form">
+                    <h5 class="orderInfoTitle">基本信息</h5>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="customerCompany">买家公司名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" readonly name="customerCompany" id="customerCompany" th:value="${order.getCustomer().getCompany()}" class="layui-input" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="payment">订单总额</label>
+                                <div class="layui-input-block">
+                                    <input type="text" readonly name="payment" id="payment" th:value="${order.getPayment()}" class="layui-input" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="orderItemVoListSize">Item数量</label>
+                                <div class="layui-input-block">
+                                    <input type="text" readonly name="orderItemVoListSize" id="orderItemVoListSize" th:value="${order.orderItemVoList.size()}" class="layui-input" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="orderCreateTime">生成时间</label>
+                                <div class="layui-input-block">
+                                    <input type="text" readonly name="orderCreateTime" id="orderCreateTime" th:value="${order.getCreateTime()}" class="layui-input" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 配送信息 Start -->
+                    <h5 class="orderInfoTitle">配送信息</h5>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label" for="receiverName">收件人</label>
+                            <div class="layui-input-block">
+                                <input type="text" readonly name="receiverName" id="receiverName" th:value="${order.getShipping().getReceiverName()}" class="layui-input" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label" for="receiverMobile">手机号</label>
+                            <div class="layui-input-block">
+                                <input type="text" readonly name="receiverMobile" id="receiverMobile" th:value="${order.getShipping().getReceiverMobile()}" class="layui-input" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-col-md6">
+                            <label class="layui-form-label">收件地址</label>
+                            <div class="layui-input-block">
+                                <input type="text" readonly name="receiverAddress"
+                                       th:value="${order.getShipping().getReceiverProvince()
+                                                + order.getShipping().getReceiverCity()
+                                                + order.getShipping().getReceiverDistrict()
+                                                + order.getShipping().getReceiverAddress()
+                                                }" class="layui-input" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //配送信息 End -->
+                    <!-- 商品信息 Start -->
+                    <h5 class="orderInfoTitle">商品信息</h5>
+                    <div class="layui-row">
+                        <table class="layui-table">
+                            <thead>
+                                <tr>
+                                    <th>商品名</th>
+                                    <th>订购数量</th>
+                                    <th>规格</th>
+                                    <th>单价</th>
+                                    <th>总额</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="orderItem:${order.getOrderItemVoList()}">
+                                    <td th:text="${orderItem.getProductName()}"></td>
+                                    <td th:text="${orderItem.getQuantity()}"></td>
+                                    <td th:text="${orderItem.getSpec().getWeight()}"></td>
+                                    <td th:text="${orderItem.getCurrentUnitPrice()}"></td>
+                                    <td th:text="${orderItem.getTotalPrice()}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="totalPriceDiv" style="">总额： [[${order.getPayment()}]]</div>
+                    </div>
+                    <!-- //商品信息 End -->
+
+
+                </form>
+
+
+                <div style="text-align: center"><a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/order/list}"><i class="layui-icon layui-icon-cols"></i>  订单列表</a></div>
+
+
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['layer', 'form', 'element'], function () {
+        var layer = layui.layer
+            ,element = layui.element;
+        element.render();
+    });
+</script>
+
+</body>
+</html>

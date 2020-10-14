@@ -128,4 +128,14 @@ public class ProductServiceImpl implements ProductService {
         return ServerResponse.createBySuccess(pageResult);
     }
 
+    @Override
+    public ServerResponse getProductDetailForWechat(Integer productId) {
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.SELECT_ERROR);
+        }
+
+        return ServerResponse.createBySuccess(product);
+    }
+
 }

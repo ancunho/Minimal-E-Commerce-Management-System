@@ -56,7 +56,7 @@ public class Shipping {
     }
 
     public String getReceiverName() {
-        return receiverName;
+        return (receiverName == "" ? "" : receiverName);
     }
 
     public void setReceiverName(String receiverName) {

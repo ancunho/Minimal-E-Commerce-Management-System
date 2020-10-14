@@ -186,6 +186,10 @@
     </foreach>
   </insert>
 
-
+  <select id="getByOrderId" parameterType="java.lang.String" resultType="com.ahnstudio.management.pojo.OrderItem">
+    select <include refid="Base_Column_List" />
+    from tb_order_item
+    where order_id = #{orderId}
+  </select>
 
 </mapper>

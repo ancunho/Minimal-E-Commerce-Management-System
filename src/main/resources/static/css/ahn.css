@@ -56,3 +56,5 @@ White Color:    #FBFBF8;
 
 /*#mainUploadImage { border:none; vertical-align: middle; background:none;}*/
 .iamgeViewDiv { width:150px; }
+
+.layui-nav-tree li a,.layui-nav-tree li a:hover { background:#354052!important;}

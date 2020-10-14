@@ -25,7 +25,7 @@
             <!-- // Location End-->
             <div class="sh-content">
                 <div class="layui-row" style="text-align: right">
-                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/create}"><i class="layui-icon layui-icon-add-1"></i> 新建产品</a>
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/create}"><i class="layui-icon layui-icon-add-1"></i> 新建客户</a>
                 </div>
                 <table id="customerListTable" lay-filter="customerTableFilter"></table>
                 <div id="pageDemo"></div>
@@ -38,48 +38,89 @@
 </div>
 
 <script th:inline="javascript">
+    $(function () {
+        layui.use(['laydate', 'table', 'element'], function () {
+            var laydate = layui.laydate //日期
+                ,table = layui.table //表格
+                ,element = layui.element; //元素操作
+            element.render();
 
-    layui.use(['laydate', 'table', 'element'], function () {
-        var laydate = layui.laydate //日期
-            ,table = layui.table //表格
-            ,element = layui.element; //元素操作
-        element.render();
-
-        table.render({
-            elem: '#customerListTable'
-            , url: '/api/user/list' //数据接口
-            , method: 'POST'
-            , page: true //开启分页
-            , parseData : function(res) {
-                return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "count": res.data.total, //解析数据长度
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            , cols: [[ //表头
-                { field : 'username', title : '用户名', align: 'center'},
-                { field : 'company', title : '公司名', align: 'center' },
-                { field : 'companyType', title : '公司类型', align: 'center' } ,
-                { field : 'deviceSerial', title : '设备序列号', align: 'left' },
-                { field : 'deviceModel', title : '设备型号', align: 'left' },
-                { field : 'deviceColor', title : '设备颜色', align: 'center' },
-                , {
-                    fixed : 'right'
-                    , title : '操作'
-                    , align : "center"
-                    , templet : function (item) {
-                        return "<a class='layui-btn layui-btn-xs' href='/manager/customer/edit/" + item.id + "'><i class='layui-icon layui-icon-edit'></i> 编辑</a>" +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs btnShipping' lay-event='ship'><i class='layui-icon layui-icon-edit'></i> 查看收货地址</a>";
-                    }
+            table.render({
+                elem: '#customerListTable'
+                , url: '/api/user/list' //数据接口
+                , method: 'POST'
+                , page: true //开启分页
+                , parseData : function(res) {
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.data.total, //解析数据长度
+                        "data": res.data.list //解析数据列表
+                    };
                 }
-            ]]
+                , cols: [[ //表头
+                    { field : 'username', title : '用户名', align: 'center'},
+                    { field : 'company', title : '公司名', align: 'center' },
+                    { field : 'companyType', title : '公司类型', align: 'center' } ,
+                    {
+                        field : 'status'
+                        , title : '状态'
+                        , align: 'center'
+                        , templet : function (item) {
+                            if (item.status == 0) {
+                                // NON Actice
+                                return "<button type='button' class='layui-btn layui-btn-sm layui-btn-normal' data-customer-id='" + item.id + "' lay-event='btnUpdateStatus'>确认激活</button>";
+                            } else {
+                                // Actice
+                                return "<button type='button' class='layui-btn layui-btn-sm layui-btn-danger' lay-event='btnUpdateStatus'>取消激活</button>";
+                            }
+                        }
+                    } ,
+                    { field : 'deviceSerial', title : '设备序列号', align: 'left' },
+                    { field : 'deviceModel', title : '设备型号', align: 'left' },
+                    { field : 'deviceColor', title : '设备颜色', align: 'center' },
+                    , {
+                        fixed : 'right'
+                        , title : '操作'
+                        , align : "center"
+                        , templet : function (item) {
+                            return "<a class='layui-btn-normal layui-btn layui-btn-sm' href='/manager/customer/edit/" + item.id + "'><i class='layui-icon layui-icon-edit'></i> 编辑</a>";
+                            // "<a class='layui-btn layui-btn-normal layui-btn-sm btnShipping' lay-event='ship'><i class='layui-icon layui-icon-edit'></i> 查看收货地址</a>";
+                        }
+                    }
+                ]]
+            });
+
+            table.on('tool(customerTableFilter)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                // var data = obj.data; //获得当前行数据
+                // var layEvent = obj.event; //获得 lay-event 对应的值
+                if (obj.event === 'btnUpdateStatus') {
+                    //确认激活
+                    $.ajax({
+                        url : '/api/user/updateStatusByUserId?userId=' + obj.data.id + "&status=" + obj.data.status
+                        , method : 'POST'
+                        , success : function (res) {
+                            if (res.status == 0) {
+                                layer.msg("状态更新成功！");
+                                table.reload('customerListTable');
+                            }
+                        }
+                        , error : function (a, b, c) {
+                            console.log(a,b,c);
+                        }
+                    });
+                } else {
+                    layer.msg('!!!!!');
+                }
+            });
+
         });
 
-        table.on()
 
-    });
+
+
+    })
+
 
 </script>
 

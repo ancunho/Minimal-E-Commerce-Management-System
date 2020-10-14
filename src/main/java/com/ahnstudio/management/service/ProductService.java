@@ -67,4 +67,6 @@ public interface ProductService {
 
     ServerResponse getProductListForWechat(int pageNum, int pageSize);
 
+    ServerResponse getProductDetailForWechat(Integer productId);
+
 }

@@ -1,54 +1,26 @@
-package com.ahnstudio.management.pojo;
+package com.ahnstudio.management.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order {
-    private Integer id;
+public class OrderListVO {
 
     private String orderId;
-
     private Integer userId;
-
-    private Integer shippingId;
-
+    private String username;
+    private String company;
+    private String companyType;
+    private String shippingId;
     private BigDecimal payment;
-
     private Integer paymentType;
-
     private Integer postage;
-
     private Integer status;
-
     private Date paymentTime;
-
     private Date sendTime;
-
     private Date endTime;
-
     private Date closeTime;
-
-    private String param1;
-
-    private String param2;
-
-    private String param3;
-
-    private String param4;
-
-    private String param5;
-
     private String createtime;
-
     private String updatetime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getOrderId() {
         return orderId;
@@ -66,11 +38,35 @@ public class Order {
         this.userId = userId;
     }
 
-    public Integer getShippingId() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
+
+    public String getShippingId() {
         return shippingId;
     }
 
-    public void setShippingId(Integer shippingId) {
+    public void setShippingId(String shippingId) {
         this.shippingId = shippingId;
     }
 
@@ -136,46 +132,6 @@ public class Order {
 
     public void setCloseTime(Date closeTime) {
         this.closeTime = closeTime;
-    }
-
-    public String getParam1() {
-        return param1;
-    }
-
-    public void setParam1(String param1) {
-        this.param1 = param1 == null ? null : param1.trim();
-    }
-
-    public String getParam2() {
-        return param2;
-    }
-
-    public void setParam2(String param2) {
-        this.param2 = param2 == null ? null : param2.trim();
-    }
-
-    public String getParam3() {
-        return param3;
-    }
-
-    public void setParam3(String param3) {
-        this.param3 = param3 == null ? null : param3.trim();
-    }
-
-    public String getParam4() {
-        return param4;
-    }
-
-    public void setParam4(String param4) {
-        this.param4 = param4 == null ? null : param4.trim();
-    }
-
-    public String getParam5() {
-        return param5;
-    }
-
-    public void setParam5(String param5) {
-        this.param5 = param5 == null ? null : param5.trim();
     }
 
     public String getCreatetime() {
