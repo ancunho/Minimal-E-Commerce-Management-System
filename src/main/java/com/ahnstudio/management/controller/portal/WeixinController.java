@@ -19,7 +19,7 @@ import java.util.Map;
 public class WeixinController {
 
     @RequestMapping(value = "pay")
-    public ServerResponse doUnifiedOrder(String openId ) {
+    public ServerResponse doUnifiedOrder(String openId) {
         MyConfig config = new MyConfig();
         WXPay wxpay= null;
         try {
@@ -41,11 +41,9 @@ public class WeixinController {
             e.printStackTrace();
         }
 
-
-
         String spbill_create_ip = addr.getHostAddress();
         //支付金额，需要转成字符串类型，否则后面的签名会失败
-        int  total_fee=1;
+        int  total_fee = 1;
         //商品描述
         String body = "咖啡支付";
         //商户订单号
@@ -59,8 +57,8 @@ public class WeixinController {
         data.put("out_trade_no",out_trade_no);
         data.put("total_fee", String.valueOf(total_fee));
         data.put("spbill_create_ip", spbill_create_ip);
-        data.put("notify_url", "https://localhost/"); //TODO
-        data.put("trade_type","JSAPI"); //TODO
+        data.put("notify_url", "https://strongholdcoffeemall.cn/"); //TODO
+        data.put("trade_type","JSAPI");
         data.put("openid", openId); //TODO
 
         String sign = null;

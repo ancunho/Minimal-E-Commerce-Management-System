@@ -24,7 +24,8 @@ public class ShippingController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse add(HttpSession session, Shipping shipping){
+    public ServerResponse add(HttpSession session, @RequestBody Shipping shipping){
+
         return shippingService.add(shipping);
     }
 
