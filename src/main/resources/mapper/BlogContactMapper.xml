@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.blog.dao.BlogContactMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.blog.pojo.BlogContact">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="CONTENTS" jdbcType="VARCHAR" property="contents" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, CONTENTS, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_contact
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_contact
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.blog.pojo.BlogContact">
+    insert into blog_contact (ID, NAME, CONTENTS, 
+      PARAM1, PARAM2, PARAM3, 
+      PARAM4, PARAM5, CREATETIME, 
+      UPDATETIME)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{contents,jdbcType=VARCHAR}, 
+      #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, 
+      #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.blog.pojo.BlogContact">
+    insert into blog_contact
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="contents != null">
+        CONTENTS,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.blog.pojo.BlogContact">
+    update blog_contact
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="contents != null">
+        CONTENTS = #{contents,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.blog.pojo.BlogContact">
+    update blog_contact
+    set NAME = #{name,jdbcType=VARCHAR},
+      CONTENTS = #{contents,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.blog.dao.BlogPostsMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.blog.pojo.BlogPosts">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="POST_AUTHOR" jdbcType="BIGINT" property="postAuthor" />
+    <result column="POST_STATUS" jdbcType="VARCHAR" property="postStatus" />
+    <result column="COMMENT_STATUS" jdbcType="VARCHAR" property="commentStatus" />
+    <result column="PING_STATUS" jdbcType="VARCHAR" property="pingStatus" />
+    <result column="POST_PASSWORD" jdbcType="VARCHAR" property="postPassword" />
+    <result column="POST_NAME" jdbcType="VARCHAR" property="postName" />
+    <result column="POST_PARENT" jdbcType="BIGINT" property="postParent" />
+    <result column="GUID" jdbcType="VARCHAR" property="guid" />
+    <result column="MENU_ORDER" jdbcType="INTEGER" property="menuOrder" />
+    <result column="POST_TYPE" jdbcType="VARCHAR" property="postType" />
+    <result column="POST_MIME_TYPE" jdbcType="VARCHAR" property="postMimeType" />
+    <result column="COMMENT_COUNT" jdbcType="BIGINT" property="commentCount" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    <result column="POST_CONTENT" jdbcType="LONGVARCHAR" property="postContent" />
+    <result column="POST_TITLE" jdbcType="LONGVARCHAR" property="postTitle" />
+    <result column="POST_EXCERPT" jdbcType="LONGVARCHAR" property="postExcerpt" />
+    <result column="TO_PING" jdbcType="LONGVARCHAR" property="toPing" />
+    <result column="PINGED" jdbcType="LONGVARCHAR" property="pinged" />
+    <result column="POST_CONTENT_FILTERED" jdbcType="LONGVARCHAR" property="postContentFiltered" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, POST_AUTHOR, POST_STATUS, COMMENT_STATUS, PING_STATUS, POST_PASSWORD, POST_NAME, 
+    POST_PARENT, GUID, MENU_ORDER, POST_TYPE, POST_MIME_TYPE, COMMENT_COUNT, PARAM1, 
+    PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <sql id="Blob_Column_List">
+    POST_CONTENT, POST_TITLE, POST_EXCERPT, TO_PING, PINGED, POST_CONTENT_FILTERED
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog_posts
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_posts
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    insert into blog_posts (ID, POST_AUTHOR, POST_STATUS, 
+      COMMENT_STATUS, PING_STATUS, POST_PASSWORD, 
+      POST_NAME, POST_PARENT, GUID, 
+      MENU_ORDER, POST_TYPE, POST_MIME_TYPE, 
+      COMMENT_COUNT, PARAM1, PARAM2, 
+      PARAM3, PARAM4, PARAM5, 
+      CREATETIME, UPDATETIME, POST_CONTENT, 
+      POST_TITLE, POST_EXCERPT, TO_PING, 
+      PINGED, POST_CONTENT_FILTERED)
+    values (#{id,jdbcType=BIGINT}, #{postAuthor,jdbcType=BIGINT}, #{postStatus,jdbcType=VARCHAR}, 
+      #{commentStatus,jdbcType=VARCHAR}, #{pingStatus,jdbcType=VARCHAR}, #{postPassword,jdbcType=VARCHAR}, 
+      #{postName,jdbcType=VARCHAR}, #{postParent,jdbcType=BIGINT}, #{guid,jdbcType=VARCHAR}, 
+      #{menuOrder,jdbcType=INTEGER}, #{postType,jdbcType=VARCHAR}, #{postMimeType,jdbcType=VARCHAR}, 
+      #{commentCount,jdbcType=BIGINT}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, 
+      #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{postContent,jdbcType=LONGVARCHAR}, 
+      #{postTitle,jdbcType=LONGVARCHAR}, #{postExcerpt,jdbcType=LONGVARCHAR}, #{toPing,jdbcType=LONGVARCHAR}, 
+      #{pinged,jdbcType=LONGVARCHAR}, #{postContentFiltered,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    insert into blog_posts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="postAuthor != null">
+        POST_AUTHOR,
+      </if>
+      <if test="postStatus != null">
+        POST_STATUS,
+      </if>
+      <if test="commentStatus != null">
+        COMMENT_STATUS,
+      </if>
+      <if test="pingStatus != null">
+        PING_STATUS,
+      </if>
+      <if test="postPassword != null">
+        POST_PASSWORD,
+      </if>
+      <if test="postName != null">
+        POST_NAME,
+      </if>
+      <if test="postParent != null">
+        POST_PARENT,
+      </if>
+      <if test="guid != null">
+        GUID,
+      </if>
+      <if test="menuOrder != null">
+        MENU_ORDER,
+      </if>
+      <if test="postType != null">
+        POST_TYPE,
+      </if>
+      <if test="postMimeType != null">
+        POST_MIME_TYPE,
+      </if>
+      <if test="commentCount != null">
+        COMMENT_COUNT,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="postContent != null">
+        POST_CONTENT,
+      </if>
+      <if test="postTitle != null">
+        POST_TITLE,
+      </if>
+      <if test="postExcerpt != null">
+        POST_EXCERPT,
+      </if>
+      <if test="toPing != null">
+        TO_PING,
+      </if>
+      <if test="pinged != null">
+        PINGED,
+      </if>
+      <if test="postContentFiltered != null">
+        POST_CONTENT_FILTERED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="postAuthor != null">
+        #{postAuthor,jdbcType=BIGINT},
+      </if>
+      <if test="postStatus != null">
+        #{postStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="commentStatus != null">
+        #{commentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pingStatus != null">
+        #{pingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="postPassword != null">
+        #{postPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="postParent != null">
+        #{postParent,jdbcType=BIGINT},
+      </if>
+      <if test="guid != null">
+        #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null">
+        #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="postType != null">
+        #{postType,jdbcType=VARCHAR},
+      </if>
+      <if test="postMimeType != null">
+        #{postMimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postContent != null">
+        #{postContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postTitle != null">
+        #{postTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postExcerpt != null">
+        #{postExcerpt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="toPing != null">
+        #{toPing,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pinged != null">
+        #{pinged,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postContentFiltered != null">
+        #{postContentFiltered,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    update blog_posts
+    <set>
+      <if test="postAuthor != null">
+        POST_AUTHOR = #{postAuthor,jdbcType=BIGINT},
+      </if>
+      <if test="postStatus != null">
+        POST_STATUS = #{postStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="commentStatus != null">
+        COMMENT_STATUS = #{commentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pingStatus != null">
+        PING_STATUS = #{pingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="postPassword != null">
+        POST_PASSWORD = #{postPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        POST_NAME = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="postParent != null">
+        POST_PARENT = #{postParent,jdbcType=BIGINT},
+      </if>
+      <if test="guid != null">
+        GUID = #{guid,jdbcType=VARCHAR},
+      </if>
+      <if test="menuOrder != null">
+        MENU_ORDER = #{menuOrder,jdbcType=INTEGER},
+      </if>
+      <if test="postType != null">
+        POST_TYPE = #{postType,jdbcType=VARCHAR},
+      </if>
+      <if test="postMimeType != null">
+        POST_MIME_TYPE = #{postMimeType,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null">
+        COMMENT_COUNT = #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postContent != null">
+        POST_CONTENT = #{postContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postTitle != null">
+        POST_TITLE = #{postTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postExcerpt != null">
+        POST_EXCERPT = #{postExcerpt,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="toPing != null">
+        TO_PING = #{toPing,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pinged != null">
+        PINGED = #{pinged,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="postContentFiltered != null">
+        POST_CONTENT_FILTERED = #{postContentFiltered,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    update blog_posts
+    set POST_AUTHOR = #{postAuthor,jdbcType=BIGINT},
+      POST_STATUS = #{postStatus,jdbcType=VARCHAR},
+      COMMENT_STATUS = #{commentStatus,jdbcType=VARCHAR},
+      PING_STATUS = #{pingStatus,jdbcType=VARCHAR},
+      POST_PASSWORD = #{postPassword,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      POST_PARENT = #{postParent,jdbcType=BIGINT},
+      GUID = #{guid,jdbcType=VARCHAR},
+      MENU_ORDER = #{menuOrder,jdbcType=INTEGER},
+      POST_TYPE = #{postType,jdbcType=VARCHAR},
+      POST_MIME_TYPE = #{postMimeType,jdbcType=VARCHAR},
+      COMMENT_COUNT = #{commentCount,jdbcType=BIGINT},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      POST_CONTENT = #{postContent,jdbcType=LONGVARCHAR},
+      POST_TITLE = #{postTitle,jdbcType=LONGVARCHAR},
+      POST_EXCERPT = #{postExcerpt,jdbcType=LONGVARCHAR},
+      TO_PING = #{toPing,jdbcType=LONGVARCHAR},
+      PINGED = #{pinged,jdbcType=LONGVARCHAR},
+      POST_CONTENT_FILTERED = #{postContentFiltered,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.blog.pojo.BlogPosts">
+    update blog_posts
+    set POST_AUTHOR = #{postAuthor,jdbcType=BIGINT},
+      POST_STATUS = #{postStatus,jdbcType=VARCHAR},
+      COMMENT_STATUS = #{commentStatus,jdbcType=VARCHAR},
+      PING_STATUS = #{pingStatus,jdbcType=VARCHAR},
+      POST_PASSWORD = #{postPassword,jdbcType=VARCHAR},
+      POST_NAME = #{postName,jdbcType=VARCHAR},
+      POST_PARENT = #{postParent,jdbcType=BIGINT},
+      GUID = #{guid,jdbcType=VARCHAR},
+      MENU_ORDER = #{menuOrder,jdbcType=INTEGER},
+      POST_TYPE = #{postType,jdbcType=VARCHAR},
+      POST_MIME_TYPE = #{postMimeType,jdbcType=VARCHAR},
+      COMMENT_COUNT = #{commentCount,jdbcType=BIGINT},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllPosts" resultType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+    select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+    from blog_posts
+    order by id
+  </select>
+</mapper>

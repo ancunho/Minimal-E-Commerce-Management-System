@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.blog.dao.BlogUsersMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.blog.pojo.BlogUsers">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="USER_LOGIN" jdbcType="VARCHAR" property="userLogin" />
+    <result column="USER_PASS" jdbcType="VARCHAR" property="userPass" />
+    <result column="USER_NICENAME" jdbcType="VARCHAR" property="userNicename" />
+    <result column="USER_EMAIL" jdbcType="VARCHAR" property="userEmail" />
+    <result column="USER_URL" jdbcType="VARCHAR" property="userUrl" />
+    <result column="USER_ACTIVATION_KEY" jdbcType="VARCHAR" property="userActivationKey" />
+    <result column="USER_STATUS" jdbcType="INTEGER" property="userStatus" />
+    <result column="DISPLAY_NAME" jdbcType="VARCHAR" property="displayName" />
+    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
+    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
+    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
+    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
+    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USER_LOGIN, USER_PASS, USER_NICENAME, USER_EMAIL, USER_URL, USER_ACTIVATION_KEY, 
+    USER_STATUS, DISPLAY_NAME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blog_users
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from blog_users
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+    insert into blog_users (ID, USER_LOGIN, USER_PASS, 
+      USER_NICENAME, USER_EMAIL, USER_URL, 
+      USER_ACTIVATION_KEY, USER_STATUS, DISPLAY_NAME, 
+      PARAM1, PARAM2, PARAM3, 
+      PARAM4, PARAM5, CREATETIME, 
+      UPDATETIME)
+    values (#{id,jdbcType=BIGINT}, #{userLogin,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR}, 
+      #{userNicename,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userUrl,jdbcType=VARCHAR}, 
+      #{userActivationKey,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER}, #{displayName,jdbcType=VARCHAR}, 
+      #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=VARCHAR}, 
+      #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+    insert into blog_users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="userLogin != null">
+        USER_LOGIN,
+      </if>
+      <if test="userPass != null">
+        USER_PASS,
+      </if>
+      <if test="userNicename != null">
+        USER_NICENAME,
+      </if>
+      <if test="userEmail != null">
+        USER_EMAIL,
+      </if>
+      <if test="userUrl != null">
+        USER_URL,
+      </if>
+      <if test="userActivationKey != null">
+        USER_ACTIVATION_KEY,
+      </if>
+      <if test="userStatus != null">
+        USER_STATUS,
+      </if>
+      <if test="displayName != null">
+        DISPLAY_NAME,
+      </if>
+      <if test="param1 != null">
+        PARAM1,
+      </if>
+      <if test="param2 != null">
+        PARAM2,
+      </if>
+      <if test="param3 != null">
+        PARAM3,
+      </if>
+      <if test="param4 != null">
+        PARAM4,
+      </if>
+      <if test="param5 != null">
+        PARAM5,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userLogin != null">
+        #{userLogin,jdbcType=VARCHAR},
+      </if>
+      <if test="userPass != null">
+        #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="userNicename != null">
+        #{userNicename,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userUrl != null">
+        #{userUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userActivationKey != null">
+        #{userActivationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="displayName != null">
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+    update blog_users
+    <set>
+      <if test="userLogin != null">
+        USER_LOGIN = #{userLogin,jdbcType=VARCHAR},
+      </if>
+      <if test="userPass != null">
+        USER_PASS = #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="userNicename != null">
+        USER_NICENAME = #{userNicename,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userUrl != null">
+        USER_URL = #{userUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="userActivationKey != null">
+        USER_ACTIVATION_KEY = #{userActivationKey,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="displayName != null">
+        DISPLAY_NAME = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="param1 != null">
+        PARAM1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        PARAM2 = #{param2,jdbcType=VARCHAR},
+      </if>
+      <if test="param3 != null">
+        PARAM3 = #{param3,jdbcType=VARCHAR},
+      </if>
+      <if test="param4 != null">
+        PARAM4 = #{param4,jdbcType=VARCHAR},
+      </if>
+      <if test="param5 != null">
+        PARAM5 = #{param5,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+    update blog_users
+    set USER_LOGIN = #{userLogin,jdbcType=VARCHAR},
+      USER_PASS = #{userPass,jdbcType=VARCHAR},
+      USER_NICENAME = #{userNicename,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_URL = #{userUrl,jdbcType=VARCHAR},
+      USER_ACTIVATION_KEY = #{userActivationKey,jdbcType=VARCHAR},
+      USER_STATUS = #{userStatus,jdbcType=INTEGER},
+      DISPLAY_NAME = #{displayName,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
