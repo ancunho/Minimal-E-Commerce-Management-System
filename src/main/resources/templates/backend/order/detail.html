@@ -110,13 +110,19 @@
                                 <tr th:each="orderItem:${order.getOrderItemVoList()}">
                                     <td th:text="${orderItem.getProductName()}"></td>
                                     <td th:text="${orderItem.getQuantity()}"></td>
-                                    <td th:text="${orderItem.getSpec().getWeight()}"></td>
+                                    <td th:text="${orderItem.getSpec().getWeight() + 'Kg'}"></td>
                                     <td th:text="${orderItem.getCurrentUnitPrice()}"></td>
                                     <td th:text="${orderItem.getTotalPrice()}"></td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="totalPriceDiv" style="">总额： [[${order.getPayment()}]]</div>
+                    </div>
+                    <!-- //商品信息 End -->
+                    <!-- 商品信息 Start -->
+                    <h5 class="etcInfoTitle">其他信息</h5>
+                    <div class="layui-row">
+
                     </div>
                     <!-- //商品信息 End -->
 

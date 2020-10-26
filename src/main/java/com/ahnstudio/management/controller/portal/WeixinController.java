@@ -19,7 +19,7 @@ import java.util.Map;
 public class WeixinController {
 
     @RequestMapping(value = "pay")
-    public ServerResponse doUnifiedOrder(String openId) {
+    public ServerResponse doUnifiedOrder(String openId, String orderNo, Integer totalPayment, String productName) {
         MyConfig config = new MyConfig();
         WXPay wxpay= null;
         try {
@@ -43,11 +43,14 @@ public class WeixinController {
 
         String spbill_create_ip = addr.getHostAddress();
         //支付金额，需要转成字符串类型，否则后面的签名会失败
-        int  total_fee = 1;
+        int  total_fee = totalPayment;
+//        String  total_fee = totalPayment;
+        System.out.println(">>>>>" + total_fee);
         //商品描述
-        String body = "咖啡支付";
+        String body = "StrongHold咖啡豆";
         //商户订单号
-        String out_trade_no= WXPayUtil.generateNonceStr();
+//        String out_trade_no= WXPayUtil.generateNonceStr();
+        String out_trade_no = orderNo;
         //统一下单接口参数
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("appid", config.getAppID());

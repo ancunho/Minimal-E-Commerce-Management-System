@@ -287,7 +287,28 @@
     <include refid="Base_Column_List2" />
     FROM  tb_order
     where ORDER_ID = #{orderId}
+    order by id desc
   </select>
+
+    <update id="orderPaySuccess" parameterType="com.ahnstudio.management.pojo.Order">
+        update tb_order set status = 20, PAYMENT_TIME=now() where order_id = #{orderNo}
+    </update>
+
+    <select id="getOrderListByStatus10" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ORDER_ID from tb_order where user_id = #{userId} and status = 10 order by id desc
+    </select>
+
+    <select id="getOrderListInStatus20And40" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ORDER_ID from tb_order where user_id = #{userId} and status in (20,40) order by id desc
+    </select>
+
+    <select id="getOrderListByStatus0" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ORDER_ID from tb_order where user_id = #{userId} and status = 0 order by id desc
+    </select>
+
+    <select id="getOrderAllList" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select ORDER_ID from tb_order where user_id = #{userId} order by id desc
+    </select>
 
 
 </mapper>

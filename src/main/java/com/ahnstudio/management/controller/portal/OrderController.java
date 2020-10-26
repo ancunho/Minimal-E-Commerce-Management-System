@@ -31,6 +31,20 @@ public class OrderController {
         return orderService.getAllOrderList(pageNum, pageSize);
     }
 
+    @RequestMapping(value = "list_status_10", method = RequestMethod.POST)
+    public ServerResponse order_list_status_10(HttpSession session, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Integer userId) {
+        return orderService.getOrderListByStatus10(pageNum, pageSize, userId);
+    }
+
+    @RequestMapping(value = "pay_success",method = RequestMethod.POST)
+    public ServerResponse order_pay_success(HttpSession session, String orderNo,@RequestParam(value = "pageNumber", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return orderService.orderPaySuccess(orderNo);
+    }
+
+    @RequestMapping(value = "by_status",method = RequestMethod.POST)
+    public ServerResponse order_list_by_status(HttpSession session, Integer userId, Integer status, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return orderService.getOrderListByStatus(userId, status, pageNum, pageSize);
+    }
 
 
 }

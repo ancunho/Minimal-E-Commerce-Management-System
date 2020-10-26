@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ServerResponse getProductListForWechat(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        List<Product> productList = productMapper.selectAllProduct();
+        List<Product> productList = productMapper.selectAllProductForWechat();
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productList);
         return ServerResponse.createBySuccess(pageResult);

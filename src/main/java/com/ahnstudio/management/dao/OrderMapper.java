@@ -27,4 +27,14 @@ public interface OrderMapper {
 
     Order selectByOrderId(String orderId);
 
+    int orderPaySuccess(String orderNo);
+
+    List<String> getOrderListByStatus10(Integer userId);
+
+    List<String> getOrderListInStatus20And40(Integer userId);
+
+    List<String> getOrderListByStatus0(Integer userId);
+
+    List<String> getOrderAllList(Integer userId);
+
 }

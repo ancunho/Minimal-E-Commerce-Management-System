@@ -107,6 +107,7 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setCreateTime(order.getCreatetime());
         orderVO.setCloseTime(DateUtil.dateToStr(order.getCloseTime()));
 
+
         List<OrderItemVO> orderItemVoList = Lists.newArrayList();
 
         for(OrderItem orderItem : orderItemList){
@@ -288,6 +289,70 @@ public class OrderServiceImpl implements OrderService {
             return orderVO;
         }
         return null;
+    }
+
+    @Override
+    public ServerResponse orderPaySuccess(String orderNo) {
+        int updateCount = orderMapper.orderPaySuccess(orderNo);
+        return ServerResponse.createBySuccessMessage("支付成功， 后台成功");
+    }
+
+    @Override
+    public ServerResponse getOrderListByStatus10(int pageNum, int pageSize, Integer userId) {
+        PageHelper.startPage(pageNum,pageSize);
+        List orderNoList = orderMapper.getOrderListByStatus10(userId);
+
+        if (orderNoList.size() > 0) {
+
+            List<OrderVO> orderVOList = new ArrayList<>();
+            for (int i = 0; i < orderNoList.size(); i++) {
+                OrderVO orderVO = new OrderVO();
+                orderVO = this.getOrderVO(orderNoList.get(i).toString());
+                orderVOList.add(orderVO);
+            }
+            PageInfo pageResult = new PageInfo(orderVOList);
+            pageResult.setList(orderVOList);
+            return ServerResponse.createBySuccess(pageResult);
+        }
+        return null;
+    }
+
+    @Override
+    public ServerResponse getOrderListByStatus(Integer userId, Integer status, int pageNum, int pageSize) {
+        if (userId == null || status == null) {
+            return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
+        }
+
+        List orderNoList = new ArrayList();
+        switch (status) {
+            case 10 :
+                orderNoList = orderMapper.getOrderListByStatus10(userId);
+                break;
+            case 40 :
+                orderNoList = orderMapper.getOrderListInStatus20And40(userId);
+                break;
+            case 0 :
+                orderNoList = orderMapper.getOrderListByStatus0(userId);
+                break;
+            default:
+                orderNoList = orderMapper.getOrderAllList(userId);
+                break;
+        }
+
+        if (orderNoList.size() > 0) {
+            List<OrderVO> orderVOList = new ArrayList<>();
+            for (int i = 0; i < orderNoList.size(); i++) {
+                OrderVO orderVO = new OrderVO();
+                orderVO = this.getOrderVO(orderNoList.get(i).toString());
+                orderVOList.add(orderVO);
+            }
+            PageInfo pageResult = new PageInfo(orderVOList);
+            pageResult.setList(orderVOList);
+            return ServerResponse.createBySuccess(pageResult);
+        }
+        return ServerResponse.createByErrorMessage("无数据");
+
+
     }
 
     private String getOrderStatusDesc(Integer status) {

@@ -28,4 +28,10 @@ public interface OrderService {
 
     OrderVO getOrderVO(String orderNo);
 
+    ServerResponse orderPaySuccess(String orderNo);
+
+    ServerResponse getOrderListByStatus10(int pageNum, int pageSize, Integer userId);
+
+    ServerResponse getOrderListByStatus(Integer userId, Integer status, int pageNum, int pageSize);
+
 }

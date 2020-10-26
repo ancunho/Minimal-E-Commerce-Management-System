@@ -376,6 +376,13 @@
     select
     <include refid="Base_Column_List" />
     from tb_product
-    order by id
+    order by id desc
+  </select>
+
+  <select id="selectAllProductForWechat" resultType="com.ahnstudio.management.pojo.Product">
+    select
+    <include refid="Base_Column_List" />
+    from tb_product where status = 1
+    order by id desc
   </select>
 </mapper>

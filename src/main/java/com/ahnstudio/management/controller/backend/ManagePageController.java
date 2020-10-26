@@ -194,7 +194,9 @@ public class ManagePageController {
             return "redirect:/manager/login";
         }
 
+
         OrderVO order = orderService.getOrderVO(orderNo);
+        System.out.println(order.getOrderItemVoList());
         model.addAttribute("order", order);
         model.addAttribute("activeUri", "manager/order");
         return "backend/order/detail";
