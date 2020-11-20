@@ -34,4 +34,6 @@ public interface OrderService {
 
     ServerResponse getOrderListByStatus(Integer userId, Integer status, int pageNum, int pageSize);
 
+    ServerResponse orderDeliverySuccess(String orderNo, String deliveryNo);
+
 }

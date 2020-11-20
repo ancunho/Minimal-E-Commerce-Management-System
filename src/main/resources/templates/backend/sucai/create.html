@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Customer Edit</title>
+<body class="layui-layout-body">
+
+
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a href="#this">素材管理</a>
+                    <a><cite>素材</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <div class="layui-row mb20" style="text-align: left">
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/list}"><i class="layui-icon layui-icon-cols"></i>  产品列表</a>
+                </div>
+                <form class="layui-form" id="productEditForm">
+                    <div class="layui-row">
+                        <div class="layui-col-md12">
+                            <label class="layui-form-label">文件</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="title" value="" id="name" class="layui-input" placeholder="请输入产品名" autocomplete="off" required  lay-verify="required" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md4">
+                            <label class="layui-form-label">文件</label>
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius" id="mainUploadImage">
+                                    <i class="layui-icon">&#xe67c;</i>缩略图
+                                </button>
+                                <div class="layui-hide iamgeViewDiv" id="mainUploadImageView" style="width:150px;">
+                                    <input type="hidden" id="mainImage" value="" />
+                                    <hr />
+                                    <img src="" alt="上传成功后渲染" style="max-width: 100%">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-md4">
+                            <label class="layui-form-label">上传视频</label>
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn" id="btnUploadVideo"><i class="layui-icon">&#xe67c;</i>上传视频</button>
+                                <button type="button" class="layui-btn" id="btnUploadVideoAction"><i class="layui-icon">&#xe67c;</i>上传视频</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=a3204is48ac" allowFullScreen="true"></iframe>
+
+
+                </form>
+
+                <div style="text-align: center">
+                    <a class="text-center layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" id="btnCreate"><i class="layui-icon layui-icon-upload-drag"></i> 保存</a>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['element'], function () {
+        var element = layui.element;
+        element.render();
+    });
+
+    // 초기 오브젝트 생성
+    var MAIN_IMAGE = $("#mainImage").val();
+    var FILE = $("#fileImage").val();
+
+    layui.use(['layer', 'form', 'element'], function () {
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element;
+        form.render();
+        element.render();
+
+        // Main Image Upload Start
+        //上传
+        layui.upload.render({
+            elem: '#mainUploadImage'
+            ,url: '/api/file/single/upload' //改成您自己的上传接口
+            ,done: function(res){
+                layer.msg('上传成功');
+                layui.$('#mainUploadImageView').removeClass('layui-hide').find('img').attr('src', res.data);
+                MAIN_IMAGE = res.data;
+                console.log(res)
+            }
+        });
+        // Main Image Upload End
+
+        // file Upload Start
+        //上传
+        layui.upload.render({
+            elem: '#btnUploadVideo'
+            ,url: '/api/file/single/upload' //改成您自己的上传接口
+            ,accept: 'images' //视频
+            ,auto: false
+            ,bindAction: '#btnUploadVideoAction'
+            ,done: function(res) {
+                layer.msg('上传成功');
+                console.log(res)
+            }
+            ,progress: function(n, elem){
+            var percent = n + '%' //获取进度百分比
+            element.progress('demo', percent); //可配合 layui 进度条元素使用
+
+            //以下系 layui 2.5.6 新增
+            console.log(elem); //得到当前触发的元素 DOM 对象。可通过该元素定义的属性值匹配到对应的进度条。
+        }
+        });
+        // Main Image Upload End
+
+
+    });
+
+
+    $(function () {
+        $("#btnCreate").unbind('click').click(function () {
+            $.ajax({
+                url : '/aliyun/simpleUpload'
+                ,type : "POST"
+                , success: function (res) {
+                    console.log(res);
+                }
+                ,error : function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    })
+
+</script>
+
+</body>
+</html>

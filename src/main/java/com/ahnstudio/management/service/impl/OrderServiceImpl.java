@@ -93,6 +93,11 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setStatus(order.getStatus());
         orderVO.setStatusDesc(Const.OrderStatusEnum.codeOf(order.getStatus()).getValue());
         orderVO.setComment(order.getParam1());
+        orderVO.setParam1(order.getParam1());
+        orderVO.setParam2(order.getParam2());
+        orderVO.setParam3(order.getParam3());
+        orderVO.setParam4(order.getParam4());
+        orderVO.setParam5(order.getParam5());
 
         orderVO.setShippingId(order.getShippingId());
         Shipping shipping = shippingMapper.selectByPrimaryKey(order.getShippingId());
@@ -353,6 +358,27 @@ public class OrderServiceImpl implements OrderService {
         return ServerResponse.createByErrorMessage("无数据");
 
 
+    }
+
+    @Override
+    public ServerResponse orderDeliverySuccess(String orderNo, String deliveryno) {
+        Order order = orderMapper.selectByOrderId(orderNo);
+        if (order == null) {
+            return ServerResponse.createByErrorMessage("订单不存在， 请联系IT管理员，查看数据");
+        }
+
+//        if (order.getParam2() != null) {
+//            return ServerResponse.createByErrorCodeMessage(97, "已经有快递单号");
+//        }
+
+        order.setParam2(deliveryno);
+
+        int updateCount = orderMapper.updateDeliveryNo(orderNo, deliveryno);
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccess();
+        }
+
+        return ServerResponse.createByErrorMessage(Const.Message.UPDATE_ERROR);
     }
 
     private String getOrderStatusDesc(Integer status) {

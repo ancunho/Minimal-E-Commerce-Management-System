@@ -278,6 +278,7 @@
           ,date_format(O.CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME
           ,date_format(O.UPDATETIME, '%Y-%m-%d %H:%i:%S') AS UPDATETIME
           ,U.COMPANY_TYPE
+          ,O.PARAM1 ,O.PARAM2 ,O.PARAM3 ,O.PARAM4 ,O.PARAM5
       FROM tb_order O LEFT OUTER JOIN tb_user U ON O.USER_ID = U.ID
       ORDER BY O.CREATETIME DESC
   </select>
@@ -309,6 +310,12 @@
     <select id="getOrderAllList" parameterType="java.lang.Integer" resultType="java.lang.String">
         select ORDER_ID from tb_order where user_id = #{userId} order by id desc
     </select>
+
+  <update id="updateDeliveryNo" parameterType="map">
+    update tb_order
+    set param2 = #{deliveryNo}, status = 40
+    where order_id = #{orderNo}
+  </update>
 
 
 </mapper>

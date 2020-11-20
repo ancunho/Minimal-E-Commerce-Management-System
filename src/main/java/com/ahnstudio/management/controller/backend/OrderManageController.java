@@ -40,5 +40,11 @@ public class OrderManageController {
         return orderService.getOrderVO(orderNo);
     }
 
+    @RequestMapping(value = "update_deliveryno")
+    public ServerResponse order_delivery_success(HttpSession session, String orderNo, String deliveryNo) {
+        return orderService.orderDeliverySuccess(orderNo, deliveryNo);
+    }
+
+
 
 }

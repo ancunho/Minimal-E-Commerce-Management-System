@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
-<title>客户列表</title>
+<title>Customer List</title>
 <body class="layui-layout-body">
 
 <style>
@@ -18,14 +18,14 @@
             <div class="location">
                  <span class="layui-breadcrumb">
                     <a href="#this">首页</a>
-                    <a href="#this">客户管理</a>
+                    <a href="#this">素材管理</a>
                     <a><cite>列表页</cite></a>
                 </span>
             </div>
             <!-- // Location End-->
             <div class="sh-content">
                 <div class="layui-row" style="text-align: right">
-                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/customer/create}"><i class="layui-icon layui-icon-add-1"></i> 新建客户</a>
+                    <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/sucai/create}"><i class="layui-icon layui-icon-add-1"></i> 新建客户</a>
                 </div>
                 <table id="customerListTable" lay-filter="customerTableFilter"></table>
                 <div id="pageDemo"></div>

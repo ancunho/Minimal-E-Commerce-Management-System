@@ -236,6 +236,33 @@ public class ManagePageController {
     }
 
 
+    /************************************************************
+     ************************************************************
+     * 素材
+     ************************************************************
+     ************************************************************/
+    @RequestMapping(value = "sucai/create")
+    public String sucai_new(HttpSession session, Model model) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/page/login";
+        }
+
+        model.addAttribute("activeUri", "manager/sucai");
+        return "backend/sucai/create";
+    }
+
+    @RequestMapping(value = "sucai/list")
+    public String sucai_list(HttpSession session, Model model) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return "redirect:/page/login";
+        }
+
+        model.addAttribute("activeUri", "manager/sucai");
+        return "backend/sucai/list";
+    }
+
 
 
 

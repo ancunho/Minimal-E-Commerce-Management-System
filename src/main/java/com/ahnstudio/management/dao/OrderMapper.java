@@ -37,4 +37,6 @@ public interface OrderMapper {
 
     List<String> getOrderAllList(Integer userId);
 
+    int updateDeliveryNo(String orderNo, String deliveryNo);
+
 }

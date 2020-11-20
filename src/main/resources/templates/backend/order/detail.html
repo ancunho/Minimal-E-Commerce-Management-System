@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
-<title>Order Detail</title>
+<title>订单详情</title>
 <body class="layui-layout-body">
 
 <style>
@@ -120,9 +120,20 @@
                     </div>
                     <!-- //商品信息 End -->
                     <!-- 商品信息 Start -->
-                    <h5 class="etcInfoTitle">其他信息</h5>
+                    <h5 class="orderInfoTitle">其他信息</h5>
                     <div class="layui-row">
-
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label" for="orderComment">订单备注</label>
+                            <div class="layui-input-block">
+                                <input type="text" readonly name="orderComment" id="orderComment" th:value="${order.getParam1()}" class="layui-input" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label" for="deliveryNo">快递单号</label>
+                            <div class="layui-input-block">
+                                <input type="text" readonly name="deliveryNo" id="deliveryNo" th:value="${order.getParam2()}" class="layui-input" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
                     </div>
                     <!-- //商品信息 End -->
 
@@ -130,7 +141,7 @@
                 </form>
 
 
-                <div style="text-align: center"><a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/order/list}"><i class="layui-icon layui-icon-cols"></i>  订单列表</a></div>
+                <div style="text-align: center; margin-top:30px;"><a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/order/list}"><i class="layui-icon layui-icon-cols"></i>  订单列表</a></div>
 
 
             </div>
