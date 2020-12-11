@@ -1,6 +1,6 @@
-package com.ahnstudio.management.blog.service;
+package com.ahnstudio.management.service;
 
-import com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs;
+import com.ahnstudio.management.pojo.BlogPostsWithBLOBs;
 import com.ahnstudio.management.common.ServerResponse;
 
 public interface PostService {

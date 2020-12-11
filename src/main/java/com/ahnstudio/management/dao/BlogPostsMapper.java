@@ -1,7 +1,7 @@
-package com.ahnstudio.management.blog.dao;
+package com.ahnstudio.management.dao;
 
-import com.ahnstudio.management.blog.pojo.BlogPosts;
-import com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs;
+import com.ahnstudio.management.pojo.BlogPosts;
+import com.ahnstudio.management.pojo.BlogPostsWithBLOBs;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

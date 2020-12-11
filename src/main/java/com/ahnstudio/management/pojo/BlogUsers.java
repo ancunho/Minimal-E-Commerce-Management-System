@@ -1,4 +1,4 @@
-package com.ahnstudio.management.blog.pojo;
+package com.ahnstudio.management.pojo;
 
 import java.util.Date;
 

@@ -23,6 +23,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -264,6 +265,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public ServerResponse getAllOrderListByCondition(Integer pageNum, Integer pageSize, String status, String startTime, String endTime) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<OrderListVO> orderList = new ArrayList<>();
+        if ("99".equals(status)) {
+            orderList = orderMapper.getAllOrderList();
+        } else {
+            orderList = orderMapper.getAllOrderListByCondition(status, startTime, endTime);
+        }
+//        List<OrderListVO> orderList = orderMapper.getAllOrderList();
+        PageInfo pageResult = new PageInfo(orderList);
+        pageResult.setList(orderList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+
+    @Override
     public ServerResponse getOrderDetail(String orderId) {
         if (orderId == null) {
             return ServerResponse.createByErrorMessage(Const.Message.PARAMETER_ERROR);
@@ -367,10 +384,6 @@ public class OrderServiceImpl implements OrderService {
             return ServerResponse.createByErrorMessage("订单不存在， 请联系IT管理员，查看数据");
         }
 
-//        if (order.getParam2() != null) {
-//            return ServerResponse.createByErrorCodeMessage(97, "已经有快递单号");
-//        }
-
         order.setParam2(deliveryno);
 
         int updateCount = orderMapper.updateDeliveryNo(orderNo, deliveryno);
@@ -380,6 +393,23 @@ public class OrderServiceImpl implements OrderService {
 
         return ServerResponse.createByErrorMessage(Const.Message.UPDATE_ERROR);
     }
+
+    public ServerResponse selectOrderByPaging(int pageNum, int pageSize, Map<String, Object> mapParams) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Map<String, Object>> lstOrder = orderMapper.selectTB_ORDER(mapParams);
+
+        for (int i = 0; lstOrder != null && i < lstOrder.size(); i++) {
+            List<Map<String, Object>> lstOrderItem = new ArrayList<>();
+            lstOrderItem = orderItemMapper.selectTB_ORDER_ITEMByORDER_ID((String) lstOrder.get(i).get("ORDER_ID"));
+            lstOrder.get(i).put("lstOrderItem", lstOrderItem);
+        }
+
+        PageInfo pageResult = new PageInfo(lstOrder);
+        pageResult.setList(lstOrder);
+
+        return ServerResponse.createBySuccess(Const.Message.SELECT_OK, pageResult);
+    }
+
 
     private String getOrderStatusDesc(Integer status) {
         if (status == 0) {

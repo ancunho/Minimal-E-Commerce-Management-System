@@ -266,7 +266,7 @@
                 layer.msg('上传成功');
                 layui.$('#mainUploadImageView').removeClass('layui-hide').find('img').attr('src', res.data);
                 MAIN_IMAGE = res.data;
-                console.log(res)
+                // console.log(res)
             }
         });
         // Main Image Upload End
@@ -280,7 +280,7 @@
                 layer.msg('上传成功');
                 layui.$('#subUploadImageView').removeClass('layui-hide').find('img').attr('src', res.data);
                 SUB_IMAGE = res.data;
-                console.log(res)
+                // console.log(res)
             }
         });
         // Sub Image Upload End
@@ -294,7 +294,7 @@
                 layer.msg('上传成功');
                 layui.$('#subUploadImageView2').removeClass('layui-hide').find('img').attr('src', res.data);
                 SUB_IMAGE2 = res.data;
-                console.log(res)
+                // console.log(res)
             }
         });
         // Sub Image2 Upload End
@@ -308,7 +308,7 @@
                 layer.msg('上传成功');
                 layui.$('#subUploadImageView3').removeClass('layui-hide').find('img').attr('src', res.data);
                 SUB_IMAGE3 = res.data;
-                console.log(res)
+                // console.log(res)
             }
         });
         // Sub Image3 Upload End
@@ -353,7 +353,7 @@ $(function () {
         productObj.subImage2 = SUB_IMAGE2;
         productObj.subImage3 = SUB_IMAGE3;
         productObj.spec = localStorage.tableSpecList;
-        console.log(productObj);
+        // console.log(productObj);
         var product = new Product();
         product.save(productObj);
     });
@@ -403,9 +403,9 @@ $(function () {
 
 
     function getSpecData() {
-        console.log("getSpecData start");
-        console.log(localStorage.tableSpecList);
-        console.log([[${product.specList}]]);
+        // console.log("getSpecData start");
+        // console.log(localStorage.tableSpecList);
+        // console.log([[${product.specList}]]);
         if (localStorage.tableSpecList == undefined) {
             specArray = [];
         } else {

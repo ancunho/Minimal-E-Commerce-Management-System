@@ -24,6 +24,7 @@ public class StrongHoldWechatController {
 
     @RequestMapping(value = "getOpenId")
     public ServerResponse getOpenIdOrSessionKeyByCODE(@RequestParam(value = "code", required = false) String code) {
+        System.out.println(">>>>>>>>>>code:" + code);
         JSONObject SessionKeyOpenId = WechatUtil.getSessionKeyOrOpenId(code);
 
         // 3.接收微信接口服务 获取返回的参数

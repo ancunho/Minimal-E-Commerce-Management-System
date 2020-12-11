@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ahnstudio.management.blog.dao.BlogPostsMapper">
-  <resultMap id="BaseResultMap" type="com.ahnstudio.management.blog.pojo.BlogPosts">
+<mapper namespace="com.ahnstudio.management.dao.BlogPostsMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.BlogPosts">
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="POST_AUTHOR" jdbcType="BIGINT" property="postAuthor" />
     <result column="POST_STATUS" jdbcType="VARCHAR" property="postStatus" />
@@ -23,7 +23,7 @@
     <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
     <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     <result column="POST_CONTENT" jdbcType="LONGVARCHAR" property="postContent" />
     <result column="POST_TITLE" jdbcType="LONGVARCHAR" property="postTitle" />
     <result column="POST_EXCERPT" jdbcType="LONGVARCHAR" property="postExcerpt" />
@@ -51,7 +51,7 @@
     delete from blog_posts
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     insert into blog_posts (ID, POST_AUTHOR, POST_STATUS, 
       COMMENT_STATUS, PING_STATUS, POST_PASSWORD, 
       POST_NAME, POST_PARENT, GUID, 
@@ -71,7 +71,7 @@
       #{postTitle,jdbcType=LONGVARCHAR}, #{postExcerpt,jdbcType=LONGVARCHAR}, #{toPing,jdbcType=LONGVARCHAR}, 
       #{pinged,jdbcType=LONGVARCHAR}, #{postContentFiltered,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     insert into blog_posts
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -234,7 +234,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     update blog_posts
     <set>
       <if test="postAuthor != null">
@@ -315,7 +315,7 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     update blog_posts
     set POST_AUTHOR = #{postAuthor,jdbcType=BIGINT},
       POST_STATUS = #{postStatus,jdbcType=VARCHAR},
@@ -345,7 +345,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.blog.pojo.BlogPosts">
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.BlogPosts">
     update blog_posts
     set POST_AUTHOR = #{postAuthor,jdbcType=BIGINT},
       POST_STATUS = #{postStatus,jdbcType=VARCHAR},
@@ -369,7 +369,7 @@
     where ID = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectAllPosts" resultType="com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs">
+  <select id="selectAllPosts" resultType="com.ahnstudio.management.pojo.BlogPostsWithBLOBs">
     select
         <include refid="Base_Column_List" />
         ,

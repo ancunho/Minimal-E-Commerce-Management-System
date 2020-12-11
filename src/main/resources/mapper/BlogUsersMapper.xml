@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ahnstudio.management.blog.dao.BlogUsersMapper">
-  <resultMap id="BaseResultMap" type="com.ahnstudio.management.blog.pojo.BlogUsers">
+<mapper namespace="com.ahnstudio.management.dao.BlogUsersMapper">
+  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.BlogUsers">
     <id column="ID" jdbcType="BIGINT" property="id" />
     <result column="USER_LOGIN" jdbcType="VARCHAR" property="userLogin" />
     <result column="USER_PASS" jdbcType="VARCHAR" property="userPass" />
@@ -33,7 +33,7 @@
     delete from blog_users
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+  <insert id="insert" parameterType="com.ahnstudio.management.pojo.BlogUsers">
     insert into blog_users (ID, USER_LOGIN, USER_PASS, 
       USER_NICENAME, USER_EMAIL, USER_URL, 
       USER_ACTIVATION_KEY, USER_STATUS, DISPLAY_NAME, 
@@ -47,7 +47,7 @@
       #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{updatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.BlogUsers">
     insert into blog_users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -150,7 +150,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.BlogUsers">
     update blog_users
     <set>
       <if test="userLogin != null">
@@ -201,7 +201,7 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.blog.pojo.BlogUsers">
+  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.BlogUsers">
     update blog_users
     set USER_LOGIN = #{userLogin,jdbcType=VARCHAR},
       USER_PASS = #{userPass,jdbcType=VARCHAR},

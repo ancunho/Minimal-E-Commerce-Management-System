@@ -165,7 +165,7 @@ function getUserFormValue() {
 
 class Product {
     save(param) {
-        console.log(param);
+        // console.log(param);
 
         $.ajax({
             url : '/api/product/create'
@@ -173,7 +173,7 @@ class Product {
             , contentType: "application/json"
             , data : JSON.stringify(param)
             , success : function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status === 0) {
                     swal({ title : response.msg, text : param.name.toString(), icon: "success", closeOnClickOutside: false}).then(function () {
                         window.location.href = '/manager/product/list';
@@ -183,12 +183,12 @@ class Product {
                 }
             }
             ,error : function (err) {
-                console.log(err);
+                // console.log(err);
             }
         });
     };
     edit(param) {
-        console.log(param);
+        // console.log(param);
 
     }
 }

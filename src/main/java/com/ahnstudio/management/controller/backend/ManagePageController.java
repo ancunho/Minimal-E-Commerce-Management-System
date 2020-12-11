@@ -1,7 +1,6 @@
 package com.ahnstudio.management.controller.backend;
 
 import com.ahnstudio.management.common.Const;
-import com.ahnstudio.management.common.ServerResponse;
 import com.ahnstudio.management.pojo.Product;
 import com.ahnstudio.management.pojo.Spec;
 import com.ahnstudio.management.pojo.User;
@@ -9,6 +8,7 @@ import com.ahnstudio.management.service.OrderService;
 import com.ahnstudio.management.service.ProductService;
 import com.ahnstudio.management.service.SpecService;
 import com.ahnstudio.management.service.UserService;
+import com.ahnstudio.management.util.DateUtil;
 import com.ahnstudio.management.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,44 +134,29 @@ public class ManagePageController {
         return "backend/product/edit";
     }
 
-//    @RequestMapping(value = "product/view/{productId}", method = RequestMethod.GET)
-//    public String product_view(HttpSession session, @PathVariable("productId") Integer productId, Model model, HttpServletRequest request) {
-////        User user = (User) session.getAttribute(Const.CURRENT_USER);
-////        if (user == null) {
-////            return "redirect:/manager/login";
-////        }
-//
-//        Product product = productService.getProductDetail(productId);
-//        List<Spec> specList = specService.getSpecListByProductId(productId);
-//        product.setSpecList(specList);
-//        model.addAttribute("activeUri", "manager/product");
-//        model.addAttribute("product", product);
-//        return "backend/product/view";
-//    }
-
     /************************************************************
      * 规格 - Spec
      ************************************************************/
-    @RequestMapping(value = "spec/list")
-    public String Spec_list(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/manager/login";
-        }
-        model.addAttribute("activeUri", "manager/spec");
-        return "spec/list";
-    }
-
-    @RequestMapping(value = "spec/create")
-    public String Spec_create(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/manager/login";
-        }
-
-        model.addAttribute("activeUri", "manager/spec");
-        return "spec/create";
-    }
+//    @RequestMapping(value = "spec/list")
+//    public String Spec_list(HttpSession session, Model model) {
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if (user == null) {
+//            return "redirect:/manager/login";
+//        }
+//        model.addAttribute("activeUri", "manager/spec");
+//        return "spec/list";
+//    }
+//
+//    @RequestMapping(value = "spec/create")
+//    public String Spec_create(HttpSession session, Model model) {
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if (user == null) {
+//            return "redirect:/manager/login";
+//        }
+//
+//        model.addAttribute("activeUri", "manager/spec");
+//        return "spec/create";
+//    }
 
     /************************************************************
      * 订单 - Order
@@ -205,16 +190,16 @@ public class ManagePageController {
     /************************************************************
      * 用户 - User
      ************************************************************/
-    @RequestMapping(value = "shipping/create")
-    public String shipping_add(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/manager/login";
-        }
-
-        model.addAttribute("activeUri", "manager/shipping");
-        return "shipping/create";
-    }
+//    @RequestMapping(value = "shipping/create")
+//    public String shipping_add(HttpSession session, Model model) {
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if (user == null) {
+//            return "redirect:/manager/login";
+//        }
+//
+//        model.addAttribute("activeUri", "manager/shipping");
+//        return "shipping/create";
+//    }
 
 
 
@@ -224,16 +209,16 @@ public class ManagePageController {
      * Portal
      ************************************************************
      ************************************************************/
-    @RequestMapping(value = "portal")
-    public String portal(HttpSession session, Model model) {
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
-        if (user == null) {
-            return "redirect:/page/login";
-        }
-
-        model.addAttribute("activeUri", "page/shipping");
-        return "shipping/create";
-    }
+//    @RequestMapping(value = "portal")
+//    public String portal(HttpSession session, Model model) {
+//        User user = (User) session.getAttribute(Const.CURRENT_USER);
+//        if (user == null) {
+//            return "redirect:/page/login";
+//        }
+//
+//        model.addAttribute("activeUri", "page/shipping");
+//        return "shipping/create";
+//    }
 
 
     /************************************************************

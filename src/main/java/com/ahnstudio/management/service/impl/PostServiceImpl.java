@@ -1,12 +1,11 @@
-package com.ahnstudio.management.blog.service.impl;
+package com.ahnstudio.management.service.impl;
 
-import com.ahnstudio.management.blog.dao.BlogPostsMapper;
-import com.ahnstudio.management.blog.pojo.BlogPosts;
-import com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs;
-import com.ahnstudio.management.blog.service.PostService;
+import com.ahnstudio.management.dao.BlogPostsMapper;
+import com.ahnstudio.management.pojo.BlogPosts;
+import com.ahnstudio.management.pojo.BlogPostsWithBLOBs;
+import com.ahnstudio.management.service.PostService;
 import com.ahnstudio.management.common.Const;
 import com.ahnstudio.management.common.ServerResponse;
-import com.ahnstudio.management.pojo.Product;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;

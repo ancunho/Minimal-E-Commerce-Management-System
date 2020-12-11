@@ -55,6 +55,21 @@ function isEmailNew(strEmail) {
         return false;
     }
 }
+function checkEmpty(str1) {
+    if(typeof str1 == "undefined" || str == "" || str == null) {
+        return "";
+    } else {
+        return str1;
+    }
+}
+
+function checkEmpty(str, replace) {
+    if(typeof str == "undefined" || str == "" || str == null) {
+        return replace;
+    } else {
+        return str;
+    }
+}
 
 /**
  *规则：	移动: 前3位 134-139  或者 150-159   一共11位

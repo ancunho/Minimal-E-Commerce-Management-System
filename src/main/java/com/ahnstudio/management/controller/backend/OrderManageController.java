@@ -2,7 +2,10 @@ package com.ahnstudio.management.controller.backend;
 
 
 import com.ahnstudio.management.common.ServerResponse;
+import com.ahnstudio.management.pojo.Order;
 import com.ahnstudio.management.service.OrderService;
+import com.ahnstudio.management.util.Box;
+import com.ahnstudio.management.util.HttpUtility;
 import com.ahnstudio.management.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author : Cunho
@@ -26,8 +32,14 @@ public class OrderManageController {
     private OrderService orderService;
 
     @RequestMapping(value = "list")
-    public ServerResponse order_list(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "limit", defaultValue = "10") int pageSize) {
-        return orderService.getAllOrderList(pageNum, pageSize);
+    public ServerResponse order_list(HttpServletRequest request
+                                    , @RequestParam(value = "pageNum",defaultValue = "1") int pageNum
+                                    , @RequestParam(value = "pageSize",defaultValue = "10") int pageSize
+                                     ) {
+        Box box = HttpUtility.getBox(request);
+        Map<String, Object> mapParams = new HashMap<>();
+        box.copyToEntityMap(mapParams);
+        return orderService.selectOrderByPaging(pageNum, pageSize, mapParams);
     }
 
     @RequestMapping(value = "detail/{orderId}")

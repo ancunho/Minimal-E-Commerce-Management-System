@@ -58,3 +58,8 @@ White Color:    #FBFBF8;
 .iamgeViewDiv { width:150px; }
 
 .layui-nav-tree li a,.layui-nav-tree li a:hover { background:#354052!important;}
+
+.popup01 { display: none; width:400px; border:1px solid #eee; border-radius: 10px;}
+.popup01 .popup_title { height:30px; background: #009688; border-top-right-radius: 10px; border-top-left-radius: 10px;}
+.popup01 .popup_title h4 { font-size:16px; color:#fff; line-height:30px; padding-left:30px;}
+.popup01 .popup_contents {background:#fff; padding:20px;}

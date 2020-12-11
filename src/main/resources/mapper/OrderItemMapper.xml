@@ -192,4 +192,18 @@
     where order_id = #{orderId}
   </select>
 
+  <select id="selectTB_ORDER_ITEMByORDER_ID" parameterType="java.lang.String" resultType="java.util.Map">
+    <![CDATA[
+    SELECT 	T1.PRODUCT_NAME
+            ,(SELECT WEIGHT FROM TB_SPEC WHERE ID = T1.SPEC_ID) AS WEIGHT
+            ,(SELECT PRICE FROM TB_SPEC WHERE ID = T1.SPEC_ID) AS UNIT_PRICE
+            ,(SELECT DELIVERY_TYPE FROM TB_SPEC WHERE ID = T1.SPEC_ID) AS DELIVERY_TYPE
+            ,T1.CURRENT_UNIT_PRICE AS CURRENT_UNIT_PRICE
+            ,T1.TOTAL_PRICE AS TOTAL_PRICE
+            ,T1.QTY AS QTY
+    FROM 	TB_ORDER_ITEM T1
+    WHERE 	T1.ORDER_ID = #{ORDER_ID}
+    ]]>
+  </select>
+
 </mapper>

@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ahnstudio.management.dao.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Order">
-    <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId" />
-    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
-    <result column="SHIPPING_ID" jdbcType="INTEGER" property="shippingId" />
-    <result column="PAYMENT" jdbcType="DECIMAL" property="payment" />
-    <result column="PAYMENT_TYPE" jdbcType="INTEGER" property="paymentType" />
-    <result column="POSTAGE" jdbcType="INTEGER" property="postage" />
-    <result column="STATUS" jdbcType="INTEGER" property="status" />
-    <result column="PAYMENT_TIME" jdbcType="TIMESTAMP" property="paymentTime" />
-    <result column="SEND_TIME" jdbcType="TIMESTAMP" property="sendTime" />
-    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="CLOSE_TIME" jdbcType="TIMESTAMP" property="closeTime" />
-    <result column="PARAM1" jdbcType="VARCHAR" property="param1" />
-    <result column="PARAM2" jdbcType="VARCHAR" property="param2" />
-    <result column="PARAM3" jdbcType="VARCHAR" property="param3" />
-    <result column="PARAM4" jdbcType="VARCHAR" property="param4" />
-    <result column="PARAM5" jdbcType="VARCHAR" property="param5" />
-    <result column="CREATETIME" jdbcType="VARCHAR" property="createtime" />
-    <result column="UPDATETIME" jdbcType="VARCHAR" property="updatetime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    ID, ORDER_ID, USER_ID, SHIPPING_ID, PAYMENT, PAYMENT_TYPE, POSTAGE, STATUS, PAYMENT_TIME, 
+    <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.Order">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="ORDER_ID" jdbcType="VARCHAR" property="orderId"/>
+        <result column="USER_ID" jdbcType="INTEGER" property="userId"/>
+        <result column="SHIPPING_ID" jdbcType="INTEGER" property="shippingId"/>
+        <result column="PAYMENT" jdbcType="DECIMAL" property="payment"/>
+        <result column="PAYMENT_TYPE" jdbcType="INTEGER" property="paymentType"/>
+        <result column="POSTAGE" jdbcType="INTEGER" property="postage"/>
+        <result column="STATUS" jdbcType="INTEGER" property="status"/>
+        <result column="PAYMENT_TIME" jdbcType="TIMESTAMP" property="paymentTime"/>
+        <result column="SEND_TIME" jdbcType="TIMESTAMP" property="sendTime"/>
+        <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="CLOSE_TIME" jdbcType="TIMESTAMP" property="closeTime"/>
+        <result column="PARAM1" jdbcType="VARCHAR" property="param1"/>
+        <result column="PARAM2" jdbcType="VARCHAR" property="param2"/>
+        <result column="PARAM3" jdbcType="VARCHAR" property="param3"/>
+        <result column="PARAM4" jdbcType="VARCHAR" property="param4"/>
+        <result column="PARAM5" jdbcType="VARCHAR" property="param5"/>
+        <result column="CREATETIME" jdbcType="VARCHAR" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="VARCHAR" property="updatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID,ORDER_ID, USER_ID, SHIPPING_ID, PAYMENT, PAYMENT_TYPE, POSTAGE, STATUS, PAYMENT_TIME,
     SEND_TIME, END_TIME, CLOSE_TIME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, date_format(CREATETIME, '%Y-%m-%d') AS CREATETIME, date_format(UPDATETIME, '%Y-%m-%d') AS UPDATETIME
-  </sql>
-  <sql id="Base_Column_List2">
+    </sql>
+    <sql id="Base_Column_List2">
     ID, ORDER_ID, USER_ID, SHIPPING_ID, PAYMENT, PAYMENT_TYPE, POSTAGE, STATUS, PAYMENT_TIME,
     SEND_TIME, END_TIME, CLOSE_TIME, PARAM1, PARAM2, PARAM3, PARAM4, PARAM5, date_format(CREATETIME, '%Y-%m-%d %H:%i:%s') AS CREATETIME, date_format(UPDATETIME, '%Y-%m-%d %H:%i:%s') AS UPDATETIME
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_order
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM TB_ORDER
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_order
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ahnstudio.management.pojo.Order">
+    <insert id="insert" parameterType="com.ahnstudio.management.pojo.Order">
     insert into tb_order (ID, ORDER_ID, USER_ID, 
       SHIPPING_ID, PAYMENT, PAYMENT_TYPE, 
       POSTAGE, STATUS, PAYMENT_TIME, 
@@ -56,188 +56,188 @@
       #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, now(),
       now())
   </insert>
-  <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.Order">
-    insert into tb_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        ID,
-      </if>
-      <if test="orderId != null">
-        ORDER_ID,
-      </if>
-      <if test="userId != null">
-        USER_ID,
-      </if>
-      <if test="shippingId != null">
-        SHIPPING_ID,
-      </if>
-      <if test="payment != null">
-        PAYMENT,
-      </if>
-      <if test="paymentType != null">
-        PAYMENT_TYPE,
-      </if>
-      <if test="postage != null">
-        POSTAGE,
-      </if>
-      <if test="status != null">
-        STATUS,
-      </if>
-      <if test="paymentTime != null">
-        PAYMENT_TIME,
-      </if>
-      <if test="sendTime != null">
-        SEND_TIME,
-      </if>
-      <if test="endTime != null">
-        END_TIME,
-      </if>
-      <if test="closeTime != null">
-        CLOSE_TIME,
-      </if>
-      <if test="param1 != null">
-        PARAM1,
-      </if>
-      <if test="param2 != null">
-        PARAM2,
-      </if>
-      <if test="param3 != null">
-        PARAM3,
-      </if>
-      <if test="param4 != null">
-        PARAM4,
-      </if>
-      <if test="param5 != null">
-        PARAM5,
-      </if>
-      <if test="createtime != null">
-        CREATETIME,
-      </if>
-      <if test="updatetime != null">
-        UPDATETIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="orderId != null">
-        #{orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="shippingId != null">
-        #{shippingId,jdbcType=INTEGER},
-      </if>
-      <if test="payment != null">
-        #{payment,jdbcType=DECIMAL},
-      </if>
-      <if test="paymentType != null">
-        #{paymentType,jdbcType=INTEGER},
-      </if>
-      <if test="postage != null">
-        #{postage,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="paymentTime != null">
-        #{paymentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sendTime != null">
-        #{sendTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="closeTime != null">
-        #{closeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="param1 != null">
-        #{param1,jdbcType=VARCHAR},
-      </if>
-      <if test="param2 != null">
-        #{param2,jdbcType=VARCHAR},
-      </if>
-      <if test="param3 != null">
-        #{param3,jdbcType=VARCHAR},
-      </if>
-      <if test="param4 != null">
-        #{param4,jdbcType=VARCHAR},
-      </if>
-      <if test="param5 != null">
-        #{param5,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.Order">
-    update tb_order
-    <set>
-      <if test="orderId != null">
-        ORDER_ID = #{orderId,jdbcType=VARCHAR},
-      </if>
-      <if test="userId != null">
-        USER_ID = #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="shippingId != null">
-        SHIPPING_ID = #{shippingId,jdbcType=INTEGER},
-      </if>
-      <if test="payment != null">
-        PAYMENT = #{payment,jdbcType=DECIMAL},
-      </if>
-      <if test="paymentType != null">
-        PAYMENT_TYPE = #{paymentType,jdbcType=INTEGER},
-      </if>
-      <if test="postage != null">
-        POSTAGE = #{postage,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        STATUS = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="paymentTime != null">
-        PAYMENT_TIME = #{paymentTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="sendTime != null">
-        SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        END_TIME = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="closeTime != null">
-        CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="param1 != null">
-        PARAM1 = #{param1,jdbcType=VARCHAR},
-      </if>
-      <if test="param2 != null">
-        PARAM2 = #{param2,jdbcType=VARCHAR},
-      </if>
-      <if test="param3 != null">
-        PARAM3 = #{param3,jdbcType=VARCHAR},
-      </if>
-      <if test="param4 != null">
-        PARAM4 = #{param4,jdbcType=VARCHAR},
-      </if>
-      <if test="param5 != null">
-        PARAM5 = #{param5,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null">
-        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null">
-        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Order">
+    <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.Order">
+        insert into tb_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="orderId != null">
+                ORDER_ID,
+            </if>
+            <if test="userId != null">
+                USER_ID,
+            </if>
+            <if test="shippingId != null">
+                SHIPPING_ID,
+            </if>
+            <if test="payment != null">
+                PAYMENT,
+            </if>
+            <if test="paymentType != null">
+                PAYMENT_TYPE,
+            </if>
+            <if test="postage != null">
+                POSTAGE,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="paymentTime != null">
+                PAYMENT_TIME,
+            </if>
+            <if test="sendTime != null">
+                SEND_TIME,
+            </if>
+            <if test="endTime != null">
+                END_TIME,
+            </if>
+            <if test="closeTime != null">
+                CLOSE_TIME,
+            </if>
+            <if test="param1 != null">
+                PARAM1,
+            </if>
+            <if test="param2 != null">
+                PARAM2,
+            </if>
+            <if test="param3 != null">
+                PARAM3,
+            </if>
+            <if test="param4 != null">
+                PARAM4,
+            </if>
+            <if test="param5 != null">
+                PARAM5,
+            </if>
+            <if test="createtime != null">
+                CREATETIME,
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="shippingId != null">
+                #{shippingId,jdbcType=INTEGER},
+            </if>
+            <if test="payment != null">
+                #{payment,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentType != null">
+                #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="postage != null">
+                #{postage,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paymentTime != null">
+                #{paymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closeTime != null">
+                #{closeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="param1 != null">
+                #{param1,jdbcType=VARCHAR},
+            </if>
+            <if test="param2 != null">
+                #{param2,jdbcType=VARCHAR},
+            </if>
+            <if test="param3 != null">
+                #{param3,jdbcType=VARCHAR},
+            </if>
+            <if test="param4 != null">
+                #{param4,jdbcType=VARCHAR},
+            </if>
+            <if test="param5 != null">
+                #{param5,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.Order">
+        update tb_order
+        <set>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="shippingId != null">
+                SHIPPING_ID = #{shippingId,jdbcType=INTEGER},
+            </if>
+            <if test="payment != null">
+                PAYMENT = #{payment,jdbcType=DECIMAL},
+            </if>
+            <if test="paymentType != null">
+                PAYMENT_TYPE = #{paymentType,jdbcType=INTEGER},
+            </if>
+            <if test="postage != null">
+                POSTAGE = #{postage,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="paymentTime != null">
+                PAYMENT_TIME = #{paymentTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                SEND_TIME = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                END_TIME = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="closeTime != null">
+                CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="param1 != null">
+                PARAM1 = #{param1,jdbcType=VARCHAR},
+            </if>
+            <if test="param2 != null">
+                PARAM2 = #{param2,jdbcType=VARCHAR},
+            </if>
+            <if test="param3 != null">
+                PARAM3 = #{param3,jdbcType=VARCHAR},
+            </if>
+            <if test="param4 != null">
+                PARAM4 = #{param4,jdbcType=VARCHAR},
+            </if>
+            <if test="param5 != null">
+                PARAM5 = #{param5,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.Order">
     update tb_order
     set ORDER_ID = #{orderId,jdbcType=VARCHAR},
       USER_ID = #{userId,jdbcType=INTEGER},
@@ -260,7 +260,7 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getAllOrderList" resultType="com.ahnstudio.management.vo.OrderListVO">
+    <select id="getAllOrderList" resultType="com.ahnstudio.management.vo.OrderListVO">
       SELECT O.ID
           ,O.ORDER_ID
           ,O.USER_ID
@@ -283,13 +283,38 @@
       ORDER BY O.CREATETIME DESC
   </select>
 
-  <select id="selectByOrderId" parameterType="java.lang.String" resultType="com.ahnstudio.management.pojo.Order">
-    SELECT
-    <include refid="Base_Column_List2" />
-    FROM  tb_order
-    where ORDER_ID = #{orderId}
-    order by id desc
+    <select id="getAllOrderListByCondition" parameterType="map" resultType="com.ahnstudio.management.vo.OrderListVO">
+      SELECT O.ID
+          ,O.ORDER_ID
+          ,O.USER_ID
+          ,U.USERNAME
+          ,U.COMPANY
+          ,O.SHIPPING_ID
+          ,O.PAYMENT
+          ,O.PAYMENT_TYPE
+          ,O.POSTAGE
+          ,O.STATUS
+          ,date_format(O.PAYMENT_TIME, '%Y-%m-%d %H:%i:%S') AS PAYMENT_TIME
+          ,date_format(O.SEND_TIME, '%Y-%m-%d %H:%i:%S') AS SEND_TIME
+          ,date_format(O.END_TIME, '%Y-%m-%d %H:%i:%S') AS END_TIME
+          ,date_format(O.CLOSE_TIME, '%Y-%m-%d %H:%i:%S') AS CLOSE_TIME
+          ,date_format(O.CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME
+          ,date_format(O.UPDATETIME, '%Y-%m-%d %H:%i:%S') AS UPDATETIME
+          ,U.COMPANY_TYPE
+          ,O.PARAM1 ,O.PARAM2 ,O.PARAM3 ,O.PARAM4 ,O.PARAM5
+      FROM tb_order O LEFT OUTER JOIN tb_user U ON O.USER_ID = U.ID
+      WHERE O.STATUS = #{status}
+      AND date_format(O.CREATETIME, '%Y-%m-%d') between #{startTime} and #{endTime}
+      ORDER BY O.CREATETIME DESC
   </select>
+
+    <select id="selectByOrderId" parameterType="java.lang.String" resultType="com.ahnstudio.management.pojo.Order">
+        SELECT
+        <include refid="Base_Column_List2"/>
+        FROM tb_order
+        where ORDER_ID = #{orderId}
+        order by id desc
+    </select>
 
     <update id="orderPaySuccess" parameterType="com.ahnstudio.management.pojo.Order">
         update tb_order set status = 20, PAYMENT_TIME=now() where order_id = #{orderNo}
@@ -311,11 +336,48 @@
         select ORDER_ID from tb_order where user_id = #{userId} order by id desc
     </select>
 
-  <update id="updateDeliveryNo" parameterType="map">
+    <update id="updateDeliveryNo" parameterType="map">
     update tb_order
     set param2 = #{deliveryNo}, status = 40
     where order_id = #{orderNo}
   </update>
+
+    <select id="selectTB_ORDER" parameterType="java.util.Map" resultType="java.util.Map">
+    <![CDATA[
+        SELECT 	T1.ORDER_ID AS ORDER_ID
+                ,T2.USERNAME AS USERNAME
+                ,T2.ID AS USER_ID
+                ,IFNULL(T2.COMPANY,'-') AS COMPANY_NAME
+                ,IFNULL(T1.PARAM1,'-') AS COMMENT
+                ,IFNULL(T2.DEVICE_SERIAL,'-') AS DEVICE_SERIAL
+                ,IFNULL(T2.DEVICE_MODEL,'-') AS DEVICE_MODEL
+                ,IFNULL(T2.DEVICE_COLOR,'-') AS DEVICE_COLOR
+                ,IFNULL(T2.PROVINCE,'-') AS PROVINCE
+                ,IFNULL(T2.CITY,'-') AS CITY
+                ,IFNULL(T2.ADDRESS,'-') AS ADDRESS
+                ,IFNULL(T2.PHONE,'-') AS MOBILE_NO
+                ,IFNULL((SELECT RECEIVER_NAME FROM TB_SHIPPING WHERE ID = T1.SHIPPING_ID),'-') AS RECEIVER_NAME
+                ,IFNULL((SELECT RECEIVER_PHONE FROM TB_SHIPPING WHERE ID = T1.SHIPPING_ID),'-') AS RECEIVER_PHONE
+                ,IFNULL((SELECT RECEIVER_ADDRESS FROM TB_SHIPPING WHERE ID = T1.SHIPPING_ID),'-') AS RECEIVER_ADDRESS
+                ,IFNULL(T1.PAYMENT,0) AS PAYMENT
+                ,IFNULL(T1.PAYMENT_TYPE,'-') AS PAYMENT_TYPE
+                ,T1.STATUS AS STATUS
+                ,IFNULL((SELECT CODE_NAME FROM TB_COMMON_CODE WHERE CODE_ID = 'ORDER_STATUS' AND CODE_TYPE = T1.STATUS),'-') AS STATUS_NAME
+                ,DATE_FORMAT(T1.PAYMENT_TIME, '%Y-%m-%d %H:%i:%S') AS PAYMENT_TIME
+                ,DATE_FORMAT(T1.SEND_TIME, '%Y-%m-%d %H:%i:%S') AS SEND_TIME
+                ,DATE_FORMAT(T1.END_TIME, '%Y-%m-%d %H:%i:%S') AS END_TIME
+                ,DATE_FORMAT(T1.CLOSE_TIME, '%Y-%m-%d %H:%i:%S') AS CLOSE_TIME
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%S') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%S') AS UPDATETIME
+        FROM 	TB_ORDER T1
+                LEFT OUTER JOIN TB_USER T2
+                            ON 	T1.USER_ID = T2.ID
+        WHERE 	T1.CREATETIME >= STR_TO_DATE(#{START_DATE},'%Y-%m-%d')
+        AND 	T1.CREATETIME < STR_TO_DATE(#{END_DATE},'%Y-%m-%d') + INTERVAL 1 DAY
+        AND 	(IFNULL(#{STATUS},'') = ''		OR 	T1.STATUS = #{STATUS})
+        ORDER BY T1.CREATETIME DESC
+        ]]>
+  </select>
 
 
 </mapper>

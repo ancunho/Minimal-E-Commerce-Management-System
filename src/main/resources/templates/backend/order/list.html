@@ -3,9 +3,15 @@
 <div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
 <title>订单列表</title>
 <body class="layui-layout-body">
-
 <style>
-    .layui-table-cell {display:table-cell; vertical-align: middle;}
+    .bbColr { border-bottom: 3px solid #808080!important;}
+    #orderListTable tr:hover { background: #efefef !important;}
+    #orderListTable .detail-product-name { font-size:20px;}
+    #orderListTable .detail-weight { font-size: 16px; color: #ff515b;}
+    #orderListTable .detail-qty {font-size: 16px; color: #ff515b;}
+    #orderListTable .detail-total-price { font-size:14px; color:#000;}
+    #orderListTable .detail-current-price { font-size:14px;}
+    #orderListTable .detail-delivery-type { font-size:14px;}
 </style>
 <div class="layui-layout layui-layout-admin">
     <div th:replace="common/backend_include::backend_header_nav"></div>
@@ -24,7 +30,65 @@
             </div>
             <!-- // Location End-->
             <div class="sh-content">
-                <table id="orderListTable" lay-filter="orderTableFilter" style="table-layout:fixed"></table>
+                <div class="layui-row">
+                    <div class="layui-field-box">
+                        <div class="layui-form-item">
+                            <form class="layui-form" style="display: inline;">
+                                <div class="layui-btn-group">
+                                    <button type="button" class="layui-btn layui-btn-primary btnClick layui-btn-normal" id="ORDER_TODAY">今天</button>
+                                    <button type="button" class="layui-btn layui-btn-primary btnClick" id="ORDER_WEEKEND">近一周</button>
+                                    <button type="button" class="layui-btn layui-btn-primary btnClick" id="ORDER_MONTH">近一个月</button>
+                                </div>
+                                <div class="layui-inline" style="margin-bottom: 0">
+                                    <label class="layui-form-label">日期</label>
+                                    <div class="layui-input-inline" style="width:350px;">
+                                        <input type="text" class="layui-input" id="START_DATE" readonly="readonly" value="" placeholder="起始日期" style="display: inline; width:auto;">
+                                        ～
+                                        <input type="text" class="layui-input" id="END_DATE" readonly="readonly" value="" placeholder="截止日期" style="display: inline; width:auto;">
+                                    </div>
+                                </div>
+                                <div class="layui-inline" style="margin-bottom: 0">
+                                    <label class="layui-form-label">状态</label>
+                                    <div class="layui-input-inline">
+                                        <select name="orderStatus" id="STATUS">
+                                            <option value="">全部</option>
+                                            <option value="10">未付款</option>
+                                            <option value="20">已付款</option>
+                                            <option value="40">已发货</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="layui-inline">
+                                <button class="layui-btn layui-btn-normal" id="btnSearch">查询</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="orderListTable" class="layui-table">
+                    <colgroup>
+                        <col width="60px" />
+                        <col width="100px" />
+                        <col width="350px" />
+                        <col width="150px" />
+                        <col width="100px" />
+                        <col width="*" />
+                        <col width="200px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>订单号</th>
+                            <th>收货人信息</th>
+                            <th>支付金额</th>
+                            <th>订单状态</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
                 <div id="pagedemo"></div>
             </div>
         </div>
@@ -34,7 +98,172 @@
     <div th:replace="common/backend_include::backend_footer"></div>
 </div>
 
+<div th:replace="common/backend_include::popup"></div>
 <script th:inline="javascript">
+var lfn_SearchTable = function(pageNo) {
+    var params = {
+        START_DATE : $("#START_DATE").val()
+        , END_DATE : $("#END_DATE").val()
+        , STATUS : $("#STATUS").val()
+    };
+
+    $.ajax({
+        url : '/api/order/list'
+        , data : params
+        , contentType : 'application/x-www-form-urlencoded'
+        , method: 'POST'
+        , success : function (response) {
+            console.log(response);
+            if (response.status !== 0) {
+                swal(response.msg,'Error', 'error');
+            } else {
+                $("#orderListTable tbody").html('');
+                var sbHTML = new StringBuffer();
+                for (var i = 0; typeof response.data.list != 'undefined' && i < response.data.list.length; i++) {
+                    sbHTML.append("<tr>");
+                    sbHTML.append("     <td rowspan='2' class='bbColr'>" + (i + 1) + "</td>");
+                    sbHTML.append("     <td>" + response.data.list[i].ORDER_ID + "</td>");
+                    sbHTML.append("     <td>" + checkEmpty(response.data.list[i].RECEIVER_NAME,'-') + " | " + checkEmpty(response.data.list[i].RECEIVER_PHONE,'-') + " | " + checkEmpty(response.data.list[i].RECEIVER_ADDRESS,'-') + "</td>");
+                    sbHTML.append("     <td>" + checkEmpty(response.data.list[i].PAYMENT,'-') + "</td>");
+                    sbHTML.append("     <td>" + checkEmpty(response.data.list[i].STATUS_NAME,'-') + "</td>");
+                    sbHTML.append("     <td>" + checkEmpty(response.data.list[i].COMMENT,'-') + "</td>");
+                    sbHTML.append("     <td>");
+                    sbHTML.append("         <input type='hidden' class='ORDER_ID' value='" + response.data.list[i].ORDER_ID + "' />");
+                    sbHTML.append("         <button class='layui-btn layui-btn-sm layui-btn-primary btnOrderDetail'>查看</button>");
+                    if (response.data.list[i].STATUS == 20) {
+                        sbHTML.append("         <button class='layui-btn layui-btn-sm layui-btn-primary btnAfterPay'><i class='layui-icon layui-icon-edit'></i>确认发货</button>");
+                    } else if (response.data.list[i].STATUS == 40) {
+                        sbHTML.append("         <button class='layui-btn layui-btn-sm layui-btn-primary btnAfterDelivery'><i class='layui-icon layui-icon-edit'></i>订单完成</button>");
+                    }
+                    sbHTML.append("     </td>");
+                    sbHTML.append("</tr>");
+                    sbHTML.append("<tr class='detail'>");
+                    sbHTML.append("     <td colspan='5' class='bbColr'>");
+                    sbHTML.append("         <div>");
+                    for (var j = 0; typeof response.data.list[i].lstOrderItem != 'undefined' && j < response.data.list[i].lstOrderItem.length; j++) {
+                        sbHTML.append("           <div> ");
+                        sbHTML.append("                 <div>");
+                        sbHTML.append("                     <p class='detail-product-name'>" + response.data.list[i].lstOrderItem[j].PRODUCT_NAME + "</p>");
+                        sbHTML.append("                     <p><strong class='detail-weight'>" + checkEmpty(response.data.list[i].lstOrderItem[j].WEIGHT,'XX') + "kg</strong> X <strong class='detail-qty'>" + checkEmpty(response.data.list[i].lstOrderItem[j].QTY,'XX') + "</strong> = <span class='detail-total-price'>(" + checkEmpty(response.data.list[i].lstOrderItem[j].TOTAL_PRICE,'XX') + ")</span></p>");
+                        sbHTML.append("                     <p class='detail-current-price'>单价：" + checkEmpty(response.data.list[i].lstOrderItem[j].CURRENT_UNIT_PRICE,'-') + "&nbsp;&nbsp;&nbsp;&nbsp;物流类型：<strong class='detail-delivery-type'>" + checkEmpty(response.data.list[i].lstOrderItem[j].DELIVERY_TYPE,'-') + "</strong></p>");
+                        sbHTML.append("                 </div>");
+                        sbHTML.append("            </div> ");
+                    }
+                    sbHTML.append("         </div>");
+                    sbHTML.append("     </td>");
+                    sbHTML.append("     <td class='bbColr' style='text-align: center'>");
+                    sbHTML.append("         <div>");
+                    sbHTML.append("               <p><strong>状态：</strong><span>" + checkEmpty(response.data.list[i].STATUS_NAME) + "</span></p><p><strong>总价：</strong><span>" + checkEmpty(response.data.list[i].PAYMENT,'0') + "元</span></p>");
+                    sbHTML.append("         </div>");
+                    sbHTML.append("     </td>");
+                    sbHTML.append("</tr>");
+                }
+
+                $("#orderListTable tbody").html(sbHTML.toString());
+
+                $(".btnAfterPay").each(function(idx, elem){
+                    $(elem).unbind('click').click(function (e) {
+                        $('#popup01').bPopup({
+                            modalClose: false,
+                            opacity: 0.6,
+                            positionStyle: 'fixed',
+                            closeClass: 'btnPopupClose'
+                        });
+
+/*
+                        $("#btnSaveDeliveryNo").unbind('click').click(function(e){
+                            var params = {
+                                orderNo: '',
+                                deliveryNo : $(".popup01 #deliveryNo").val()
+                            }
+                            $.ajax({
+                                url : '/api/order/update_deliveryno?orderNo=' + data.orderId + '&deliveryNo=' + deliveryNo
+                                , method : 'POST'
+
+
+
+                                url : '/api/order/update_deliveryno'
+                                , data : params
+                                , contentType : 'application/x-www-form-urlencoded'
+                                , method: 'POST'
+                                , success: function (res) {
+                                    // console.log(res);
+                                    if (res.status == 0) {
+                                        layer.msg("更新成功", function() {
+                                            layer.closeAll();
+                                        });
+                                    } else {
+                                        layer.msg(res.msg);
+                                    }
+                                }
+                                , error : function (res) {
+                                    alert("ERROR");
+                                    // console.log(res);
+                                }
+                            })
+                        });
+*/
+
+                    });
+                });
+
+
+
+            }
+        }
+        , error : function (e,a,r) {
+            swal(e+a+r,'','error');
+        }
+    });
+}
+
+$(document).ready(function(){
+
+    $("#btnSearch").unbind('click').click(function () {
+        lfn_SearchTable(1);
+    });
+
+    $("#ORDER_TODAY").click(function(){
+        $("#START_DATE").val(getCurrentDay());
+        $("#END_DATE").val(getCurrentDay());
+        $("#STATUS").val('');
+        lfn_SearchTable(1);
+    });
+
+    $("#ORDER_WEEKEND").click(function(){
+        $("#START_DATE").val(getDate(-7));
+        $("#END_DATE").val(getCurrentDay());
+        $("#STATUS").val('');
+        lfn_SearchTable(1);
+    });
+
+    $("#ORDER_MONTH").click(function(){
+        $("#START_DATE").val(getDate(-30));
+        $("#END_DATE").val(getCurrentDay());
+        $("#STATUS").val('');
+        lfn_SearchTable(1);
+    });
+
+    $(".btnClick").each(function (idx, elem) {
+        $(elem).click(function(){
+            $(".btnClick").removeClass('layui-btn-normal').eq(idx).addClass('layui-btn-normal').addClass('on');
+        });
+    });
+
+    layui.use('laydate', function () {
+        layui.laydate.render({
+            elem: '#START_DATE'
+            ,value: getCurrentDay()
+            ,isInitValue: true
+        });
+        layui.laydate.render({
+            elem: '#END_DATE'
+            ,value: getCurrentDay()
+            ,isInitValue: true
+        });
+    });
+
+    layui.form.render();
 
     layui.use(['element'], function () {
         var element = layui.element;
@@ -42,159 +271,43 @@
     });
 
 
-    layui.table.render({
-        elem: '#orderListTable'
-        , url: '/api/order/list' //数据接口
-        , method: 'POST'
-        , page: true //开启分页
-        , parseData : function(res) {
-            return {
-                "code": res.status, //解析接口状态
-                "msg": res.msg, //解析提示文本
-                "count": res.data.total, //解析数据长度
-                "data": res.data.list //解析数据列表
-            };
-        }
-        , cols: [[ //表头
-            { align : 'center', title : '编号', width:100, sort: true, templet : function(data) { return data.LAY_INDEX}}
-            , { field: 'orderId', title: '订单号', align : 'center', width:180}
-            // , { field : 'username', title : '用户', align: 'center', width:100 }
-            , { field : 'company', title : '公司名', align: 'center', width:100 }
-            , { field : 'payment', title : '支付金额', align: 'center', width:100 }
 
-            // CANCELED(0,"已取消"),
-            // NO_PAY(10,"未支付"),
-            // PAID(20,"已付款"),
-            // SHIPPED(40,"已发货"),
-            // ORDER_SUCCESS(50,"订单完成"),
-            // ORDER_CLOSE(60,"订单关闭");
-            , {
-                field : 'status'
-                , title : '订单状态'
-                , align : 'center'
-                , width : 100
-                , templet : function (item) {
-                    if (item.status == 0) {
-                        return '已取消';
-                    } else if (item.status == 10) {
-                        return '未支付';
-                    } else if (item.status == 20) {
-                        return '已付款';
-                    } else if (item.status == 40) {
-                        return '已发货';
-                    } else if (item.status == 50) {
-                        return '订单完成';
-                    } else if (item.status == 60) {
-                        return '订单关闭';
-                    }
-                }
-            }
-            , {
-                // field : 'paymentTime'
-                title : '时间'
-                , align: 'center'
-                , width:250
-                , templet: function (item) {
-                    console.log(item);
-                    var timeStr = "";
-                    if (item.createtime) {
-                        timeStr += ('<strong>创建时间</strong>:' + item.createtime + '<br/>');
-                    }
+    lfn_SearchTable(1);
 
-                    if (item.paymentTime) {
-                        timeStr += ('<strong>支付时间</strong>:' + item.paymentTime + '<br/>');
-                    }
+});
 
-                    if (item.sendTime) {
-                        timeStr += ('<strong>发货时间</strong>:' + item.sendTime + '<br/>');
-                    }
-
-                    return timeStr;
-                }
-            }
-            // , { field : 'createtime', title : '创建时间', align: 'center' }
-            , { field : 'param1', title : '订单备注', align: 'center', width:100 }
-            , { field : 'param2', title : '快递单号', align: 'center', hide: true }
-            , {
-                title : '操作'
-                , align : "center"
-                , width: 200
-                , templet : function (item) {
-                    // console.log(item);
-                    if(item.status == 20) {
-                        //已付款 --> 按钮状态：确认发货
-                        return "<a class='layui-btn layui-bg-blue layui-btn-xs' lay-event='orderDetail' href='/manager/order/detail/" + item.orderId + "'><i class='layui-icon layui-icon-search'></i></a>" +
-                            "<a class='layui-btn layui-bg-orange layui-btn-xs' lay-event='btnAfterPay'><i class='layui-icon layui-icon-edit'></i> 确认发货</a>";
-                    } else if (item.status == 40) {
-                        //已发货 --> 按钮状态：确认订单完成
-                        return "<a class='layui-btn layui-bg-blue layui-btn-xs' lay-event='orderDetail' href='/manager/order/detail/" + item.orderId + "'><i class='layui-icon layui-icon-search'></i></a>" +
-                            "<a class='layui-btn layui-bg-cyan layui-btn-xs' lay-event='btnAfterDelivery'>订单完成</a>";
-                    } else {
-                        return "<a class='layui-btn layui-bg-blue layui-btn-xs' lay-event='orderDetail' href='/manager/order/detail/" + item.orderId + "'><i class='layui-icon layui-icon-search'></i></a>";
-                    }
+function getCurrentDay() {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
 
 
-                }
-            }
-        ]]
-    });
+function getDate(num) {
+    var date1 = new Date();
+    var time1 = date1.getFullYear() + "-" + (date1.getMonth() + 1) + "-" + date1.getDate();
+    var date2 = new Date(date1);
+    date2.setDate(date1.getDate() + num);
+    var time2 = addZero(date2.getFullYear()) + "-" + addZero((date2.getMonth() + 1)) + "-" + addZero(date2.getDate());
+    return time2;
+}
 
-    layui.table.on('tool(orderTableFilter)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-        var data = obj.data //获得当前行数据
-            , layEvent = obj.event; //获得 lay-event 对应的值
-        // console.log(obj);
-        if (layEvent === 'orderDetail') {
-
-        } else if (layEvent === 'btnAfterPay') {
-            console.log(data);
-            var inputStr = "";
-            if (data.param2 != "") {
-                inputStr = '<input value="' + data.param2 + '" type="text" name="deliveryNo" id="deliveryNo" class="layui-input" placeholder="请输入快递单号" />';
-            } else {
-                inputStr = '<input type="text" name="deliveryNo" id="deliveryNo" class="layui-input" placeholder="请输入快递单号" />';
-            }
-
-            layer.open({
-                type: 1
-                ,title: '请输入快递单号'
-                , content: '<div style="padding:15px;"> ' + inputStr + '</div>'
-                , btn: ['确认', '取消']
-                , btn1: function(index, layero) {
-                    const deliveryNo = $("#deliveryNo").val();
-                    console.log(data);
-                    if (deliveryNo == "") {
-                        layer.msg("请输入快递单号");
-                    } else {
-                        $.ajax({
-                            url : '/api/order/update_deliveryno?orderNo=' + data.orderId + '&deliveryNo=' + deliveryNo
-                            , method : 'POST'
-                            , success: function (res) {
-                                console.log(res);
-                                if (res.status == 0) {
-                                    layer.msg("更新成功", function() {
-                                        layer.closeAll();
-                                    });
-                                } else {
-                                    layer.msg(res.msg);
-                                }
-                            }
-                            , error : function (res) {
-                                alert("ERROR");
-                                console.log(res);
-                            }
-                        })
-                    }
-                }
-                , btn2: function(index, layero) {
-                    console.log('close');
-                    layer.closeAll();
-
-                }
-            })
-        }
-        layui.table.reload('orderListTable');
-    });
-
+function addZero(num){
+    if(parseInt(num) < 10){
+        num = '0' + num;
+    }
+    return num;
+}
 
 </script>
 

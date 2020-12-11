@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Component("orderItemMapper")
@@ -25,4 +26,6 @@ public interface OrderItemMapper {
     void batchInsert(@Param("orderItemList") List<OrderItem> orderItemList);
 
     List<OrderItem> getByOrderId(@Param("orderId") String orderId);
+
+    List<Map<String, Object>> selectTB_ORDER_ITEMByORDER_ID(String ORDER_ID);
 }

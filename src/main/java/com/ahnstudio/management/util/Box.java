@@ -3,6 +3,7 @@ package com.ahnstudio.management.util;
 import java.lang.reflect.Array;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 public class Box extends Hashtable {
@@ -68,6 +69,20 @@ public class Box extends Hashtable {
             }
 
             field[i].setAccessible(false);
+        }
+    }
+
+    public void copyToEntityMap(Map<String, Object> map) {
+        if (map == null) {
+            throw new NullPointerException("trying to copy form box to null map");
+        }
+
+        Hashtable src = (Hashtable) this;
+        Enumeration e = src.keys();
+        while(e.hasMoreElements()) {
+            String key = (String) e.nextElement();
+            Object value = src.get(key);
+            map.put(key, value);
         }
     }
 

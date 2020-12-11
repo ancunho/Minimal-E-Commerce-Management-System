@@ -1,7 +1,7 @@
-package com.ahnstudio.management.blog.controller;
+package com.ahnstudio.management.controller.backend;
 
-import com.ahnstudio.management.blog.pojo.BlogPostsWithBLOBs;
-import com.ahnstudio.management.blog.service.PostService;
+import com.ahnstudio.management.pojo.BlogPostsWithBLOBs;
+import com.ahnstudio.management.service.PostService;
 import com.ahnstudio.management.common.ServerResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,11 @@
-package com.ahnstudio.management.blog.dao;
+package com.ahnstudio.management.dao;
 
-import com.ahnstudio.management.blog.pojo.BlogContact;
+import com.ahnstudio.management.pojo.BlogContact;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
+@Mapper
+@Component("blogContactMapper")
 public interface BlogContactMapper {
     int deleteByPrimaryKey(Long id);
 
