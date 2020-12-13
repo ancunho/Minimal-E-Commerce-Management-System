@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="common/common_head_meta_backend::head_meta_backend"></div>
+<title>Customer List</title>
+<body class="layui-layout-body">
+
+<style>
+    .layui-table-cell { vertical-align: middle; }
+</style>
+<div class="layui-layout layui-layout-admin">
+    <div th:replace="common/backend_include::backend_header_nav"></div>
+    <div th:replace="common/backend_include::backend_side_menu"></div>
+
+    <div class="layui-body">
+        <!-- Content Start -->
+        <div class="sh-container">
+            <!-- Location Start-->
+            <div class="location">
+                 <span class="layui-breadcrumb">
+                    <a href="#this">首页</a>
+                    <a><cite>配置</cite></a>
+                </span>
+            </div>
+            <!-- // Location End-->
+            <div class="sh-content">
+                <div class="layui-row" style="text-align: left; padding-left:30px; line-height:40px; font-size:12px;">
+                    参考图片大小：320px * 200px
+                </div>
+                <div class="layui-col-md12 mb20">
+                    <div class="row">
+                        <label class="layui-form-label">首页轮播图</label>
+                        <div class="layui-input-block">
+                            <div class="row">
+                                <div class="layui-col-md4 fileList" data-sort="1">
+
+                                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius" id="subUploadImage">
+                                        <i class="layui-icon">&#xe67c;</i>缩略图1
+                                    </button>
+                                    <div class="iamgeViewDiv" id="subUploadImageView" style="width:150px;">
+                                        <input type="hidden" class="FILE_SEQ" value="" />
+                                        <input type="hidden" class="FILE_NAME" value="" />
+                                        <input type="hidden" class="FILE_PATH" value="" />
+                                        <input type="hidden" class="FILE_FULL_PATH" value="" />
+                                        <input type="hidden" class="SORT" value="1" />
+                                        <input type="hidden" class="bExist" value="0" />
+                                        <input type="hidden" id="subImage" value="" />
+                                        <hr />
+                                        <img src="" alt="上传成功后渲染" style="max-width: 100%">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4 fileList" data-sort="2">
+                                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius" id="subUploadImage2">
+                                        <i class="layui-icon">&#xe67c;</i>缩略图2
+                                    </button>
+                                    <div class="iamgeViewDiv" id="subUploadImageView2" style="width:150px;">
+                                        <input type="hidden" class="FILE_SEQ" value="" />
+                                        <input type="hidden" class="FILE_NAME" value="" />
+                                        <input type="hidden" class="FILE_PATH" value="" />
+                                        <input type="hidden" class="FILE_FULL_PATH" value="" />
+                                        <input type="hidden" class="SORT" value="2" />
+                                        <input type="hidden" class="bExist" value="0" />
+                                        <input type="hidden" id="subImage2" value="" />
+                                        <hr />
+                                        <img src="" alt="上传成功后渲染" style="max-width: 100%">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4 fileList" data-sort="3">
+                                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius" id="subUploadImage3">
+                                        <i class="layui-icon">&#xe67c;</i>缩略图3
+                                    </button>
+                                    <div class="iamgeViewDiv" id="subUploadImageView3" style="width:150px;">
+                                        <input type="hidden" class="FILE_SEQ" value="" />
+                                        <input type="hidden" class="FILE_NAME" value="" />
+                                        <input type="hidden" class="FILE_PATH" value="" />
+                                        <input type="hidden" class="FILE_FULL_PATH" value="" />
+                                        <input type="hidden" class="SORT" value="3" />
+                                        <input type="hidden" class="bExist" value="0" />
+                                        <input type="hidden" id="subImage3" value="" />
+                                        <hr />
+                                        <img src="" alt="上传成功后渲染" style="max-width: 100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div style="text-align: center"><a class="text-center layui-btn layui-btn-lg layui-btn-radius layui-btn-normal" id="btnSaveMainImage"><i class="layui-icon layui-icon-upload-drag"></i> 保存</a></div>
+
+            </div>
+        </div>
+        <!-- // Content End -->
+    </div>
+
+    <div th:replace="common/backend_include::backend_footer"></div>
+</div>
+
+<script th:inline="javascript">
+
+
+    layui.use(['element'], function () {
+        var element = layui.element;
+        element.render();
+    });
+
+    // 초기 오브젝트 생성
+    var MAIN_SUB_IMAGE = $("#subImage").val()
+        , MAIN_SUB_IMAGE2 = $("#subImage2").val()
+        , MAIN_SUB_IMAGE3 = $("#subImage3").val();
+
+    layui.use(['layer', 'form', 'element'], function(){
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element;
+        form.render();
+        element.render();
+
+        form.on('switch(productStatus)', function (data) {
+            var checked = data.elem.checked === true ? "1" : "0";
+            $("#status").val(checked);
+        });
+
+        // Sub Image Upload Start
+        //上传
+        layui.upload.render({
+            elem: '#subUploadImage'
+            ,url: '/api/file/main/upload' //改成您自己的上传接口
+            ,done: function(res){
+                layer.msg('上传成功');
+                if (typeof res.data != 'undefined') {
+                    $("#subUploadImageView").find('img').attr('src', res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView").find('.FILE_FULL_PATH').val(res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView").find('.FILE_NAME').val(res.data.FILE_NAME);
+                    $("#subUploadImageView").find('.FILE_PATH').val(res.data.FILE_PATH);
+                    $("#subUploadImageView").find('.bExist').val('1');
+                }
+            }
+        });
+        // Sub Image Upload End
+
+        // Sub Image2 Upload Start
+        //上传
+        layui.upload.render({
+            elem: '#subUploadImage2'
+            ,url: '/api/file/main/upload' //改成您自己的上传接口
+            ,done: function(res){
+                layer.msg('上传成功');
+                if (typeof res.data != 'undefined') {
+                    $("#subUploadImageView2").find('img').attr('src', res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView2").find('.FILE_FULL_PATH').val(res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView2").find('.FILE_NAME').val(res.data.FILE_NAME);
+                    $("#subUploadImageView2").find('.FILE_PATH').val(res.data.FILE_PATH);
+                    $("#subUploadImageView2").find('.bExist').val('1');
+                }
+            }
+        });
+        // Sub Image2 Upload End
+
+        // Sub Image3 Upload Start
+        //上传
+        layui.upload.render({
+            elem: '#subUploadImage3'
+            ,url: '/api/file/main/upload' //改成您自己的上传接口
+            ,done: function(res){
+                layer.msg('上传成功');
+                if (typeof res.data != 'undefined') {
+                    $("#subUploadImageView3").find('img').attr('src', res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView3").find('.FILE_FULL_PATH').val(res.data.FILE_FULL_PATH);
+                    $("#subUploadImageView3").find('.FILE_NAME').val(res.data.FILE_NAME);
+                    $("#subUploadImageView3").find('.FILE_PATH').val(res.data.FILE_PATH);
+                    $("#subUploadImageView3").find('.bExist').val('1');
+                }
+            }
+        });
+        // Sub Image3 Upload End
+
+    });
+
+
+    var lfn_RenderImage = function() {
+        $.ajax({
+            url : '/api/file/main/list'
+            , type : "POST"
+            ,success: function(response) {
+                console.log(response);
+                for(var i = 0; typeof response.data != 'undefined' && i < response.data.length; i++) {
+                    if (response.data[i].sort === "1") {
+                        $(".fileList").eq(0).find('img').attr('src', response.data[i].fileFullPath);
+                        $(".fileList").eq(0).find('.FILE_FULL_PATH').val(response.data[i].fileFullPath);
+                        $(".fileList").eq(0).find('.FILE_NAME').val(response.data[i].fileName);
+                        $(".fileList").eq(0).find('.FILE_PATH').val(response.data[i].filePath);
+                    } else if (response.data[i].sort === "2") {
+                        $(".fileList").eq(1).find('img').attr('src', response.data[i].fileFullPath);
+                        $(".fileList").eq(1).find('.FILE_FULL_PATH').val(response.data[i].fileFullPath);
+                        $(".fileList").eq(1).find('.FILE_NAME').val(response.data[i].fileName);
+                        $(".fileList").eq(1).find('.FILE_PATH').val(response.data[i].filePath);
+                    } else if (response.data[i].sort === "3") {
+                        $(".fileList").eq(2).find('img').attr('src', response.data[i].fileFullPath);
+                        $(".fileList").eq(2).find('.FILE_FULL_PATH').val(response.data[i].fileFullPath);
+                        $(".fileList").eq(2).find('.FILE_NAME').val(response.data[i].fileName);
+                        $(".fileList").eq(2).find('.FILE_PATH').val(response.data[i].filePath);
+                    }
+                }
+            }
+            ,error: function(error) {
+                swal("ERROR", "", "error");
+            }
+        })
+    }
+
+    $(document).ready(function() {
+        lfn_RenderImage();
+
+        $("#btnSaveMainImage").unbind('click').click(function(e){
+
+            var arrFileVO = new Array();
+            $(".fileList").each(function (idx, elem) {
+                var FileVOObject = new Object();
+                // if ($(".fileList").eq(idx).find('.bExist').val() == "1") {
+                    FileVOObject.FILE_SEQ = checkEmpty($(".fileList").eq(idx).find('.FILE_SEQ').val());
+                    FileVOObject.FILE_NAME = checkEmpty($(".fileList").eq(idx).find('.FILE_NAME').val());
+                    FileVOObject.FILE_PATH = checkEmpty($(".fileList").eq(idx).find('.FILE_PATH').val());
+                    FileVOObject.FILE_FULL_PATH = checkEmpty($(".fileList").eq(idx).find('.FILE_FULL_PATH').val());
+                    FileVOObject.USE_TYPE = '10';
+                    FileVOObject.SORT = checkEmpty($(".fileList").eq(idx).find('.SORT').val());
+                    arrFileVO.push(FileVOObject);
+                // }
+            });
+
+            $.ajax({
+                url : '/api/file/main/save'
+                , type : "POST"
+                , dataType: 'json'
+                , data : { arrFileVO: JSON.stringify(arrFileVO)}
+                , success : function (response) {
+                    lfn_RenderImage();
+                }
+                ,error : function (err) {
+                    swal("ERROR",'Error', 'error');
+                }
+            });
+
+
+
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>

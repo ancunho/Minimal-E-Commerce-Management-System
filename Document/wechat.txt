@@ -19,3 +19,15 @@ if(!openId) {
         }
     });
 }
+
+BufferedReader reader = request.getReader();
+String line="";
+StringBuffer sb = new StringBuffer();
+while ((line = reader.readLine()) != null) {
+    sb.append(line);
+}
+
+Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+JsonParser parser = new JsonParser();
+JsonElement objTB_FILE = parser.parse(sb.toString()).getAsJsonObject().get("FileVO");
+FileVO fileVO = gson.fromJson(objTB_FILE, FileVO.class);

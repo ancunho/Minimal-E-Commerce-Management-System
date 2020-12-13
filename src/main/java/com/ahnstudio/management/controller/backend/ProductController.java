@@ -30,7 +30,7 @@ public class ProductController {
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse list(HttpSession session, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+    public ServerResponse list(HttpSession session, @RequestParam(value = "page", defaultValue = "1") int pageNum, @RequestParam(value = "limit", defaultValue = "2") int pageSize) {
         return productService.getProductListForAdmin(pageNum, pageSize);
     }
 

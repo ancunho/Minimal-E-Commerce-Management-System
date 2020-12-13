@@ -105,8 +105,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ServerResponse getProductListForAdmin(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
         List<Product> productList = productMapper.selectAllProduct();
-        return ServerResponse.createBySuccess(productList);
+        PageInfo pageResult = new PageInfo(productList);
+        pageResult.setList(productList);
+        return ServerResponse.createBySuccess(pageResult);
     }
 
     @Override

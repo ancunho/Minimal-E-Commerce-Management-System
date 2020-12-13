@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ahnstudio.management.dao.FileVOMapper">
+    <resultMap id="BaseResultMap" type="com.ahnstudio.management.pojo.FileVO">
+        <id column="FILE_SEQ" jdbcType="INTEGER" property="fileSeq"/>
+        <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName"/>
+        <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath"/>
+        <result column="FILE_FULL_PATH" jdbcType="VARCHAR" property="fileFullPath"/>
+        <result column="USE_TYPE" jdbcType="VARCHAR" property="useType"/>
+        <result column="USE_YN" jdbcType="VARCHAR" property="useYn"/>
+        <result column="SORT" jdbcType="VARCHAR" property="sort"/>
+        <result column="PARAM1" jdbcType="VARCHAR" property="param1"/>
+        <result column="PARAM2" jdbcType="VARCHAR" property="param2"/>
+        <result column="PARAM3" jdbcType="VARCHAR" property="param3"/>
+        <result column="PARAM4" jdbcType="VARCHAR" property="param4"/>
+        <result column="PARAM5" jdbcType="VARCHAR" property="param5"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    FILE_SEQ, FILE_NAME, FILE_PATH, FILE_FULL_PATH, USE_TYPE, USE_YN, SORT, PARAM1, PARAM2, 
+    PARAM3, PARAM4, PARAM5, CREATETIME, UPDATETIME
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_file
+        where FILE_SEQ = #{fileSeq,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_file
+    where FILE_SEQ = #{fileSeq,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ahnstudio.management.pojo.FileVO">
+    insert into tb_file (FILE_SEQ, FILE_NAME, FILE_PATH, 
+      FILE_FULL_PATH, USE_TYPE, USE_YN, 
+      SORT, PARAM1, PARAM2, 
+      PARAM3, PARAM4, PARAM5, 
+      CREATETIME, UPDATETIME)
+    values (#{fileSeq,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, 
+      #{fileFullPath,jdbcType=VARCHAR}, #{useType,jdbcType=VARCHAR}, #{useYn,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, 
+      #{param3,jdbcType=VARCHAR}, #{param4,jdbcType=VARCHAR}, #{param5,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ahnstudio.management.pojo.FileVO">
+        insert into tb_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileSeq != null">
+                FILE_SEQ,
+            </if>
+            <if test="fileName != null">
+                FILE_NAME,
+            </if>
+            <if test="filePath != null">
+                FILE_PATH,
+            </if>
+            <if test="fileFullPath != null">
+                FILE_FULL_PATH,
+            </if>
+            <if test="useType != null">
+                USE_TYPE,
+            </if>
+            <if test="useYn != null">
+                USE_YN,
+            </if>
+            <if test="sort != null">
+                SORT,
+            </if>
+            <if test="param1 != null">
+                PARAM1,
+            </if>
+            <if test="param2 != null">
+                PARAM2,
+            </if>
+            <if test="param3 != null">
+                PARAM3,
+            </if>
+            <if test="param4 != null">
+                PARAM4,
+            </if>
+            <if test="param5 != null">
+                PARAM5,
+            </if>
+            <if test="createtime != null">
+                CREATETIME,
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileSeq != null">
+                #{fileSeq,jdbcType=INTEGER},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="filePath != null">
+                #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileFullPath != null">
+                #{fileFullPath,jdbcType=VARCHAR},
+            </if>
+            <if test="useType != null">
+                #{useType,jdbcType=VARCHAR},
+            </if>
+            <if test="useYn != null">
+                #{useYn,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="param1 != null">
+                #{param1,jdbcType=VARCHAR},
+            </if>
+            <if test="param2 != null">
+                #{param2,jdbcType=VARCHAR},
+            </if>
+            <if test="param3 != null">
+                #{param3,jdbcType=VARCHAR},
+            </if>
+            <if test="param4 != null">
+                #{param4,jdbcType=VARCHAR},
+            </if>
+            <if test="param5 != null">
+                #{param5,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ahnstudio.management.pojo.FileVO">
+        update tb_file
+        <set>
+            <if test="fileName != null">
+                FILE_NAME = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="filePath != null">
+                FILE_PATH = #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileFullPath != null">
+                FILE_FULL_PATH = #{fileFullPath,jdbcType=VARCHAR},
+            </if>
+            <if test="useType != null">
+                USE_TYPE = #{useType,jdbcType=VARCHAR},
+            </if>
+            <if test="useYn != null">
+                USE_YN = #{useYn,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                SORT = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="param1 != null">
+                PARAM1 = #{param1,jdbcType=VARCHAR},
+            </if>
+            <if test="param2 != null">
+                PARAM2 = #{param2,jdbcType=VARCHAR},
+            </if>
+            <if test="param3 != null">
+                PARAM3 = #{param3,jdbcType=VARCHAR},
+            </if>
+            <if test="param4 != null">
+                PARAM4 = #{param4,jdbcType=VARCHAR},
+            </if>
+            <if test="param5 != null">
+                PARAM5 = #{param5,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where FILE_SEQ = #{fileSeq,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ahnstudio.management.pojo.FileVO">
+    update tb_file
+    set FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      FILE_FULL_PATH = #{fileFullPath,jdbcType=VARCHAR},
+      USE_TYPE = #{useType,jdbcType=VARCHAR},
+      USE_YN = #{useYn,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=VARCHAR},
+      PARAM1 = #{param1,jdbcType=VARCHAR},
+      PARAM2 = #{param2,jdbcType=VARCHAR},
+      PARAM3 = #{param3,jdbcType=VARCHAR},
+      PARAM4 = #{param4,jdbcType=VARCHAR},
+      PARAM5 = #{param5,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+    where FILE_SEQ = #{fileSeq,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectTB_FILEForMain" resultType="com.ahnstudio.management.pojo.FileVO">
+    select  <include refid="Base_Column_List"/>
+    from    tb_file
+    where   USE_YN = '1'
+    and     USE_TYPE = '10'
+  </select>
+
+  <insert id="insertTB_FILEFORMain" parameterType="com.ahnstudio.management.pojo.FileVO" useGeneratedKeys="true" keyProperty="fileSeq">
+    <selectKey keyProperty="fileSeq" resultType="int" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tb_file (
+                        FILE_SEQ
+                        ,FILE_NAME
+                        ,FILE_PATH
+                        ,FILE_FULL_PATH
+                        ,USE_TYPE
+                        ,USE_YN
+                        ,SORT
+                        ,PARAM1
+                        ,PARAM2
+                        ,PARAM3
+                        ,PARAM4
+                        ,PARAM5
+                        ,CREATETIME)
+                values (
+                        #{fileSeq}
+                        ,#{fileName}
+                        ,#{filePath}
+                        ,#{fileFullPath}
+                        ,'10'
+                        ,'1'
+                        ,#{sort}
+                        ,#{param1}
+                        ,#{param2}
+                        ,#{param3}
+                        ,#{param4}
+                        ,#{param5}
+                        ,now()
+                        )
+  </insert>
+
+  <delete id="deleteTB_FILEByUSE_TYPE" parameterType="com.ahnstudio.management.pojo.FileVO">
+    update tb_file
+    set USE_YN = '0'
+    where USE_TYPE = '10'
+    and   SORT = #{sort}
+  </delete>
+
+
+</mapper>

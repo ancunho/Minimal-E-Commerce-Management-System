@@ -21,7 +21,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
-		<javaModelGenerator targetPackage="com.ahnstudio.management.blog.pojo" targetProject="src/main/java">
+		<javaModelGenerator targetPackage="com.ahnstudio.management.pojo" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
@@ -30,11 +30,11 @@
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ahnstudio.management.blog.dao"  targetProject="src/main/java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.ahnstudio.management.dao"  targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="blog_contact" domainObjectName="BlogContact" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />
+<!--		<table tableName="tb_file" domainObjectName="FileVO" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />-->
 <!--		<table tableName="tb_category" domainObjectName="Category" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />-->
 <!--		<table tableName="tb_order" domainObjectName="Order" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />-->
 <!--		<table tableName="tb_order_item" domainObjectName="OrderItem" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false" />-->

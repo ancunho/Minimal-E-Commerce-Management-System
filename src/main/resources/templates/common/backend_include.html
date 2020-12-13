@@ -1,6 +1,6 @@
 <div th:fragment="backend_header_nav" xmlns:th="https://www.thymeleaf.org">
 
-    <div class="layui-header">
+    <div class="layui-header" style="background:#354052; color:#e1e1e1;">
         <div class="layui-logo" style="background:#354052; color:#e1e1e1;"><span>Stronghold China</span></div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav" style="left:200px; background:#354052; display: none;">
@@ -31,7 +31,7 @@
                 <li class="layui-nav-item" th:class="${activeUri=='manager/customer' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/customer/list}"><i class="layui-icon layui-icon-user"></i> <cite>客户管理</cite></a></li>
                 <li class="layui-nav-item" th:class="${activeUri=='manager/product' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/product/list}"><i class="layui-icon layui-icon-gift"></i> <cite>商品管理</cite></a></li>
                 <li class="layui-nav-item" th:class="${activeUri=='manager/order' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/order/list}"><i class="layui-icon layui-icon-rmb"></i> <cite>订单管理</cite></a></li>
-                <li class="layui-nav-item" th:class="${activeUri=='manager/sucai' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/sucai/list}"><i class="layui-icon layui-icon-rmb"></i> <cite>素材管理</cite></a></li>
+                <li class="layui-nav-item" th:class="${activeUri=='manager/setting' ? 'layui-nav-item layui-this' : 'layui-nav-item'}"><a href="#this" th:href="@{/manager/setting}"><i class="layui-icon layui-icon-rmb"></i> <cite>配置</cite></a></li>
             </ul>
         </div>
     </div>
@@ -61,7 +61,7 @@
             <h4>asdf</h4>
         </div>
         <div class="popup_contents">
-            <form class="layui-form" action="">
+<!--            <form class="layui-form" action="">-->
                 <div class="layui-form-item">
                     <label class="layui-form-label">快递单号</label>
                     <div class="layui-input-block">
@@ -74,7 +74,7 @@
                         <button type="reset" class="layui-btn layui-btn-primary btnPopupClose">重置</button>
                     </div>
                 </div>
-            </form>
+<!--            </form>-->
         </div>
     </div>
     <!--  //快递单号 popup End -->

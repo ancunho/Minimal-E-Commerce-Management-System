@@ -33,6 +33,7 @@ public class WechatUtil {
         log.info("requestUrlParam: " + requestUrlParam);
         //发送post请求读取调用微信接口获取openid用户唯一标识
         JSONObject jsonObject = JSON.parseObject(HttpClientUtil.doGet(requestUrl, requestUrlParam));
+        System.out.println(">>>>>>jsonObject:" + jsonObject.toJSONString());
         return jsonObject;
     }
 

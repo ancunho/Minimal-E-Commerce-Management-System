@@ -201,6 +201,19 @@ public class ManagePageController {
 //        return "shipping/create";
 //    }
 
+    /************************************************************
+     * 配置
+     ************************************************************/
+    @RequestMapping(value = "setting", method = RequestMethod.GET)
+    public String setting(HttpSession session, Model model, HttpServletRequest request) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return "redirect:/manager/login";
+        }
+
+        model.addAttribute("activeUri", "manager/setting");
+        return "backend/setting/index";
+    }
 
 
 

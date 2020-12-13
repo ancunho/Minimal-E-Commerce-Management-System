@@ -3,17 +3,16 @@ package com.ahnstudio.management.controller.backend;
 import com.ahnstudio.management.common.Const;
 import com.ahnstudio.management.common.PropertiesConfig;
 import com.ahnstudio.management.common.ServerResponse;
-import com.ahnstudio.management.pojo.User;
+import com.ahnstudio.management.pojo.FileVO;
+import com.ahnstudio.management.pojo.Spec;
 import com.ahnstudio.management.service.FileService;
-import com.google.common.collect.Lists;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,6 +59,22 @@ public class FileController {
         }
     }
 
+    @RequestMapping(value = "/main/upload", method = RequestMethod.POST)
+    public ServerResponse file_upload2(HttpSession session
+            , HttpServletRequest request
+            , @RequestParam(value = "file", required = false) MultipartFile file
+    ) {
+        // 0. 파일 사이즈 체크 -->  최대 20MB
+        if (file.getSize() > 0 && file.getSize() <= (Const.UPLOAD_IMAGE_MAX_SIZE * 1024)) {
+            Map<String, Object> resultMap = fileService.saveSingleImage2(file);
+            log.info(">>>>>>" + resultMap);
+
+            return ServerResponse.createBySuccess(resultMap);
+        } else {
+            return ServerResponse.createByErrorMessage("文件大小不能超过20MB");
+        }
+    }
+
     @RequestMapping(value = "/single/upload/url", method = RequestMethod.POST)
     public Map<String, Object> file_upload_return_url(HttpSession session
             , HttpServletRequest request
@@ -89,6 +104,27 @@ public class FileController {
         return result;
     }
 
+    @RequestMapping(value = "main/save", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse saveFileVO(HttpServletRequest request, String arrFileVO) {
+        List<FileVO> fileVOList = new ArrayList<>();
+
+        if (JSONArray.parseArray(arrFileVO, FileVO.class).size() > 0) {
+            List<FileVO> fileList = JSONArray.parseArray(arrFileVO, FileVO.class);
+            for (FileVO fileVO : fileList) {
+                fileVO = fileService.saveFileVO(fileVO);
+                fileVOList.add(fileVO);
+            }
+        }
+
+        return ServerResponse.createBySuccess(fileVOList);
+    }
+
+    @RequestMapping(value = "main/list", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse mainFileList() {
+        return fileService.mainFileList();
+    }
 
 
 }

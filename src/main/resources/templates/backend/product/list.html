@@ -28,6 +28,7 @@
                     <a class="layui-btn-normal layui-btn layui-btn-radius" th:href="@{/manager/product/create}"><i class="layui-icon layui-icon-add-1"></i> 新建产品</a>
                 </div>
                 <table id="productListTable" lay-filter="productTableFilter"></table>
+                <div id="pageDemo"></div>
             </div>
         </div>
         <!-- // Content End -->
@@ -53,8 +54,8 @@
             return {
                 "code": res.status, //解析接口状态
                 "msg": res.msg, //解析提示文本
-                "count": res.data.length, //解析数据长度
-                "data": res.data //解析数据列表
+                "count": res.data.total, //解析数据长度
+                "data": res.data.list //解析数据列表
             };
         }
         , cols: [[ //表头

@@ -9,14 +9,15 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Cart {
+public class FileVO {
 
-    private Integer id;
-    private Integer userId;
-    private Integer productId;
-    private Integer specId;
-    private Integer qty;
-    private Integer checked;
+    private Integer fileSeq;
+    private String fileName;
+    private String filePath;
+    private String fileFullPath;
+    private String useType;
+    private String useYn;
+    private String sort;
     private String param1;
     private String param2;
     private String param3;

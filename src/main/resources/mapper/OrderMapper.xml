@@ -363,17 +363,17 @@
                 ,IFNULL(T1.PAYMENT_TYPE,'-') AS PAYMENT_TYPE
                 ,T1.STATUS AS STATUS
                 ,IFNULL((SELECT CODE_NAME FROM TB_COMMON_CODE WHERE CODE_ID = 'ORDER_STATUS' AND CODE_TYPE = T1.STATUS),'-') AS STATUS_NAME
-                ,DATE_FORMAT(T1.PAYMENT_TIME, '%Y-%M-%D %H:%I:%S') AS PAYMENT_TIME
-                ,DATE_FORMAT(T1.SEND_TIME, '%Y-%M-%D %H:%I:%S') AS SEND_TIME
-                ,DATE_FORMAT(T1.END_TIME, '%Y-%M-%D %H:%I:%S') AS END_TIME
-                ,DATE_FORMAT(T1.CLOSE_TIME, '%Y-%M-%D %H:%I:%S') AS CLOSE_TIME
-                ,DATE_FORMAT(T1.CREATETIME, '%Y-%M-%D %H:%I:%S') AS CREATETIME
-                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%M-%D %H:%I:%S') AS UPDATETIME
+                ,DATE_FORMAT(T1.PAYMENT_TIME, '%Y-%m-%d %H:%i:%s') AS PAYMENT_TIME
+                ,DATE_FORMAT(T1.SEND_TIME, '%Y-%-%d %H:%i:%s') AS SEND_TIME
+                ,DATE_FORMAT(T1.END_TIME, '%Y-%m-%d %H:%i:%s') AS END_TIME
+                ,DATE_FORMAT(T1.CLOSE_TIME, '%Y-%m-%d %H:%i:%s') AS CLOSE_TIME
+                ,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') AS CREATETIME
+                ,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') AS UPDATETIME
         FROM 	tb_order T1
                 LEFT OUTER JOIN tb_user T2
                             ON 	T1.USER_ID = T2.ID
-        WHERE 	T1.CREATETIME >= STR_TO_DATE(#{START_DATE},'%Y-%M-%D')
-        AND 	T1.CREATETIME < STR_TO_DATE(#{END_DATE},'%Y-%M-%D') + INTERVAL 1 DAY
+        WHERE 	T1.CREATETIME >= STR_TO_DATE(#{START_DATE},'%Y-%m-%d')
+        AND 	T1.CREATETIME < STR_TO_DATE(#{END_DATE},'%Y-%m-%d') + INTERVAL 1 DAY
         AND 	(IFNULL(#{STATUS},'') = ''		OR 	T1.STATUS = #{STATUS})
         ORDER BY T1.CREATETIME DESC
         ]]>

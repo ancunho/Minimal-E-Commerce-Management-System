@@ -352,7 +352,8 @@ public class WXPay {
     public Map<String, String> unifiedOrder(Map<String, String> reqData,  int connectTimeoutMs, int readTimeoutMs) throws Exception {
         String url;
         if (this.useSandbox) {
-            url = WXPayConstants.SANDBOX_UNIFIEDORDER_URL_SUFFIX;
+//            url = WXPayConstants.SANDBOX_UNIFIEDORDER_URL_SUFFIX;
+            url = WXPayConstants.UNIFIEDORDER_URL_SUFFIX;
         }
         else {
             url = WXPayConstants.UNIFIEDORDER_URL_SUFFIX;
@@ -360,6 +361,7 @@ public class WXPay {
         if(this.notifyUrl != null) {
             reqData.put("notify_url", this.notifyUrl);
         }
+        System.out.println(">>>>>>reqData:" + reqData.toString());
         String respXml = this.requestWithoutCert(url, this.fillRequestData(reqData), connectTimeoutMs, readTimeoutMs);
         return this.processResponseXml(respXml);
     }
