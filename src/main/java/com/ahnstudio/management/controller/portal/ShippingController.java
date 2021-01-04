@@ -43,7 +43,7 @@ public class ShippingController {
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse shipping_update(HttpSession session, Shipping shipping) {
+    public ServerResponse shipping_update(HttpSession session, @RequestBody Shipping shipping) {
         return shippingService.updateShipping(shipping);
     }
 
@@ -51,6 +51,12 @@ public class ShippingController {
     @ResponseBody
     public ServerResponse shipping_delete(HttpSession session, Integer userId, Integer id) {
         return shippingService.deleteByShippingIdUserId(userId, id);
+    }
+
+    @RequestMapping(value = "detailById", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse selectShipByPk(HttpSession session, Integer shippingId) {
+        return shippingService.selectShipByPk(shippingId);
     }
 
 }

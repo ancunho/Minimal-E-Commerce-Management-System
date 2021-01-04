@@ -5,6 +5,7 @@ import com.ahnstudio.management.common.ServerResponse;
 import com.ahnstudio.management.dao.ShippingMapper;
 import com.ahnstudio.management.pojo.Shipping;
 import com.ahnstudio.management.service.ShippingService;
+import com.ahnstudio.management.vo.ShippingVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,11 @@ public class ShippingServiceImpl implements ShippingService {
             return ServerResponse.createBySuccessMessage(Const.Message.DELETE_OK);
         }
         return ServerResponse.createByErrorMessage(Const.Message.DELETE_ERROR);
+    }
+
+    @Override
+    public ServerResponse selectShipByPk(Integer shippingId) {
+        Shipping shipping = shippingMapper.selectByPrimaryKey(shippingId);
+        return ServerResponse.createBySuccess(shipping);
     }
 }

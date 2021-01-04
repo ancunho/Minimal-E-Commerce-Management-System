@@ -17,4 +17,6 @@ public interface ShippingService {
 
     ServerResponse deleteByShippingIdUserId(Integer userId, Integer shippingId);
 
+    ServerResponse selectShipByPk(Integer shippingId);
+
 }

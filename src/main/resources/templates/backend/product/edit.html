@@ -163,28 +163,9 @@
                     <div class="layui-row">
                         <div class="layui-col-md6">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">国家</label>
+                                <label class="layui-form-label">产区</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="param1" id="country" th:value="${product.getCountry()}" class="layui-input" placeholder="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md6">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">城市</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="variety" id="city" th:value="${product.getCity()}" class="layui-input">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="layui-row">
-                        <div class="layui-col-md6">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">机器规格</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="param1" id="param1" th:value="${product.getParam1()}" class="layui-input" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -193,6 +174,26 @@
                                 <label class="layui-form-label">品种</label>
                                 <div class="layui-input-block">
                                     <input type="text" name="variety" id="variety" th:value="${product.getVariety()}" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="layui-row" style="display: none;">
+                        <div class="layui-col-md6" style="display: none;">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">机器规格</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="param1" id="param1" th:value="${product.getParam1()}" class="layui-input" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md6" style="display: none">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">城市</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="variety" id="city" th:value="${product.getCity()}" class="layui-input">
                                 </div>
                             </div>
                         </div>

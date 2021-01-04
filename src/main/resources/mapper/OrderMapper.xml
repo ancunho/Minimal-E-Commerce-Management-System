@@ -379,5 +379,16 @@
         ]]>
   </select>
 
+<!--    <select id="dashboard" parameterType="java.util.Map" resultType="java.util.Map">-->
+<!--        <![CDATA[-->
+
+<!--        select  IFNULL((select count(1) from tb_user where date_format(createtime,'%Y-%m-%d') = date_format(sysdate(),'%Y-%m-%d')),0) as ALL_USER_CNT-->
+<!--                ,IFNULL((select count(1) from tb_user where date_format(createtime,'%Y-%m-%d') = date_format(sysdate(),'%Y-%m-%d' and status = 0)),0) as NO_ACTIVITY_USER-->
+<!--                ,IFNULL((select count(1) from tb_product where status = '1'),0) as PRODUCT_CNT-->
+<!--                ,IFNULL((select count(1) from tb_order where status = '20'),0) as NO_HANDLE_ORDER_CNT-->
+<!--                ,(SELECT SUM(T1.PAYMENT) FROM TB_ORDER T1 WHERE STATUS = '20') AS SUM_PAYMENT-->
+
+<!--        ]]>-->
+<!--    </select>-->
 
 </mapper>
