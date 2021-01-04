@@ -280,12 +280,12 @@
   <select id="selectAllSpec" resultType="com.ahnstudio.management.pojo.Spec">
     SELECT
     <include refid="Base_Column_List" />
-    FROM    TB_SPEC
+    FROM    tb_spec
     ORDER BY PRODUCT_ID,CREATETIME
   </select>
 
   <delete id="deleteSpecByProductId" parameterType="java.lang.Integer">
-    DELETE FROM TB_SPEC WHERE PRODUCT_ID = #{productId}
+    DELETE FROM tb_spec WHERE PRODUCT_ID = #{productId}
   </delete>
 
   <select id="getSpecListByProductId" parameterType="java.lang.Integer" resultType="com.ahnstudio.management.pojo.Spec">

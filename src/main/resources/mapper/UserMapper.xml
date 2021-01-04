@@ -481,7 +481,7 @@
 
   <select id="selectQuestionByUsername" resultType="java.lang.String" parameterType="java.lang.String">
 		select 	QUESTION
-		FROM 	TB_USER
+		FROM 	tb_user
 		WHERE 	USERNAME = #{username}
 	</select>
 

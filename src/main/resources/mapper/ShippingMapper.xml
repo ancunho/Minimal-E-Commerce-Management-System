@@ -294,7 +294,7 @@
   </update>
 
   <delete id="deleteByShippingIdUserId" parameterType="map">
-    DELETE FROM TB_SHIPPING
+    DELETE FROM tb_shipping
     WHERE   ID = #{shippingId}
     AND     USER_ID = #{userId}
   </delete>

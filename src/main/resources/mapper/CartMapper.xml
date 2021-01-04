@@ -196,7 +196,7 @@
 
   <select id="selectCartByUserId" parameterType="java.lang.Integer" resultType="com.ahnstudio.management.pojo.Cart">
     SELECT  <include refid="Base_Column_List" />
-    FROM    TB_CART
+    FROM    tb_cart
     WHERE   USER_ID = #{userId}
   </select>
 </mapper>

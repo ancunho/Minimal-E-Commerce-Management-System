@@ -174,7 +174,7 @@
   </update>
 
   <select id="checkRepeatCategoryName" parameterType="java.lang.String" resultType="java.lang.Integer">
-    SELECT 1 FROM TB_CATEGORY WHERE NAME = #{categoryName} LIMIT 1
+    SELECT 1 FROM tb_category WHERE NAME = #{categoryName} LIMIT 1
   </select>
 
   <select id="selectCategoryChildrenByParentId" resultMap="BaseResultMap" parameterType="int">
