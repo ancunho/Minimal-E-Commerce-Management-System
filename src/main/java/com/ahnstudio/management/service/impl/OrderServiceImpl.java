@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal totalPrice = this.getOrderTotalPrice(orderItemList);
         log.info("3:::" + totalPrice);
         // 3. 주문번호 생성
-        Order order = this.assembleOrder(cartVO.getUserId(), cartVO.getShippingId(), totalPrice, cartVO.getComment());
+        Order order = this.assembleOrder(cartVO.getUserId(), cartVO.getShippingId(), totalPrice, cartVO.getComment(), orderItemList);
         if(order == null){
             return ServerResponse.createByErrorMessage("生成订单错误");
         }
@@ -127,7 +127,13 @@ public class OrderServiceImpl implements OrderService {
     private void reduceProductStock(List<OrderItem> orderItemList){
         for(OrderItem orderItem : orderItemList){
             Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
-            product.setStock(product.getStock()-orderItem.getQty());
+            int stockValue = 0;
+            stockValue = product.getStock() - orderItem.getQty();
+            if ((product.getStock() - orderItem.getQty()) <= 0) {
+                product.setStock(0);
+            } else {
+                product.setStock(stockValue);
+            }
             productMapper.updateByPrimaryKeySelective(product);
         }
     }
@@ -139,14 +145,33 @@ public class OrderServiceImpl implements OrderService {
      * @param totalPrice
      * @return
      */
-    private Order assembleOrder(Integer userId, Integer shippingId, BigDecimal totalPrice, String comment) {
+    private Order assembleOrder(Integer userId, Integer shippingId, BigDecimal totalPrice, String comment, List<OrderItem> orderItemList) {
         Order order = new Order();
+        Shipping shipping = shippingMapper.selectByPrimaryKey(shippingId);
+        if (shipping == null) {
+            return null;
+        } else {
+            Spec spec;
+            int postageValue = 0;
+            for (int i = 0; i < orderItemList.size(); i++) {
+                spec = new Spec();
+                spec = specMapper.selectByPrimaryKey(orderItemList.get(i).getSpecId());
+                if ("上海市".equals(shipping.getReceiverProvince()) || "江苏省".equals(shipping.getReceiverProvince()) || "浙江省".equals(shipping.getReceiverProvince())) {
+                    postageValue += orderItemList.get(i).getQty() * Integer.parseInt(spec.getWeight());
+                } else {
+                    postageValue += (2 * orderItemList.get(i).getQty() * Integer.parseInt(spec.getWeight()));
+                }
+            }
+            order.setPostage(postageValue);
+        }
+
+
         String orderNo = this.generateOrderNo();
         order.setOrderId(orderNo);
         order.setStatus(Const.OrderStatusEnum.NO_PAY.getCode());
-        order.setPostage(0);
+
         order.setPaymentType(Const.PaymentTypeEnum.ONLINE_PAY.getCode());
-        order.setPayment(totalPrice);
+        order.setPayment(BigDecimalUtil.add(totalPrice.doubleValue(), order.getPostage().doubleValue()));
         order.setParam1(comment);
 
         order.setUserId(userId);
